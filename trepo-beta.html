@@ -445,8 +445,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     top: 0;
   }
   
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+  
   </style>
   
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -554,19 +561,21 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
             var results = fuse.search(query, searchOptions);
             callback(results
               .map(function(result) { return result.item; })
-              .filter(function(item) { return !!item.description; })
             );
           },
           templates: {
             suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
               var html = `
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
                   <div class="search-item-description">
-                    ${suggestion.description}
+                    ${suggestion.description || ''}
                   </div>
                   <div class="search-item-preview">
-                    <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                    ${img}
                   </div>
                 </div>
               `;
@@ -589,6 +598,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   </script>
   
   <style type="text/css">
+  
+  .nav-search {
+    font-size: x-small;
+  }
   
   /* Algolioa Autocomplete */
   
@@ -664,6 +677,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
   
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
@@ -891,6 +905,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-decoration: underline;
   }
   
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+  
   @media(min-width: 768px) {
   
   d-article pre,
@@ -1045,6 +1064,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+  
+  /* Citation hover box */
+  
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+  
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
   
   
@@ -1712,7 +1742,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       var layout = $(this).attr('data-layout');
   
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1827,6 +1857,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+  
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
   
       // clear polling timer
       clearInterval(tid);
@@ -1987,7 +2031,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   </script>
   
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
@@ -2226,6 +2273,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     content: "\f146";
   }
   
+  
+  /********************************/
+  /* dygraph*/
+  /********************************/
+  
   </style>
   <!--/radix_placeholder_site_in_header-->
 
@@ -2253,9 +2305,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="intro.html">Introduction</a>
-<a href="temp.html">Physical</a>
-<a href="temp.html">Inverts</a>
+<a href="trepo-intro.html">Introduction</a>
+<a href="trepo-physical.html">Physical</a>
+<a href="trepo-inverts.html">Inverts</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Microbial
@@ -2279,7 +2331,7 @@ Microbial
 <hr/>
 </div>
 </div>
-<a href="temp.html">Data</a>
+<a href="trepo-data.html">Data</a>
 <a href="https://github.com/tropical-repo/web/" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2316,6 +2368,10 @@ Microbial
 <li><a href="#plots-all-asvs">Plots ALL ASVs</a></li>
 <li><a href="#plots-all-pime-asv">Plots ALL PIME ASV</a></li>
 </ul></li>
+<li><a href="#beta-diversity-plots-by-site">Beta Diversity Plots (by Site)</a><ul>
+<li><a href="#plots-all-asvs-1">Plots ALL ASVs</a></li>
+<li><a href="#plots-pime-asvs">Plots PIME ASVs</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#merged-data-set">Merged Data Set</a><ul>
 <li><a href="#significance-tests-1">Significance Tests</a><ul>
@@ -2325,8 +2381,12 @@ Microbial
 <li><a href="#summary-1">Summary</a></li>
 </ul></li>
 <li><a href="#beta-diversity-plots-1">Beta Diversity Plots</a><ul>
-<li><a href="#plots-all-asvs-1">Plots ALL ASVs</a></li>
+<li><a href="#plots-all-asvs-2">Plots ALL ASVs</a></li>
 <li><a href="#plots-all-pime-asv-1">Plots ALL PIME ASV</a></li>
+</ul></li>
+<li><a href="#beta-diversity-plots-by-site-1">Beta Diversity Plots (by Site)</a><ul>
+<li><a href="#plots-all-asvs-3">Plots ALL ASVs</a></li>
+<li><a href="#plots-pime-asvs-1">Plots PIME ASVs</a></li>
 </ul></li>
 <li><a href="#source-code">Source Code</a></li>
 </ul></li>
@@ -2910,8 +2970,11 @@ PUCL    176  5810.50  8902.0 12097.25 24569  2850</code></pre>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="figure"><span id="fig:unnamed-chunk-27"></span>
+<div class="figure"><span id="fig:unnamed-chunk-28"></span>
 <img src="include/trepo/beta/ssu_ps_work_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
 <p class="caption">
 Figure 1: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
@@ -2982,8 +3045,11 @@ Figure 1: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</str
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="figure"><span id="fig:unnamed-chunk-32"></span>
+<div class="figure"><span id="fig:unnamed-chunk-34"></span>
 <img src="include/trepo/beta/ssu_ps_pime_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
 <p class="caption">
 Figure 2: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
@@ -2992,6 +3058,327 @@ Figure 2: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</str
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
+</div>
+<h2 id="beta-diversity-plots-by-site">Beta Diversity Plots (by Site)</h2>
+<p>Here we visualize the different distance matrices using several ordination methods on the ALL and PIME filtered data sets to access dissimilarity among samples from <strong>the same site</strong>.</p>
+<h3 id="plots-all-asvs-1">Plots ALL ASVs</h3>
+<p>First, we inspect different ordination methods to see how the samples cluster using <strong>weighted-UniFrac</strong>, <strong>unweighted-UniFrac</strong>, and <strong>Jensen-Shannon Divergence</strong> distance measurements. We could also test different diversity metrics, different transformations, etc.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">remove</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
+<span id="cb29-2"><a href="#cb29-2"></a>ssu_ps_work_ALMR &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_ALMR.rds&quot;</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a>ssu_ps_work_CRIS  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_CRIS.rds&quot;</span>)</span>
+<span id="cb29-4"><a href="#cb29-4"></a>ssu_ps_work_PAST &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_PAST.rds&quot;</span>)</span>
+<span id="cb29-5"><a href="#cb29-5"></a>ssu_ps_work_PUCL &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_PUCL.rds&quot;</span>)</span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<p>Before we begin, we must first transform sample counts to relative abundance for both data sets.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_work_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_work_PAST&quot;</span>, <span class="st">&quot;ssu_ps_work_PUCL&quot;</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb30-3"><a href="#cb30-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>))</span>
+<span id="cb30-4"><a href="#cb30-4"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb30-5"><a href="#cb30-5"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb30-6"><a href="#cb30-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb30-8"><a href="#cb30-8"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb30-9"><a href="#cb30-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
+<span id="cb30-10"><a href="#cb30-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb30-11"><a href="#cb30-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb30-12"><a href="#cb30-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb30-13"><a href="#cb30-13"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_work_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_work_PAST&quot;</span>, <span class="st">&quot;ssu_ps_work_PUCL&quot;</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps){</span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb31-5"><a href="#cb31-5"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, .))</span>
+<span id="cb31-6"><a href="#cb31-6"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb31-7"><a href="#cb31-7"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb31-8"><a href="#cb31-8"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
+<span id="cb31-9"><a href="#cb31-9"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
+<span id="cb31-10"><a href="#cb31-10"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
+<span id="cb31-11"><a href="#cb31-11"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
+<span id="cb31-12"><a href="#cb31-12"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SEASON&quot;</span>)</span>
+<span id="cb31-13"><a href="#cb31-13"></a>   }, tmp_get, d)</span>
+<span id="cb31-14"><a href="#cb31-14"></a></span>
+<span id="cb31-15"><a href="#cb31-15"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
+<span id="cb31-16"><a href="#cb31-16"></a></span>
+<span id="cb31-17"><a href="#cb31-17"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
+<span id="cb31-18"><a href="#cb31-18"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb31-19"><a href="#cb31-19"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
+<span id="cb31-20"><a href="#cb31-20"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
+<span id="cb31-21"><a href="#cb31-21"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
+<span id="cb31-22"><a href="#cb31-22"></a>  </span>
+<span id="cb31-23"><a href="#cb31-23"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb31-24"><a href="#cb31-24"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb31-25"><a href="#cb31-25"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
+<span id="cb31-26"><a href="#cb31-26"></a>                                 <span class="dt">color =</span> SEASON, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SEASON))</span>
+<span id="cb31-27"><a href="#cb31-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
+<span id="cb31-28"><a href="#cb31-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb31-29"><a href="#cb31-29"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb31-30"><a href="#cb31-30"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
+<span id="cb31-31"><a href="#cb31-31"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb31-32"><a href="#cb31-32"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
+<span id="cb31-33"><a href="#cb31-33"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb31-34"><a href="#cb31-34"></a> }</span>
+<span id="cb31-35"><a href="#cb31-35"></a>}</span>
+<span id="cb31-36"><a href="#cb31-36"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_dist_&quot;</span>)</span>
+<span id="cb31-37"><a href="#cb31-37"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
+<span id="cb32-5"><a href="#cb32-5"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb32-6"><a href="#cb32-6"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
+<span id="cb32-8"><a href="#cb32-8"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb32-9"><a href="#cb32-9"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
+<span id="cb32-10"><a href="#cb32-10"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
+<span id="cb32-11"><a href="#cb32-11"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb32-12"><a href="#cb32-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb32-14"><a href="#cb32-14"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
+<span id="cb32-16"><a href="#cb32-16"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb32-17"><a href="#cb32-17"></a>  }</span>
+<span id="cb32-18"><a href="#cb32-18"></a>}</span></code></pre></div>
+</div>
+<h4 id="almirante-inner-bay">Almirante (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-44"></span>
+<img src="include/trepo/beta/ssu_ps_work_ALMR_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 3: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="pastores-inner-bay">Pastores (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-48"></span>
+<img src="include/trepo/beta/ssu_ps_work_PAST_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 4: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="cristobal-outer-bay">Cristobal (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-52"></span>
+<img src="include/trepo/beta/ssu_ps_work_CRIS_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 5: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="punta-caracol-outer-bay">Punta Caracol (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-56"></span>
+<img src="include/trepo/beta/ssu_ps_work_PUCL_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 6: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h3 id="plots-pime-asvs">Plots PIME ASVs</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">remove</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
+<span id="cb33-2"><a href="#cb33-2"></a>ssu_ps_pime_ALMR &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_asv_pime_ALMR.rds&quot;</span>)</span>
+<span id="cb33-3"><a href="#cb33-3"></a>ssu_ps_pime_CRIS  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_asv_pime_CRIS.rds&quot;</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a>ssu_ps_pime_PAST &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_asv_pime_PAST.rds&quot;</span>)</span>
+<span id="cb33-5"><a href="#cb33-5"></a>ssu_ps_pime_PUCL &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_asv_pime_PUCL.rds&quot;</span>)</span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<p>Before we begin, we must first transform sample counts to relative abundance for both data sets.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_pime_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_pime_PAST&quot;</span>, <span class="st">&quot;ssu_ps_pime_PUCL&quot;</span>)</span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb34-3"><a href="#cb34-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>))</span>
+<span id="cb34-4"><a href="#cb34-4"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb34-5"><a href="#cb34-5"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb34-6"><a href="#cb34-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb34-8"><a href="#cb34-8"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb34-9"><a href="#cb34-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
+<span id="cb34-10"><a href="#cb34-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb34-11"><a href="#cb34-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb34-12"><a href="#cb34-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb34-13"><a href="#cb34-13"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_pime_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_pime_PAST&quot;</span>, <span class="st">&quot;ssu_ps_pime_PUCL&quot;</span>)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps){</span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb35-5"><a href="#cb35-5"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, .))</span>
+<span id="cb35-6"><a href="#cb35-6"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb35-7"><a href="#cb35-7"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb35-8"><a href="#cb35-8"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
+<span id="cb35-10"><a href="#cb35-10"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
+<span id="cb35-11"><a href="#cb35-11"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
+<span id="cb35-12"><a href="#cb35-12"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SEASON&quot;</span>)</span>
+<span id="cb35-13"><a href="#cb35-13"></a>   }, tmp_get, d)</span>
+<span id="cb35-14"><a href="#cb35-14"></a></span>
+<span id="cb35-15"><a href="#cb35-15"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
+<span id="cb35-16"><a href="#cb35-16"></a></span>
+<span id="cb35-17"><a href="#cb35-17"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
+<span id="cb35-18"><a href="#cb35-18"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb35-19"><a href="#cb35-19"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
+<span id="cb35-20"><a href="#cb35-20"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
+<span id="cb35-21"><a href="#cb35-21"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
+<span id="cb35-22"><a href="#cb35-22"></a>  </span>
+<span id="cb35-23"><a href="#cb35-23"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb35-24"><a href="#cb35-24"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb35-25"><a href="#cb35-25"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
+<span id="cb35-26"><a href="#cb35-26"></a>                                 <span class="dt">color =</span> SEASON, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SEASON))</span>
+<span id="cb35-27"><a href="#cb35-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
+<span id="cb35-28"><a href="#cb35-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb35-29"><a href="#cb35-29"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb35-30"><a href="#cb35-30"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
+<span id="cb35-31"><a href="#cb35-31"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb35-32"><a href="#cb35-32"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
+<span id="cb35-33"><a href="#cb35-33"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb35-34"><a href="#cb35-34"></a> }</span>
+<span id="cb35-35"><a href="#cb35-35"></a>}</span>
+<span id="cb35-36"><a href="#cb35-36"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_dist_&quot;</span>)</span>
+<span id="cb35-37"><a href="#cb35-37"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
+<span id="cb36-2"><a href="#cb36-2"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
+<span id="cb36-5"><a href="#cb36-5"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb36-6"><a href="#cb36-6"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
+<span id="cb36-8"><a href="#cb36-8"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb36-9"><a href="#cb36-9"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
+<span id="cb36-10"><a href="#cb36-10"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
+<span id="cb36-11"><a href="#cb36-11"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb36-12"><a href="#cb36-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb36-14"><a href="#cb36-14"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
+<span id="cb36-15"><a href="#cb36-15"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
+<span id="cb36-16"><a href="#cb36-16"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb36-17"><a href="#cb36-17"></a>  }</span>
+<span id="cb36-18"><a href="#cb36-18"></a>}</span></code></pre></div>
+</div>
+<h4 id="almirante-inner-bay-1">Almirante (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-65"></span>
+<img src="include/trepo/beta/ssu_ps_pime_ALMR_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 7: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="pastores-inner-bay-1">Pastores (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-69"></span>
+<img src="include/trepo/beta/ssu_ps_pime_PAST_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 8: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="cristobal-outer-bay-1">Cristobal (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-73"></span>
+<img src="include/trepo/beta/ssu_ps_pime_CRIS_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 9: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="punta-caracol-outer-bay-1">Punta Caracol (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-77"></span>
+<img src="include/trepo/beta/ssu_ps_pime_PUCL_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 10: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
 </div>
 <h1 id="merged-data-set">Merged Data Set</h1>
 <div class="layout-chunk" data-layout="l-body">
@@ -3008,41 +3395,41 @@ Figure 2: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</str
 <p>Steps 1, 2, and 3 are analyzed in a <code>for</code> loop that tests all three distance metrics.</p>
 <p>Before we begin, we must first transform sample counts to relative abundance for both data sets.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work&quot;</span>, <span class="st">&quot;ssu_ps_pime&quot;</span>)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
-<span id="cb29-3"><a href="#cb29-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>))</span>
-<span id="cb29-4"><a href="#cb29-4"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb29-5"><a href="#cb29-5"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
-<span id="cb29-6"><a href="#cb29-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb29-7"><a href="#cb29-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
-<span id="cb29-8"><a href="#cb29-8"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
-<span id="cb29-9"><a href="#cb29-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
-<span id="cb29-10"><a href="#cb29-10"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb29-11"><a href="#cb29-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
-<span id="cb29-12"><a href="#cb29-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb29-13"><a href="#cb29-13"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work&quot;</span>, <span class="st">&quot;ssu_ps_pime&quot;</span>)</span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb37-3"><a href="#cb37-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>))</span>
+<span id="cb37-4"><a href="#cb37-4"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb37-5"><a href="#cb37-5"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb37-6"><a href="#cb37-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb37-7"><a href="#cb37-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb37-8"><a href="#cb37-8"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb37-9"><a href="#cb37-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
+<span id="cb37-10"><a href="#cb37-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb37-11"><a href="#cb37-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb37-12"><a href="#cb37-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb37-13"><a href="#cb37-13"></a>}</span></code></pre></div>
 </div>
 <h3 id="beta-dispersion-1">Beta Dispersion</h3>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;jsd&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;wunifrac&quot;</span>)</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
-<span id="cb30-3"><a href="#cb30-3"></a>        <span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
-<span id="cb30-4"><a href="#cb30-4"></a>             tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_prop&quot;</span>)))</span>
-<span id="cb30-5"><a href="#cb30-5"></a>             tmp_samp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_get))</span>
-<span id="cb30-6"><a href="#cb30-6"></a>             tmp_df &lt;-<span class="st"> </span>phyloseq<span class="op">::</span><span class="kw">distance</span>(tmp_get, <span class="dt">method =</span> d)</span>
-<span id="cb30-7"><a href="#cb30-7"></a>             tmp_df_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_beta_dist_&quot;</span>, .))</span>
-<span id="cb30-8"><a href="#cb30-8"></a>             <span class="kw">assign</span>(tmp_df_name, tmp_df)</span>
-<span id="cb30-9"><a href="#cb30-9"></a>             tmp_df2 &lt;-<span class="st"> </span><span class="kw">betadisper</span>(tmp_df, tmp_samp<span class="op">$</span>SITE, <span class="dt">bias.adjust =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb30-10"><a href="#cb30-10"></a>             tmp_df_name2 &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_beta_dispersion_&quot;</span>, .))</span>
-<span id="cb30-11"><a href="#cb30-11"></a>             <span class="kw">assign</span>(tmp_df_name2, tmp_df2)</span>
-<span id="cb30-12"><a href="#cb30-12"></a>             tmp_df3 &lt;-<span class="st"> </span><span class="kw">permutest</span>(tmp_df2, <span class="dt">pairwise =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb30-13"><a href="#cb30-13"></a>                                  <span class="dt">permutations =</span> <span class="dv">1000</span>, <span class="dt">binary =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb30-14"><a href="#cb30-14"></a>             tmp_df_name3 &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_permutest_&quot;</span>, .))</span>
-<span id="cb30-15"><a href="#cb30-15"></a>             <span class="kw">assign</span>(tmp_df_name3, tmp_df3)</span>
-<span id="cb30-16"><a href="#cb30-16"></a>             <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb30-17"><a href="#cb30-17"></a>       }</span>
-<span id="cb30-18"><a href="#cb30-18"></a>}</span>
-<span id="cb30-19"><a href="#cb30-19"></a><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;jsd&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;wunifrac&quot;</span>)</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb38-3"><a href="#cb38-3"></a>        <span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb38-4"><a href="#cb38-4"></a>             tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb38-5"><a href="#cb38-5"></a>             tmp_samp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_get))</span>
+<span id="cb38-6"><a href="#cb38-6"></a>             tmp_df &lt;-<span class="st"> </span>phyloseq<span class="op">::</span><span class="kw">distance</span>(tmp_get, <span class="dt">method =</span> d)</span>
+<span id="cb38-7"><a href="#cb38-7"></a>             tmp_df_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_beta_dist_&quot;</span>, .))</span>
+<span id="cb38-8"><a href="#cb38-8"></a>             <span class="kw">assign</span>(tmp_df_name, tmp_df)</span>
+<span id="cb38-9"><a href="#cb38-9"></a>             tmp_df2 &lt;-<span class="st"> </span><span class="kw">betadisper</span>(tmp_df, tmp_samp<span class="op">$</span>SITE, <span class="dt">bias.adjust =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb38-10"><a href="#cb38-10"></a>             tmp_df_name2 &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_beta_dispersion_&quot;</span>, .))</span>
+<span id="cb38-11"><a href="#cb38-11"></a>             <span class="kw">assign</span>(tmp_df_name2, tmp_df2)</span>
+<span id="cb38-12"><a href="#cb38-12"></a>             tmp_df3 &lt;-<span class="st"> </span><span class="kw">permutest</span>(tmp_df2, <span class="dt">pairwise =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb38-13"><a href="#cb38-13"></a>                                  <span class="dt">permutations =</span> <span class="dv">1000</span>, <span class="dt">binary =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb38-14"><a href="#cb38-14"></a>             tmp_df_name3 &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_permutest_&quot;</span>, .))</span>
+<span id="cb38-15"><a href="#cb38-15"></a>             <span class="kw">assign</span>(tmp_df_name3, tmp_df3)</span>
+<span id="cb38-16"><a href="#cb38-16"></a>             <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb38-17"><a href="#cb38-17"></a>       }</span>
+<span id="cb38-18"><a href="#cb38-18"></a>}</span>
+<span id="cb38-19"><a href="#cb38-19"></a><span class="kw">objects</span>()</span></code></pre></div>
 </div>
 <details>
 <p><summary>Detailed results of Beta Dispersion &amp; Permutation tests</summary></p>
@@ -3194,18 +3581,18 @@ PUCL 0.182975 0.146451 0.185432       </code></pre>
 </details>
 <p>Remember, if the beta dispersion p-value is greater than <code>0.05</code> we use PERMANOVA, otherwise we use ANOSIM.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">file.remove</span>(<span class="st">&quot;files/trepo/beta/tables/tmp_merge.txt&quot;</span>)</span>
-<span id="cb32-2"><a href="#cb32-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
-<span id="cb32-3"><a href="#cb32-3"></a>        <span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
-<span id="cb32-4"><a href="#cb32-4"></a>          tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_permutest_&quot;</span>, d)))</span>
-<span id="cb32-5"><a href="#cb32-5"></a>          tmp_res &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">isTRUE</span>(tmp_get<span class="op">$</span>tab<span class="op">$</span><span class="st">`</span><span class="dt">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">1</span>] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>))</span>
-<span id="cb32-6"><a href="#cb32-6"></a>          tmp_print &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Permutation test p-value of  &quot;</span>, i, d,</span>
-<span id="cb32-7"><a href="#cb32-7"></a>          <span class="st">&quot; &lt; 0.05?&quot;</span>, tmp_res)</span>
-<span id="cb32-8"><a href="#cb32-8"></a>          <span class="kw">cat</span>(tmp_print,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">append =</span> <span class="ot">TRUE</span>, <span class="dt">file =</span> <span class="st">&quot;files/trepo/beta/tables/tmp_merge.txt&quot;</span>)</span>
-<span id="cb32-9"><a href="#cb32-9"></a>          <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb32-10"><a href="#cb32-10"></a>        }</span>
-<span id="cb32-11"><a href="#cb32-11"></a>}</span>
-<span id="cb32-12"><a href="#cb32-12"></a>ssu_perm_pvalues &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;files/trepo/beta/tables/tmp_merge.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">col_names =</span> <span class="st">&quot;permutation results&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">file.remove</span>(<span class="st">&quot;files/trepo/beta/tables/tmp_merge.txt&quot;</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb40-3"><a href="#cb40-3"></a>        <span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb40-4"><a href="#cb40-4"></a>          tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_permutest_&quot;</span>, d)))</span>
+<span id="cb40-5"><a href="#cb40-5"></a>          tmp_res &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">isTRUE</span>(tmp_get<span class="op">$</span>tab<span class="op">$</span><span class="st">`</span><span class="dt">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">1</span>] <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>))</span>
+<span id="cb40-6"><a href="#cb40-6"></a>          tmp_print &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Permutation test p-value of  &quot;</span>, i, d,</span>
+<span id="cb40-7"><a href="#cb40-7"></a>          <span class="st">&quot; &lt; 0.05?&quot;</span>, tmp_res)</span>
+<span id="cb40-8"><a href="#cb40-8"></a>          <span class="kw">cat</span>(tmp_print,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">append =</span> <span class="ot">TRUE</span>, <span class="dt">file =</span> <span class="st">&quot;files/trepo/beta/tables/tmp_merge.txt&quot;</span>)</span>
+<span id="cb40-9"><a href="#cb40-9"></a>          <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb40-10"><a href="#cb40-10"></a>        }</span>
+<span id="cb40-11"><a href="#cb40-11"></a>}</span>
+<span id="cb40-12"><a href="#cb40-12"></a>ssu_perm_pvalues &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">&quot;files/trepo/beta/tables/tmp_merge.txt&quot;</span>, <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>, <span class="dt">col_names =</span> <span class="st">&quot;permutation results&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -3220,22 +3607,22 @@ PUCL 0.182975 0.146451 0.185432       </code></pre>
 3 &quot;Permutation test p-value of   ssu_ps_work wunifrac  &lt; 0.05? FALSE &quot;</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>ssu_ps_work_adonis_jsd &lt;-<span class="st">  </span><span class="kw">adonis</span>(ssu_ps_work_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
-<span id="cb34-2"><a href="#cb34-2"></a>                                 <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span>
-<span id="cb34-3"><a href="#cb34-3"></a>ssu_ps_work_adonis2_jsd &lt;-<span class="st"> </span><span class="kw">adonis2</span>(ssu_ps_work_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
-<span id="cb34-4"><a href="#cb34-4"></a>                                  <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>ssu_ps_work_adonis_jsd &lt;-<span class="st">  </span><span class="kw">adonis</span>(ssu_ps_work_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
+<span id="cb42-2"><a href="#cb42-2"></a>                                 <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span>
+<span id="cb42-3"><a href="#cb42-3"></a>ssu_ps_work_adonis2_jsd &lt;-<span class="st"> </span><span class="kw">adonis2</span>(ssu_ps_work_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
+<span id="cb42-4"><a href="#cb42-4"></a>                                  <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>ssu_ps_work_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
-<span id="cb35-2"><a href="#cb35-2"></a>ssu_ps_work_anosim_unifrac &lt;-</span>
-<span id="cb35-3"><a href="#cb35-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_work_prop, <span class="st">&quot;unifrac&quot;</span>),</span>
-<span id="cb35-4"><a href="#cb35-4"></a>         <span class="dt">grouping =</span> ssu_ps_work_groups)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>ssu_ps_work_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
+<span id="cb43-2"><a href="#cb43-2"></a>ssu_ps_work_anosim_unifrac &lt;-</span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_work_prop, <span class="st">&quot;unifrac&quot;</span>),</span>
+<span id="cb43-4"><a href="#cb43-4"></a>         <span class="dt">grouping =</span> ssu_ps_work_groups)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>ssu_ps_work_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
-<span id="cb36-2"><a href="#cb36-2"></a>ssu_ps_work_anosim_wunifrac &lt;-</span>
-<span id="cb36-3"><a href="#cb36-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_work_prop, <span class="st">&quot;wunifrac&quot;</span>),</span>
-<span id="cb36-4"><a href="#cb36-4"></a>         <span class="dt">grouping =</span> ssu_ps_work_groups)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>ssu_ps_work_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
+<span id="cb44-2"><a href="#cb44-2"></a>ssu_ps_work_anosim_wunifrac &lt;-</span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_work_prop, <span class="st">&quot;wunifrac&quot;</span>),</span>
+<span id="cb44-4"><a href="#cb44-4"></a>         <span class="dt">grouping =</span> ssu_ps_work_groups)</span></code></pre></div>
 </div>
 <details>
 <p><summary>Detailed results of Significance tests for the ALL ASV data set</summary></p>
@@ -3314,22 +3701,22 @@ PUCL      3  405.00  794.0 1272.00 1988  325</code></pre>
 3 &quot;Permutation test p-value of   ssu_ps_pime wunifrac  &lt; 0.05? TRUE &quot;</code></pre>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>ssu_ps_pime_adonis_jsd &lt;-<span class="st">  </span><span class="kw">adonis</span>(ssu_ps_pime_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
-<span id="cb44-2"><a href="#cb44-2"></a>                                 <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span>
-<span id="cb44-3"><a href="#cb44-3"></a>ssu_ps_pime_adonis2_jsd &lt;-<span class="st"> </span><span class="kw">adonis2</span>(ssu_ps_pime_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
-<span id="cb44-4"><a href="#cb44-4"></a>                                  <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>ssu_ps_pime_adonis_jsd &lt;-<span class="st">  </span><span class="kw">adonis</span>(ssu_ps_pime_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
+<span id="cb52-2"><a href="#cb52-2"></a>                                 <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span>
+<span id="cb52-3"><a href="#cb52-3"></a>ssu_ps_pime_adonis2_jsd &lt;-<span class="st"> </span><span class="kw">adonis2</span>(ssu_ps_pime_beta_dist_jsd <span class="op">~</span><span class="st"> </span>SITE,</span>
+<span id="cb52-4"><a href="#cb52-4"></a>                                  <span class="dt">data =</span> adonis_sampledf, <span class="dt">permutations =</span> <span class="dv">1000</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>ssu_ps_pime_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
-<span id="cb45-2"><a href="#cb45-2"></a>ssu_ps_pime_anosim_unifrac &lt;-</span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_pime_prop, <span class="st">&quot;unifrac&quot;</span>),</span>
-<span id="cb45-4"><a href="#cb45-4"></a>         <span class="dt">grouping =</span> ssu_ps_pime_groups)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>ssu_ps_pime_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
+<span id="cb53-2"><a href="#cb53-2"></a>ssu_ps_pime_anosim_unifrac &lt;-</span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_pime_prop, <span class="st">&quot;unifrac&quot;</span>),</span>
+<span id="cb53-4"><a href="#cb53-4"></a>         <span class="dt">grouping =</span> ssu_ps_pime_groups)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>ssu_ps_pime_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a>ssu_ps_pime_anosim_wunifrac &lt;-</span>
-<span id="cb46-3"><a href="#cb46-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_pime_prop, <span class="st">&quot;wunifrac&quot;</span>),</span>
-<span id="cb46-4"><a href="#cb46-4"></a>         <span class="dt">grouping =</span> ssu_ps_pime_groups)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>ssu_ps_pime_groups &lt;-<span class="st"> </span><span class="kw">get_variable</span>(anosim_data, <span class="st">&quot;SITE&quot;</span>)</span>
+<span id="cb54-2"><a href="#cb54-2"></a>ssu_ps_pime_anosim_wunifrac &lt;-</span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="st">  </span><span class="kw">anosim</span>(phyloseq<span class="op">::</span><span class="kw">distance</span>(ssu_ps_pime_prop, <span class="st">&quot;wunifrac&quot;</span>),</span>
+<span id="cb54-4"><a href="#cb54-4"></a>         <span class="dt">grouping =</span> ssu_ps_pime_groups)</span></code></pre></div>
 </div>
 <details>
 <p><summary>Detailed results of Significance tests for PIME data set</summary></p>
@@ -3440,66 +3827,69 @@ PUCL     46  505.0  793.0 1033.00 1764  325</code></pre>
 
 </div>
 <p>Here we visualize the different distance matrices using several ordination methods on the ALL and PIME filtered data sets to access dissimilarity among sample.</p>
-<h3 id="plots-all-asvs-1">Plots ALL ASVs</h3>
+<h3 id="plots-all-asvs-2">Plots ALL ASVs</h3>
 <p>First, we inspect different ordination methods to see how the samples cluster using <strong>weighted-UniFrac</strong>, <strong>unweighted-UniFrac</strong>, and <strong>Jensen-Shannon Divergence</strong> distance measurements. We could also test different diversity metrics, different transformations, etc.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_work&quot;</span></span>
-<span id="cb53-2"><a href="#cb53-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
-<span id="cb53-3"><a href="#cb53-3"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
-<span id="cb53-4"><a href="#cb53-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, .))</span>
-<span id="cb53-5"><a href="#cb53-5"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
-<span id="cb53-6"><a href="#cb53-6"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(samp_ps, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
-<span id="cb53-7"><a href="#cb53-7"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
-<span id="cb53-8"><a href="#cb53-8"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
-<span id="cb53-9"><a href="#cb53-9"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
-<span id="cb53-10"><a href="#cb53-10"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
-<span id="cb53-11"><a href="#cb53-11"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SITE&quot;</span>)</span>
-<span id="cb53-12"><a href="#cb53-12"></a>   }, tmp_get, d)</span>
-<span id="cb53-13"><a href="#cb53-13"></a></span>
-<span id="cb53-14"><a href="#cb53-14"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
-<span id="cb53-15"><a href="#cb53-15"></a></span>
-<span id="cb53-16"><a href="#cb53-16"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
-<span id="cb53-17"><a href="#cb53-17"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
-<span id="cb53-18"><a href="#cb53-18"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
-<span id="cb53-19"><a href="#cb53-19"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
-<span id="cb53-20"><a href="#cb53-20"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
-<span id="cb53-21"><a href="#cb53-21"></a>  </span>
-<span id="cb53-22"><a href="#cb53-22"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
-<span id="cb53-23"><a href="#cb53-23"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
-<span id="cb53-24"><a href="#cb53-24"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
-<span id="cb53-25"><a href="#cb53-25"></a>                                 <span class="dt">color =</span> SITE, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SITE))</span>
-<span id="cb53-26"><a href="#cb53-26"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
-<span id="cb53-27"><a href="#cb53-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
-<span id="cb53-28"><a href="#cb53-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
-<span id="cb53-29"><a href="#cb53-29"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
-<span id="cb53-30"><a href="#cb53-30"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb53-31"><a href="#cb53-31"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
-<span id="cb53-32"><a href="#cb53-32"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb53-33"><a href="#cb53-33"></a>}</span>
-<span id="cb53-34"><a href="#cb53-34"></a></span>
-<span id="cb53-35"><a href="#cb53-35"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_dist_&quot;</span>)</span>
-<span id="cb53-36"><a href="#cb53-36"></a><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_work&quot;</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
+<span id="cb61-3"><a href="#cb61-3"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb61-4"><a href="#cb61-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, .))</span>
+<span id="cb61-5"><a href="#cb61-5"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb61-6"><a href="#cb61-6"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(samp_ps, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb61-7"><a href="#cb61-7"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
+<span id="cb61-8"><a href="#cb61-8"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
+<span id="cb61-9"><a href="#cb61-9"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
+<span id="cb61-10"><a href="#cb61-10"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
+<span id="cb61-11"><a href="#cb61-11"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SITE&quot;</span>)</span>
+<span id="cb61-12"><a href="#cb61-12"></a>   }, tmp_get, d)</span>
+<span id="cb61-13"><a href="#cb61-13"></a></span>
+<span id="cb61-14"><a href="#cb61-14"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
+<span id="cb61-15"><a href="#cb61-15"></a></span>
+<span id="cb61-16"><a href="#cb61-16"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
+<span id="cb61-17"><a href="#cb61-17"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb61-18"><a href="#cb61-18"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
+<span id="cb61-19"><a href="#cb61-19"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
+<span id="cb61-20"><a href="#cb61-20"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
+<span id="cb61-21"><a href="#cb61-21"></a>  </span>
+<span id="cb61-22"><a href="#cb61-22"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb61-23"><a href="#cb61-23"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb61-24"><a href="#cb61-24"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
+<span id="cb61-25"><a href="#cb61-25"></a>                                 <span class="dt">color =</span> SITE, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SITE))</span>
+<span id="cb61-26"><a href="#cb61-26"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
+<span id="cb61-27"><a href="#cb61-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb61-28"><a href="#cb61-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb61-29"><a href="#cb61-29"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
+<span id="cb61-30"><a href="#cb61-30"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb61-31"><a href="#cb61-31"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
+<span id="cb61-32"><a href="#cb61-32"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb61-33"><a href="#cb61-33"></a>}</span>
+<span id="cb61-34"><a href="#cb61-34"></a></span>
+<span id="cb61-35"><a href="#cb61-35"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_dist_&quot;</span>)</span>
+<span id="cb61-36"><a href="#cb61-36"></a><span class="kw">objects</span>()</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_work&quot;</span></span>
-<span id="cb54-2"><a href="#cb54-2"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
-<span id="cb54-3"><a href="#cb54-3"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb54-4"><a href="#cb54-4"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
-<span id="cb54-5"><a href="#cb54-5"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
-<span id="cb54-6"><a href="#cb54-6"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb54-7"><a href="#cb54-7"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
-<span id="cb54-8"><a href="#cb54-8"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
-<span id="cb54-9"><a href="#cb54-9"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
-<span id="cb54-10"><a href="#cb54-10"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
-<span id="cb54-11"><a href="#cb54-11"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
-<span id="cb54-12"><a href="#cb54-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
-<span id="cb54-13"><a href="#cb54-13"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
-<span id="cb54-14"><a href="#cb54-14"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb54-15"><a href="#cb54-15"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
-<span id="cb54-16"><a href="#cb54-16"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
-<span id="cb54-17"><a href="#cb54-17"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb54-18"><a href="#cb54-18"></a>  }</span>
-<span id="cb54-19"><a href="#cb54-19"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_work&quot;</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
+<span id="cb62-3"><a href="#cb62-3"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb62-4"><a href="#cb62-4"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
+<span id="cb62-5"><a href="#cb62-5"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
+<span id="cb62-6"><a href="#cb62-6"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb62-7"><a href="#cb62-7"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb62-8"><a href="#cb62-8"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
+<span id="cb62-9"><a href="#cb62-9"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb62-10"><a href="#cb62-10"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
+<span id="cb62-11"><a href="#cb62-11"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
+<span id="cb62-12"><a href="#cb62-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb62-13"><a href="#cb62-13"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
+<span id="cb62-14"><a href="#cb62-14"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb62-15"><a href="#cb62-15"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
+<span id="cb62-16"><a href="#cb62-16"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
+<span id="cb62-17"><a href="#cb62-17"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb62-18"><a href="#cb62-18"></a>  }</span>
+<span id="cb62-19"><a href="#cb62-19"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -3508,70 +3898,73 @@ PUCL     46  505.0  793.0 1033.00 1764  325</code></pre>
 
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="figure"><span id="fig:unnamed-chunk-60"></span>
+<div class="figure"><span id="fig:unnamed-chunk-105"></span>
 <img src="include/trepo/beta/ssu_ps_work_merge_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
 <p class="caption">
-Figure 3: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+Figure 11: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
 </p>
 </div>
 </div>
 <h3 id="plots-all-pime-asv-1">Plots ALL PIME ASV</h3>
 <p>Same as above, we inspect different ordination methods to see how the samples cluster using <strong>weighted-UniFrac</strong>, <strong>unweighted-UniFrac</strong>, and <strong>Jensen-Shannon Divergence</strong> distance measurements.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_pime&quot;</span></span>
-<span id="cb55-2"><a href="#cb55-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
-<span id="cb55-3"><a href="#cb55-3"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
-<span id="cb55-4"><a href="#cb55-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, .))</span>
-<span id="cb55-5"><a href="#cb55-5"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
-<span id="cb55-6"><a href="#cb55-6"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(samp_ps, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
-<span id="cb55-7"><a href="#cb55-7"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
-<span id="cb55-8"><a href="#cb55-8"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
-<span id="cb55-9"><a href="#cb55-9"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
-<span id="cb55-10"><a href="#cb55-10"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
-<span id="cb55-11"><a href="#cb55-11"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SITE&quot;</span>)</span>
-<span id="cb55-12"><a href="#cb55-12"></a>   }, tmp_get, d)</span>
-<span id="cb55-13"><a href="#cb55-13"></a></span>
-<span id="cb55-14"><a href="#cb55-14"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
-<span id="cb55-15"><a href="#cb55-15"></a></span>
-<span id="cb55-16"><a href="#cb55-16"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
-<span id="cb55-17"><a href="#cb55-17"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
-<span id="cb55-18"><a href="#cb55-18"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
-<span id="cb55-19"><a href="#cb55-19"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
-<span id="cb55-20"><a href="#cb55-20"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
-<span id="cb55-21"><a href="#cb55-21"></a>  </span>
-<span id="cb55-22"><a href="#cb55-22"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
-<span id="cb55-23"><a href="#cb55-23"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
-<span id="cb55-24"><a href="#cb55-24"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
-<span id="cb55-25"><a href="#cb55-25"></a>                                 <span class="dt">color =</span> SITE, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SITE))</span>
-<span id="cb55-26"><a href="#cb55-26"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
-<span id="cb55-27"><a href="#cb55-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
-<span id="cb55-28"><a href="#cb55-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
-<span id="cb55-29"><a href="#cb55-29"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
-<span id="cb55-30"><a href="#cb55-30"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb55-31"><a href="#cb55-31"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
-<span id="cb55-32"><a href="#cb55-32"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb55-33"><a href="#cb55-33"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_pime&quot;</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
+<span id="cb63-3"><a href="#cb63-3"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb63-4"><a href="#cb63-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, .))</span>
+<span id="cb63-5"><a href="#cb63-5"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb63-6"><a href="#cb63-6"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(samp_ps, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb63-7"><a href="#cb63-7"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
+<span id="cb63-8"><a href="#cb63-8"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(samp_ps, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
+<span id="cb63-9"><a href="#cb63-9"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
+<span id="cb63-10"><a href="#cb63-10"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
+<span id="cb63-11"><a href="#cb63-11"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SITE&quot;</span>)</span>
+<span id="cb63-12"><a href="#cb63-12"></a>   }, tmp_get, d)</span>
+<span id="cb63-13"><a href="#cb63-13"></a></span>
+<span id="cb63-14"><a href="#cb63-14"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
+<span id="cb63-15"><a href="#cb63-15"></a></span>
+<span id="cb63-16"><a href="#cb63-16"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
+<span id="cb63-17"><a href="#cb63-17"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb63-18"><a href="#cb63-18"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
+<span id="cb63-19"><a href="#cb63-19"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
+<span id="cb63-20"><a href="#cb63-20"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
+<span id="cb63-21"><a href="#cb63-21"></a>  </span>
+<span id="cb63-22"><a href="#cb63-22"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb63-23"><a href="#cb63-23"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb63-24"><a href="#cb63-24"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
+<span id="cb63-25"><a href="#cb63-25"></a>                                 <span class="dt">color =</span> SITE, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SITE))</span>
+<span id="cb63-26"><a href="#cb63-26"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
+<span id="cb63-27"><a href="#cb63-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb63-28"><a href="#cb63-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb63-29"><a href="#cb63-29"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
+<span id="cb63-30"><a href="#cb63-30"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb63-31"><a href="#cb63-31"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
+<span id="cb63-32"><a href="#cb63-32"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb63-33"><a href="#cb63-33"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_pime&quot;</span></span>
-<span id="cb56-2"><a href="#cb56-2"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
-<span id="cb56-3"><a href="#cb56-3"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb56-4"><a href="#cb56-4"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
-<span id="cb56-5"><a href="#cb56-5"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
-<span id="cb56-6"><a href="#cb56-6"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb56-7"><a href="#cb56-7"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
-<span id="cb56-8"><a href="#cb56-8"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
-<span id="cb56-9"><a href="#cb56-9"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
-<span id="cb56-10"><a href="#cb56-10"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
-<span id="cb56-11"><a href="#cb56-11"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
-<span id="cb56-12"><a href="#cb56-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
-<span id="cb56-13"><a href="#cb56-13"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
-<span id="cb56-14"><a href="#cb56-14"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
-<span id="cb56-15"><a href="#cb56-15"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
-<span id="cb56-16"><a href="#cb56-16"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
-<span id="cb56-17"><a href="#cb56-17"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb56-18"><a href="#cb56-18"></a>  }</span>
-<span id="cb56-19"><a href="#cb56-19"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>samp_ps &lt;-<span class="st"> &quot;ssu_ps_pime&quot;</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
+<span id="cb64-3"><a href="#cb64-3"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb64-4"><a href="#cb64-4"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
+<span id="cb64-5"><a href="#cb64-5"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
+<span id="cb64-6"><a href="#cb64-6"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb64-7"><a href="#cb64-7"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb64-8"><a href="#cb64-8"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
+<span id="cb64-9"><a href="#cb64-9"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb64-10"><a href="#cb64-10"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
+<span id="cb64-11"><a href="#cb64-11"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
+<span id="cb64-12"><a href="#cb64-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb64-13"><a href="#cb64-13"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
+<span id="cb64-14"><a href="#cb64-14"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb64-15"><a href="#cb64-15"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
+<span id="cb64-16"><a href="#cb64-16"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
+<span id="cb64-17"><a href="#cb64-17"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb64-18"><a href="#cb64-18"></a>  }</span>
+<span id="cb64-19"><a href="#cb64-19"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -3580,15 +3973,336 @@ Figure 3: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</str
 
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="figure"><span id="fig:unnamed-chunk-65"></span>
+<div class="figure"><span id="fig:unnamed-chunk-111"></span>
 <img src="include/trepo/beta/ssu_ps_pime_merge_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
 <p class="caption">
-Figure 4: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+Figure 12: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
 </p>
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
+</div>
+<h2 id="beta-diversity-plots-by-site-1">Beta Diversity Plots (by Site)</h2>
+<p>Here we visualize the different distance matrices using several ordination methods on the ALL and PIME filtered data sets to access dissimilarity among samples from <strong>the same site</strong>.</p>
+<h3 id="plots-all-asvs-3">Plots ALL ASVs</h3>
+<p>First, we inspect different ordination methods to see how the samples cluster using <strong>weighted-UniFrac</strong>, <strong>unweighted-UniFrac</strong>, and <strong>Jensen-Shannon Divergence</strong> distance measurements. We could also test different diversity metrics, different transformations, etc.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="kw">remove</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
+<span id="cb65-2"><a href="#cb65-2"></a>ssu_ps_work_merge_ALMR &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_merge_ALMR.rds&quot;</span>)</span>
+<span id="cb65-3"><a href="#cb65-3"></a>ssu_ps_work_merge_CRIS  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_merge_CRIS.rds&quot;</span>)</span>
+<span id="cb65-4"><a href="#cb65-4"></a>ssu_ps_work_merge_PAST &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_merge_PAST.rds&quot;</span>)</span>
+<span id="cb65-5"><a href="#cb65-5"></a>ssu_ps_work_merge_PUCL &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_work_merge_PUCL.rds&quot;</span>)</span>
+<span id="cb65-6"><a href="#cb65-6"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<p>Before we begin, we must first transform sample counts to relative abundance for both data sets.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_work_merge_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_work_merge_PAST&quot;</span>, <span class="st">&quot;ssu_ps_work_merge_PUCL&quot;</span>)</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb66-3"><a href="#cb66-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>))</span>
+<span id="cb66-4"><a href="#cb66-4"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb66-5"><a href="#cb66-5"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb66-6"><a href="#cb66-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb66-7"><a href="#cb66-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb66-8"><a href="#cb66-8"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb66-9"><a href="#cb66-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
+<span id="cb66-10"><a href="#cb66-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb66-11"><a href="#cb66-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb66-12"><a href="#cb66-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb66-13"><a href="#cb66-13"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_work_merge_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_work_merge_PAST&quot;</span>, <span class="st">&quot;ssu_ps_work_merge_PUCL&quot;</span>)</span>
+<span id="cb67-2"><a href="#cb67-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
+<span id="cb67-3"><a href="#cb67-3"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps){</span>
+<span id="cb67-4"><a href="#cb67-4"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb67-5"><a href="#cb67-5"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, .))</span>
+<span id="cb67-6"><a href="#cb67-6"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb67-7"><a href="#cb67-7"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb67-8"><a href="#cb67-8"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
+<span id="cb67-9"><a href="#cb67-9"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
+<span id="cb67-10"><a href="#cb67-10"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
+<span id="cb67-11"><a href="#cb67-11"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
+<span id="cb67-12"><a href="#cb67-12"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SEASON&quot;</span>)</span>
+<span id="cb67-13"><a href="#cb67-13"></a>   }, tmp_get, d)</span>
+<span id="cb67-14"><a href="#cb67-14"></a></span>
+<span id="cb67-15"><a href="#cb67-15"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
+<span id="cb67-16"><a href="#cb67-16"></a></span>
+<span id="cb67-17"><a href="#cb67-17"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
+<span id="cb67-18"><a href="#cb67-18"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb67-19"><a href="#cb67-19"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
+<span id="cb67-20"><a href="#cb67-20"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
+<span id="cb67-21"><a href="#cb67-21"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
+<span id="cb67-22"><a href="#cb67-22"></a>  </span>
+<span id="cb67-23"><a href="#cb67-23"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb67-24"><a href="#cb67-24"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb67-25"><a href="#cb67-25"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
+<span id="cb67-26"><a href="#cb67-26"></a>                                 <span class="dt">color =</span> SEASON, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SEASON))</span>
+<span id="cb67-27"><a href="#cb67-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
+<span id="cb67-28"><a href="#cb67-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb67-29"><a href="#cb67-29"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb67-30"><a href="#cb67-30"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
+<span id="cb67-31"><a href="#cb67-31"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb67-32"><a href="#cb67-32"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
+<span id="cb67-33"><a href="#cb67-33"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb67-34"><a href="#cb67-34"></a> }</span>
+<span id="cb67-35"><a href="#cb67-35"></a>}</span>
+<span id="cb67-36"><a href="#cb67-36"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_dist_&quot;</span>)</span>
+<span id="cb67-37"><a href="#cb67-37"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
+<span id="cb68-2"><a href="#cb68-2"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb68-3"><a href="#cb68-3"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
+<span id="cb68-4"><a href="#cb68-4"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
+<span id="cb68-5"><a href="#cb68-5"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb68-6"><a href="#cb68-6"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb68-7"><a href="#cb68-7"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
+<span id="cb68-8"><a href="#cb68-8"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb68-9"><a href="#cb68-9"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
+<span id="cb68-10"><a href="#cb68-10"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
+<span id="cb68-11"><a href="#cb68-11"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb68-12"><a href="#cb68-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
+<span id="cb68-13"><a href="#cb68-13"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb68-14"><a href="#cb68-14"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
+<span id="cb68-15"><a href="#cb68-15"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
+<span id="cb68-16"><a href="#cb68-16"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb68-17"><a href="#cb68-17"></a>  }</span>
+<span id="cb68-18"><a href="#cb68-18"></a>}</span></code></pre></div>
+</div>
+<h4 id="almirante-inner-bay-2">Almirante (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-121"></span>
+<img src="include/trepo/beta/ssu_ps_work_merge_ALMR_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 13: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="pastores-inner-bay-2">Pastores (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-125"></span>
+<img src="include/trepo/beta/ssu_ps_work_merge_PAST_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 14: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="cristobal-outer-bay-2">Cristobal (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-129"></span>
+<img src="include/trepo/beta/ssu_ps_work_merge_CRIS_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 15: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="punta-caracol-outer-bay-2">Punta Caracol (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-133"></span>
+<img src="include/trepo/beta/ssu_ps_work_merge_PUCL_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 16: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h3 id="plots-pime-asvs-1">Plots PIME ASVs</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="kw">remove</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
+<span id="cb69-2"><a href="#cb69-2"></a>ssu_ps_pime_merge_ALMR &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_merge_asv_pime_ALMR.rds&quot;</span>)</span>
+<span id="cb69-3"><a href="#cb69-3"></a>ssu_ps_pime_merge_CRIS  &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_merge_asv_pime_CRIS.rds&quot;</span>)</span>
+<span id="cb69-4"><a href="#cb69-4"></a>ssu_ps_pime_merge_PAST &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_merge_asv_pime_PAST.rds&quot;</span>)</span>
+<span id="cb69-5"><a href="#cb69-5"></a>ssu_ps_pime_merge_PUCL &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;files/trepo/pime/rdata/ssu_ps_merge_asv_pime_PUCL.rds&quot;</span>)</span>
+<span id="cb69-6"><a href="#cb69-6"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<p>Before we begin, we must first transform sample counts to relative abundance for both data sets.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_merge_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge_PAST&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge_PUCL&quot;</span>)</span>
+<span id="cb70-2"><a href="#cb70-2"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps) {</span>
+<span id="cb70-3"><a href="#cb70-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>))</span>
+<span id="cb70-4"><a href="#cb70-4"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb70-5"><a href="#cb70-5"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb70-6"><a href="#cb70-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb70-7"><a href="#cb70-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb70-8"><a href="#cb70-8"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb70-9"><a href="#cb70-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
+<span id="cb70-10"><a href="#cb70-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb70-11"><a href="#cb70-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb70-12"><a href="#cb70-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb70-13"><a href="#cb70-13"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>samp_ps &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_merge_ALMR&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge_CRIS&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge_PAST&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge_PUCL&quot;</span>)</span>
+<span id="cb71-2"><a href="#cb71-2"></a>dist &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;wunifrac&quot;</span>, <span class="st">&quot;unifrac&quot;</span>, <span class="st">&quot;jsd&quot;</span>)</span>
+<span id="cb71-3"><a href="#cb71-3"></a><span class="cf">for</span> (i <span class="cf">in</span> samp_ps){</span>
+<span id="cb71-4"><a href="#cb71-4"></a><span class="cf">for</span> (d <span class="cf">in</span> dist){</span>
+<span id="cb71-5"><a href="#cb71-5"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, .))</span>
+<span id="cb71-6"><a href="#cb71-6"></a>     tmp_name_plot &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_dist_&quot;</span>, ., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb71-7"><a href="#cb71-7"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_prop&quot;</span>)))</span>
+<span id="cb71-8"><a href="#cb71-8"></a>     ord_meths &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;PCoA&quot;</span>, <span class="st">&quot;CCA&quot;</span>, <span class="st">&quot;DCA&quot;</span>) <span class="co">#    MDS = PCoA, &quot;CCA&quot;, &quot;DCA&quot;, &quot;DPCoA&quot;, &quot;RDA&quot;</span></span>
+<span id="cb71-9"><a href="#cb71-9"></a>     tmp_plist_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(d, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(i, <span class="st">&quot;_&quot;</span>, ., <span class="st">&quot;_plist&quot;</span>))</span>
+<span id="cb71-10"><a href="#cb71-10"></a>     tmp_plist &lt;-<span class="st"> </span><span class="kw">llply</span>(<span class="kw">as.list</span>(ord_meths), <span class="cf">function</span>(i, physeq, d) {</span>
+<span id="cb71-11"><a href="#cb71-11"></a>        ordi =<span class="st"> </span><span class="kw">ordinate</span>(physeq, <span class="dt">method =</span> i, <span class="dt">distance =</span> d)</span>
+<span id="cb71-12"><a href="#cb71-12"></a>        <span class="kw">plot_ordination</span>(physeq, ordi, <span class="st">&quot;samples&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;SEASON&quot;</span>)</span>
+<span id="cb71-13"><a href="#cb71-13"></a>   }, tmp_get, d)</span>
+<span id="cb71-14"><a href="#cb71-14"></a></span>
+<span id="cb71-15"><a href="#cb71-15"></a>  <span class="kw">names</span>(tmp_plist) &lt;-<span class="st"> </span>ord_meths</span>
+<span id="cb71-16"><a href="#cb71-16"></a></span>
+<span id="cb71-17"><a href="#cb71-17"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">ldply</span>(tmp_plist, <span class="cf">function</span>(x){</span>
+<span id="cb71-18"><a href="#cb71-18"></a>      df =<span class="st"> </span>x<span class="op">$</span>data[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span>
+<span id="cb71-19"><a href="#cb71-19"></a>      <span class="kw">colnames</span>(df) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Axis_1&quot;</span>, <span class="st">&quot;Axis_2&quot;</span>)</span>
+<span id="cb71-20"><a href="#cb71-20"></a>      <span class="kw">return</span>(<span class="kw">cbind</span>(df, x<span class="op">$</span>data))})</span>
+<span id="cb71-21"><a href="#cb71-21"></a>  <span class="kw">names</span>(tmp_df)[<span class="dv">1</span>] =<span class="st"> &quot;method&quot;</span></span>
+<span id="cb71-22"><a href="#cb71-22"></a>  </span>
+<span id="cb71-23"><a href="#cb71-23"></a>  <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb71-24"><a href="#cb71-24"></a>  tmp_df<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_df<span class="op">$</span>SITE, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb71-25"><a href="#cb71-25"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df, <span class="kw">aes</span>(Axis_<span class="dv">1</span>, Axis_<span class="dv">2</span>,</span>
+<span id="cb71-26"><a href="#cb71-26"></a>                                 <span class="dt">color =</span> SEASON, <span class="dt">shape =</span> SEASON, <span class="dt">fill =</span> SEASON))</span>
+<span id="cb71-27"><a href="#cb71-27"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">2</span>)</span>
+<span id="cb71-28"><a href="#cb71-28"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>method, <span class="dt">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb71-29"><a href="#cb71-29"></a>  tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb71-30"><a href="#cb71-30"></a>  <span class="kw">assign</span>(tmp_plist_name, tmp_plist)</span>
+<span id="cb71-31"><a href="#cb71-31"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb71-32"><a href="#cb71-32"></a>  <span class="kw">assign</span>(tmp_name_plot, tmp_plot)</span>
+<span id="cb71-33"><a href="#cb71-33"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb71-34"><a href="#cb71-34"></a> }</span>
+<span id="cb71-35"><a href="#cb71-35"></a>}</span>
+<span id="cb71-36"><a href="#cb71-36"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_dist_&quot;</span>)</span>
+<span id="cb71-37"><a href="#cb71-37"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>plist_name &lt;-<span class="st"> </span><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plist&quot;</span>)</span>
+<span id="cb72-2"><a href="#cb72-2"></a>plot_num &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb72-3"><a href="#cb72-3"></a><span class="cf">for</span> (i <span class="cf">in</span> plist_name) {</span>
+<span id="cb72-4"><a href="#cb72-4"></a>  <span class="cf">for</span> (j <span class="cf">in</span> plot_num) {</span>
+<span id="cb72-5"><a href="#cb72-5"></a>       tmp_get_i &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb72-6"><a href="#cb72-6"></a>     <span class="co">## NEXT  LINE REORDER FACTORS</span></span>
+<span id="cb72-7"><a href="#cb72-7"></a>       tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_get_i[[j]]<span class="op">$</span>data<span class="op">$</span>SITE, </span>
+<span id="cb72-8"><a href="#cb72-8"></a>                                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb72-9"><a href="#cb72-9"></a>       tmp_ord &lt;-<span class="st"> </span><span class="kw">names</span>(tmp_get_i)[j]</span>
+<span id="cb72-10"><a href="#cb72-10"></a>       tmp_name &lt;-<span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(i, <span class="st">&quot;plist&quot;</span>, tmp_ord)</span>
+<span id="cb72-11"><a href="#cb72-11"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_get_i[[j]] <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span>
+<span id="cb72-12"><a href="#cb72-12"></a>       tmp_plot &lt;-<span class="st"> </span>tmp_plot <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="dt">size =</span> <span class="dv">4</span>, <span class="kw">aes</span>(<span class="dt">shape =</span> SEASON)) <span class="op">+</span></span>
+<span id="cb72-13"><a href="#cb72-13"></a><span class="st">         </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>)</span>
+<span id="cb72-14"><a href="#cb72-14"></a>       tmp_plot<span class="op">$</span>labels<span class="op">$</span>shape &lt;-<span class="st"> &quot;SEASON&quot;</span></span>
+<span id="cb72-15"><a href="#cb72-15"></a>       <span class="kw">assign</span>(tmp_name, tmp_plot)</span>
+<span id="cb72-16"><a href="#cb72-16"></a>       <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb72-17"><a href="#cb72-17"></a>  }</span>
+<span id="cb72-18"><a href="#cb72-18"></a>}</span></code></pre></div>
+</div>
+<h4 id="almirante-inner-bay-3">Almirante (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-142"></span>
+<img src="include/trepo/beta/ssu_ps_pime_merge_ALMR_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 17: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="pastores-inner-bay-3">Pastores (inner bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-146"></span>
+<img src="include/trepo/beta/ssu_ps_pime_merge_PAST_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 18: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="cristobal-outer-bay-3">Cristobal (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-150"></span>
+<img src="include/trepo/beta/ssu_ps_pime_merge_CRIS_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 19: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
+</div>
+<h4 id="punta-caracol-outer-bay-3">Punta Caracol (outer bay)</h4>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-154"></span>
+<img src="include/trepo/beta/ssu_ps_pime_merge_PUCL_beta_div_ord_plots.png" alt="**Left** = Jensen-Shannon Divergence, **middle** = UniFrac (unwieghted), **right** = UniFrac (wieghted); **Top** = NMDS, **bottom** = PCoA." width="4252" />
+<p class="caption">
+Figure 20: <strong>Left</strong> = Jensen-Shannon Divergence, <strong>middle</strong> = UniFrac (unwieghted), <strong>right</strong> = UniFrac (wieghted); <strong>Top</strong> = NMDS, <strong>bottom</strong> = PCoA.
+</p>
+</div>
 </div>
 <h2 id="source-code" class="appendix">Source Code</h2>
 <p>The source code for this page can be accessed on GitHub by <a href="https://github.com/tropical-repo/web/blob/master/trepo-beta.Rmd">clicking this link</a>. Please note, that in order to process the data <em>and</em> build the website, we needed to run the workflow and get the results. Then hard code the results and turn off the individual commands. So the raw file for this page is a bit messy—you have been warned.</p>

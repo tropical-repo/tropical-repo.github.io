@@ -444,8 +444,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     top: 0;
   }
   
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+  
   </style>
   
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -553,19 +560,21 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
             var results = fuse.search(query, searchOptions);
             callback(results
               .map(function(result) { return result.item; })
-              .filter(function(item) { return !!item.description; })
             );
           },
           templates: {
             suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
               var html = `
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
                   <div class="search-item-description">
-                    ${suggestion.description}
+                    ${suggestion.description || ''}
                   </div>
                   <div class="search-item-preview">
-                    <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                    ${img}
                   </div>
                 </div>
               `;
@@ -588,6 +597,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   </script>
   
   <style type="text/css">
+  
+  .nav-search {
+    font-size: x-small;
+  }
   
   /* Algolioa Autocomplete */
   
@@ -663,6 +676,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
   
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
@@ -890,6 +904,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-decoration: underline;
   }
   
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+  
   @media(min-width: 768px) {
   
   d-article pre,
@@ -1044,6 +1063,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+  
+  /* Citation hover box */
+  
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+  
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
   
   
@@ -1711,7 +1741,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       var layout = $(this).attr('data-layout');
   
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1826,6 +1856,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+  
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
   
       // clear polling timer
       clearInterval(tid);
@@ -1987,9 +2031,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   
   <!--/radix_placeholder_distill-->
   <script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-  <script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+  <script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
   <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-  <script src="site_libs/datatables-binding-0.16/datatables.js"></script>
+  <script src="site_libs/datatables-binding-0.17/datatables.js"></script>
   <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
   <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
   <script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
@@ -2004,8 +2048,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   <script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
   <link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
   <script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
-  <link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-  <script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+  <link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+  <script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
@@ -2244,6 +2292,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     content: "\f146";
   }
   
+  
+  /********************************/
+  /* dygraph*/
+  /********************************/
+  
   </style>
   <!--/radix_placeholder_site_in_header-->
 
@@ -2271,9 +2324,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="intro.html">Introduction</a>
-<a href="temp.html">Physical</a>
-<a href="temp.html">Inverts</a>
+<a href="trepo-intro.html">Introduction</a>
+<a href="trepo-physical.html">Physical</a>
+<a href="trepo-inverts.html">Inverts</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Microbial
@@ -2297,7 +2350,7 @@ Microbial
 <hr/>
 </div>
 </div>
-<a href="temp.html">Data</a>
+<a href="trepo-data.html">Data</a>
 <a href="https://github.com/tropical-repo/web/" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
@@ -2691,30 +2744,7 @@ InvSimpson_pt Shapiro p-value = 0.5597 Bartlett p-value = 0.0068 Are both p-valu
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">## Format as follows:</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co">## FALSE Kruskal-Wallis Test = ssu_ps_pime_q1_adt$test[[3]]</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="co">## TRUE Tukey post-hoc  =      ssu_ps_work_q1_adt$test[[1]][[1, 5]]</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a></span>
-<span id="cb19-5"><a href="#cb19-5"></a>tmp_pvalue &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">c</span>(ssu_ps_work_q0_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb19-6"><a href="#cb19-6"></a>                           ssu_ps_work_q1_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb19-7"><a href="#cb19-7"></a>                           ssu_ps_work_q2_adt<span class="op">$</span>test[[<span class="dv">3</span>]]))</span>
-<span id="cb19-8"><a href="#cb19-8"></a>ssu_ps_work_sig_tab &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_cols</span>(ssu_ps_work_sig_tab, tmp_pvalue) <span class="op">%&gt;%</span></span>
-<span id="cb19-9"><a href="#cb19-9"></a><span class="st">                         </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;posthoc p-value&quot;</span> =<span class="st"> </span><span class="dv">7</span>)</span>
-<span id="cb19-10"><a href="#cb19-10"></a><span class="co">#####################################################################################</span></span>
-<span id="cb19-11"><a href="#cb19-11"></a>tmp_pvalue &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">c</span>(ssu_ps_pime_q0_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb19-12"><a href="#cb19-12"></a>                           ssu_ps_pime_q1_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb19-13"><a href="#cb19-13"></a>                           ssu_ps_pime_q2_adt<span class="op">$</span>test[[<span class="dv">3</span>]]))</span>
-<span id="cb19-14"><a href="#cb19-14"></a>ssu_ps_pime_sig_tab &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_cols</span>(ssu_ps_pime_sig_tab, tmp_pvalue) <span class="op">%&gt;%</span></span>
-<span id="cb19-15"><a href="#cb19-15"></a><span class="st">                         </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;posthoc p-value&quot;</span> =<span class="st"> </span><span class="dv">7</span>)</span>
-<span id="cb19-16"><a href="#cb19-16"></a><span class="co">#####################################################################################</span></span>
-<span id="cb19-17"><a href="#cb19-17"></a>tmp_pvalue &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">c</span>(ssu_ps_pime_t_q0_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb19-18"><a href="#cb19-18"></a>                           ssu_ps_pime_t_q1_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb19-19"><a href="#cb19-19"></a>                           ssu_ps_pime_t_q2_adt<span class="op">$</span>test[[<span class="dv">3</span>]]))</span>
-<span id="cb19-20"><a href="#cb19-20"></a>ssu_ps_pime_t_sig_tab &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_cols</span>(ssu_ps_pime_t_sig_tab, tmp_pvalue) <span class="op">%&gt;%</span></span>
-<span id="cb19-21"><a href="#cb19-21"></a><span class="st">                         </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;posthoc p-value&quot;</span> =<span class="st"> </span><span class="dv">7</span>)</span>
-<span id="cb19-22"><a href="#cb19-22"></a><span class="co">#####################################################################################</span></span>
-<span id="cb19-23"><a href="#cb19-23"></a></span>
-<span id="cb19-24"><a href="#cb19-24"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span></code></pre></div>
+
 </div>
 <p><br/></p>
 <div class="layout-chunk" data-layout="l-page">
@@ -3015,21 +3045,21 @@ PASTC-PUCLC 0.00050587354918720840464</code></pre>
 <p>The command is as follows:</p>
 <p><code>div_test_plot(divtest = x, chart = "type", colour = col.pal, posthoc = TRUE, threshold = value))</code>, where <code>x</code> is the results from the <code>div_test</code> function, <code>"type"</code> is chart type (box, jitter, or violin),<code>colour</code> is is a color palette, <code>posthoc</code> indicates whether to run posthoc pairwise analyses, and <code>value</code> is the maximum p-value to show in pairwise posthoc results. <strong>WARNING</strong> if none of the posthoc results are below the specified threshold, the function will throw an error. Therefore, until this is fixed, all posthoc values are shown.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">source</span>(<span class="st">&quot;hack_code/div_test_plot_jjs.R&quot;</span>)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt_plot&quot;</span>))</span>
-<span id="cb29-3"><a href="#cb29-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt&quot;</span>)) {</span>
-<span id="cb29-4"><a href="#cb29-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_plot&quot;</span>))</span>
-<span id="cb29-5"><a href="#cb29-5"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb29-6"><a href="#cb29-6"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data[<span class="kw">order</span>(<span class="kw">factor</span>(tmp_get<span class="op">$</span>data<span class="op">$</span>Group,</span>
-<span id="cb29-7"><a href="#cb29-7"></a>                                <span class="dt">levels=</span><span class="kw">c</span>(<span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)))),]</span>
-<span id="cb29-8"><a href="#cb29-8"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
-<span id="cb29-9"><a href="#cb29-9"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">div_test_plot_jjs</span>(tmp_get, <span class="dt">chart =</span> <span class="st">&quot;box&quot;</span>,</span>
-<span id="cb29-10"><a href="#cb29-10"></a>                                 <span class="dt">colour =</span> swel_col, <span class="dt">posthoc =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb29-11"><a href="#cb29-11"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">ggpar</span>(tmp_df, <span class="dt">legend =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb29-12"><a href="#cb29-12"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb29-13"><a href="#cb29-13"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb29-14"><a href="#cb29-14"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb29-15"><a href="#cb29-15"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">source</span>(<span class="st">&quot;hack_code/div_test_plot_jjs.R&quot;</span>)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt_plot&quot;</span>))</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt&quot;</span>)) {</span>
+<span id="cb28-4"><a href="#cb28-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb28-5"><a href="#cb28-5"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb28-6"><a href="#cb28-6"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data[<span class="kw">order</span>(<span class="kw">factor</span>(tmp_get<span class="op">$</span>data<span class="op">$</span>Group,</span>
+<span id="cb28-7"><a href="#cb28-7"></a>                                <span class="dt">levels=</span><span class="kw">c</span>(<span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)))),]</span>
+<span id="cb28-8"><a href="#cb28-8"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
+<span id="cb28-9"><a href="#cb28-9"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">div_test_plot_jjs</span>(tmp_get, <span class="dt">chart =</span> <span class="st">&quot;box&quot;</span>,</span>
+<span id="cb28-10"><a href="#cb28-10"></a>                                 <span class="dt">colour =</span> swel_col, <span class="dt">posthoc =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb28-11"><a href="#cb28-11"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">ggpar</span>(tmp_df, <span class="dt">legend =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb28-12"><a href="#cb28-12"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb28-13"><a href="#cb28-13"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb28-14"><a href="#cb28-14"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb28-15"><a href="#cb28-15"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -3054,24 +3084,24 @@ Figure 1: <strong>Top row</strong> = Observed; <strong>middle row</strong> = Sha
 <h3 id="full-data-set-split-by-site">Full data set split by site</h3>
 <p>We will start by splitting the full data set by treatment then generating new trees and ASV tables for each split.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb30-3"><a href="#cb30-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, .))</span>
-<span id="cb30-4"><a href="#cb30-4"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ssu_ps_work, SITE <span class="op">==</span><span class="st"> </span>i)</span>
-<span id="cb30-5"><a href="#cb30-5"></a>     tmp_ps &lt;-<span class="st">  </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
-<span id="cb30-6"><a href="#cb30-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb30-7"><a href="#cb30-7"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb30-8"><a href="#cb30-8"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
-<span id="cb30-9"><a href="#cb30-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
-<span id="cb30-10"><a href="#cb30-10"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb30-11"><a href="#cb30-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
-<span id="cb30-12"><a href="#cb30-12"></a>     tmp_asv &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb30-13"><a href="#cb30-13"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb30-14"><a href="#cb30-14"></a>     tmp_get_asv &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
-<span id="cb30-15"><a href="#cb30-15"></a>     <span class="kw">print</span>(tmp_asv)</span>
-<span id="cb30-16"><a href="#cb30-16"></a>     <span class="kw">assign</span>(tmp_asv, tmp_get_asv)</span>
-<span id="cb30-17"><a href="#cb30-17"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb30-18"><a href="#cb30-18"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb29-3"><a href="#cb29-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, .))</span>
+<span id="cb29-4"><a href="#cb29-4"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ssu_ps_work, SITE <span class="op">==</span><span class="st"> </span>i)</span>
+<span id="cb29-5"><a href="#cb29-5"></a>     tmp_ps &lt;-<span class="st">  </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb29-6"><a href="#cb29-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb29-8"><a href="#cb29-8"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb29-9"><a href="#cb29-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
+<span id="cb29-10"><a href="#cb29-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb29-11"><a href="#cb29-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb29-12"><a href="#cb29-12"></a>     tmp_asv &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb29-13"><a href="#cb29-13"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb29-14"><a href="#cb29-14"></a>     tmp_get_asv &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
+<span id="cb29-15"><a href="#cb29-15"></a>     <span class="kw">print</span>(tmp_asv)</span>
+<span id="cb29-16"><a href="#cb29-16"></a>     <span class="kw">assign</span>(tmp_asv, tmp_get_asv)</span>
+<span id="cb29-17"><a href="#cb29-17"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb29-18"><a href="#cb29-18"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>phyloseq-class experiment-level object
@@ -3100,20 +3130,34 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 </div>
 <p>As mentioned above, any tree used in the <code>hilldv</code> package must be <strong>ultrametric</strong>. So we need to convert the trees in order to look at lineage diversity. We will also save copies of each tree since this process takes a while to run.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb31-3"><a href="#cb31-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, .))</span>
+<span id="cb31-4"><a href="#cb31-4"></a>     tmp_name_tr &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb31-5"><a href="#cb31-5"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb31-6"><a href="#cb31-6"></a>     tmp_ult_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
+<span id="cb31-7"><a href="#cb31-7"></a>     <span class="kw">print</span>(tmp_name_tr)</span>
+<span id="cb31-8"><a href="#cb31-8"></a>     <span class="kw">assign</span>(tmp_name_tr, tmp_ult_tree)</span>
+<span id="cb31-9"><a href="#cb31-9"></a>     save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name_tr, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
+<span id="cb31-10"><a href="#cb31-10"></a>     tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name_tr)</span>
+<span id="cb31-11"><a href="#cb31-11"></a>     <span class="kw">saveRDS</span>(tree, save_name)</span>
+<span id="cb31-12"><a href="#cb31-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb31-13"><a href="#cb31-13"></a>     <span class="kw">rm</span>(save_name)</span>
+<span id="cb31-14"><a href="#cb31-14"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
 <span id="cb32-2"><a href="#cb32-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb32-3"><a href="#cb32-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, .))</span>
-<span id="cb32-4"><a href="#cb32-4"></a>     tmp_name_tr &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb32-5"><a href="#cb32-5"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb32-6"><a href="#cb32-6"></a>     tmp_ult_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
-<span id="cb32-7"><a href="#cb32-7"></a>     <span class="kw">print</span>(tmp_name_tr)</span>
-<span id="cb32-8"><a href="#cb32-8"></a>     <span class="kw">assign</span>(tmp_name_tr, tmp_ult_tree)</span>
-<span id="cb32-9"><a href="#cb32-9"></a>     save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name_tr, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
-<span id="cb32-10"><a href="#cb32-10"></a>     tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name_tr)</span>
-<span id="cb32-11"><a href="#cb32-11"></a>     <span class="kw">saveRDS</span>(tree, save_name)</span>
-<span id="cb32-12"><a href="#cb32-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb32-13"><a href="#cb32-13"></a>     <span class="kw">rm</span>(save_name)</span>
-<span id="cb32-14"><a href="#cb32-14"></a>}</span></code></pre></div>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
+<span id="cb32-4"><a href="#cb32-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb32-5"><a href="#cb32-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
+<span id="cb32-6"><a href="#cb32-6"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
+<span id="cb32-7"><a href="#cb32-7"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb32-8"><a href="#cb32-8"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
+<span id="cb32-9"><a href="#cb32-9"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
+<span id="cb32-10"><a href="#cb32-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb32-11"><a href="#cb32-11"></a>  }</span>
+<span id="cb32-12"><a href="#cb32-12"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
@@ -3121,64 +3165,66 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 <span id="cb33-3"><a href="#cb33-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
 <span id="cb33-4"><a href="#cb33-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
 <span id="cb33-5"><a href="#cb33-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb33-6"><a href="#cb33-6"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
-<span id="cb33-7"><a href="#cb33-7"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb33-8"><a href="#cb33-8"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
-<span id="cb33-9"><a href="#cb33-9"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb33-10"><a href="#cb33-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb33-11"><a href="#cb33-11"></a>  }</span>
-<span id="cb33-12"><a href="#cb33-12"></a>}</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb34-2"><a href="#cb34-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
-<span id="cb34-4"><a href="#cb34-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb34-5"><a href="#cb34-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb34-6"><a href="#cb34-6"></a>     tmp_tree_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb34-7"><a href="#cb34-7"></a>     tmp_tree_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tree_name)</span>
-<span id="cb34-8"><a href="#cb34-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
-<span id="cb34-9"><a href="#cb34-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb34-10"><a href="#cb34-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_tree_name)</span>
-<span id="cb34-11"><a href="#cb34-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb34-12"><a href="#cb34-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb34-13"><a href="#cb34-13"></a>  }</span>
-<span id="cb34-14"><a href="#cb34-14"></a>}</span></code></pre></div>
+<span id="cb33-6"><a href="#cb33-6"></a>     tmp_tree_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb33-7"><a href="#cb33-7"></a>     tmp_tree_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tree_name)</span>
+<span id="cb33-8"><a href="#cb33-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
+<span id="cb33-9"><a href="#cb33-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb33-10"><a href="#cb33-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_tree_name)</span>
+<span id="cb33-11"><a href="#cb33-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
+<span id="cb33-12"><a href="#cb33-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb33-13"><a href="#cb33-13"></a>  }</span>
+<span id="cb33-14"><a href="#cb33-14"></a>}</span></code></pre></div>
 </div>
 <h3 id="pime-filtered-data-set">PIME filtered data set</h3>
 <p>For this step, we will use the PIME data set. We start by making new trees and ASV tables for each split.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb35-2"><a href="#cb35-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, .))</span>
-<span id="cb35-3"><a href="#cb35-3"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb35-4"><a href="#cb35-4"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb35-5"><a href="#cb35-5"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb35-6"><a href="#cb35-6"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
-<span id="cb35-7"><a href="#cb35-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
-<span id="cb35-8"><a href="#cb35-8"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb35-9"><a href="#cb35-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
-<span id="cb35-10"><a href="#cb35-10"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb35-11"><a href="#cb35-11"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb35-12"><a href="#cb35-12"></a>     tmp_asv_tab &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
-<span id="cb35-13"><a href="#cb35-13"></a>     <span class="kw">print</span>(tmp_asv_name)</span>
-<span id="cb35-14"><a href="#cb35-14"></a>     <span class="kw">assign</span>(tmp_asv_name, tmp_asv_tab)</span>
-<span id="cb35-15"><a href="#cb35-15"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb35-16"><a href="#cb35-16"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb34-2"><a href="#cb34-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, .))</span>
+<span id="cb34-3"><a href="#cb34-3"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb34-4"><a href="#cb34-4"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb34-6"><a href="#cb34-6"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb34-7"><a href="#cb34-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
+<span id="cb34-8"><a href="#cb34-8"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb34-9"><a href="#cb34-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb34-10"><a href="#cb34-10"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb34-11"><a href="#cb34-11"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb34-12"><a href="#cb34-12"></a>     tmp_asv_tab &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
+<span id="cb34-13"><a href="#cb34-13"></a>     <span class="kw">print</span>(tmp_asv_name)</span>
+<span id="cb34-14"><a href="#cb34-14"></a>     <span class="kw">assign</span>(tmp_asv_name, tmp_asv_tab)</span>
+<span id="cb34-15"><a href="#cb34-15"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb34-16"><a href="#cb34-16"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb36-2"><a href="#cb36-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, .))</span>
-<span id="cb36-3"><a href="#cb36-3"></a>     tmp_tr_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb36-4"><a href="#cb36-4"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb36-5"><a href="#cb36-5"></a>     ultra_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
-<span id="cb36-6"><a href="#cb36-6"></a>     <span class="kw">print</span>(tmp_tr_name)</span>
-<span id="cb36-7"><a href="#cb36-7"></a>     <span class="kw">assign</span>(tmp_tr_name, ultra_tree)</span>
-<span id="cb36-8"><a href="#cb36-8"></a>     tmp_save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_tr_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
-<span id="cb36-9"><a href="#cb36-9"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tr_name)</span>
-<span id="cb36-10"><a href="#cb36-10"></a>     <span class="kw">saveRDS</span>(tmp_tree, tmp_save_name)</span>
-<span id="cb36-11"><a href="#cb36-11"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb36-12"><a href="#cb36-12"></a>     <span class="kw">rm</span>(ultra_tree)</span>
-<span id="cb36-13"><a href="#cb36-13"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb35-2"><a href="#cb35-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, .))</span>
+<span id="cb35-3"><a href="#cb35-3"></a>     tmp_tr_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb35-4"><a href="#cb35-4"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb35-5"><a href="#cb35-5"></a>     ultra_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
+<span id="cb35-6"><a href="#cb35-6"></a>     <span class="kw">print</span>(tmp_tr_name)</span>
+<span id="cb35-7"><a href="#cb35-7"></a>     <span class="kw">assign</span>(tmp_tr_name, ultra_tree)</span>
+<span id="cb35-8"><a href="#cb35-8"></a>     tmp_save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_tr_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
+<span id="cb35-9"><a href="#cb35-9"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tr_name)</span>
+<span id="cb35-10"><a href="#cb35-10"></a>     <span class="kw">saveRDS</span>(tmp_tree, tmp_save_name)</span>
+<span id="cb35-11"><a href="#cb35-11"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb35-12"><a href="#cb35-12"></a>     <span class="kw">rm</span>(ultra_tree)</span>
+<span id="cb35-13"><a href="#cb35-13"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
+<span id="cb36-4"><a href="#cb36-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb36-5"><a href="#cb36-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
+<span id="cb36-6"><a href="#cb36-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb36-7"><a href="#cb36-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
+<span id="cb36-8"><a href="#cb36-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
+<span id="cb36-9"><a href="#cb36-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb36-10"><a href="#cb36-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
+<span id="cb36-11"><a href="#cb36-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
+<span id="cb36-12"><a href="#cb36-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb36-13"><a href="#cb36-13"></a>  }</span>
+<span id="cb36-14"><a href="#cb36-14"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
@@ -3188,29 +3234,13 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 <span id="cb37-5"><a href="#cb37-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
 <span id="cb37-6"><a href="#cb37-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
 <span id="cb37-7"><a href="#cb37-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
-<span id="cb37-8"><a href="#cb37-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
+<span id="cb37-8"><a href="#cb37-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
 <span id="cb37-9"><a href="#cb37-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb37-10"><a href="#cb37-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
+<span id="cb37-10"><a href="#cb37-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_spl_name)</span>
 <span id="cb37-11"><a href="#cb37-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
 <span id="cb37-12"><a href="#cb37-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
 <span id="cb37-13"><a href="#cb37-13"></a>  }</span>
 <span id="cb37-14"><a href="#cb37-14"></a>}</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb38-3"><a href="#cb38-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
-<span id="cb38-4"><a href="#cb38-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb38-5"><a href="#cb38-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb38-6"><a href="#cb38-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb38-7"><a href="#cb38-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
-<span id="cb38-8"><a href="#cb38-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
-<span id="cb38-9"><a href="#cb38-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb38-10"><a href="#cb38-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_spl_name)</span>
-<span id="cb38-11"><a href="#cb38-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb38-12"><a href="#cb38-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb38-13"><a href="#cb38-13"></a>  }</span>
-<span id="cb38-14"><a href="#cb38-14"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -3382,47 +3412,47 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 <h2 id="read-distribution-1">Read Distribution</h2>
 <h3 id="histogram-of-read-counts-1">Histogram of Read Counts</h3>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>ssu_max &lt;-<span class="st"> </span><span class="kw">max</span>(ssu_ps_samp_data<span class="op">$</span>total_reads) <span class="op">+</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="st">  </span>(<span class="fl">0.2</span> <span class="op">*</span><span class="st"> </span><span class="kw">max</span>(ssu_ps_samp_data<span class="op">$</span>total_reads))</span>
-<span id="cb39-3"><a href="#cb39-3"></a>ssu_p_hist &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ssu_ps_samp_data,</span>
-<span id="cb39-4"><a href="#cb39-4"></a>       <span class="kw">aes</span>(ssu_ps_samp_data<span class="op">$</span>total_reads)) <span class="op">+</span></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="st">         </span><span class="kw">geom_histogram</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, ssu_max, <span class="dt">by =</span> <span class="dv">5000</span>),</span>
-<span id="cb39-6"><a href="#cb39-6"></a>                        <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a><span class="st">         </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Distribution of total reads (MERGED)&quot;</span>,</span>
-<span id="cb39-8"><a href="#cb39-8"></a>              <span class="dt">caption =</span> <span class="st">&quot;Bin width equals 5000 reads&quot;</span>) <span class="op">+</span></span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;No. of reads&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;No. of samples&quot;</span>) <span class="op">+</span></span>
-<span id="cb39-10"><a href="#cb39-10"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>ssu_max &lt;-<span class="st"> </span><span class="kw">max</span>(ssu_ps_samp_data<span class="op">$</span>total_reads) <span class="op">+</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="st">  </span>(<span class="fl">0.2</span> <span class="op">*</span><span class="st"> </span><span class="kw">max</span>(ssu_ps_samp_data<span class="op">$</span>total_reads))</span>
+<span id="cb38-3"><a href="#cb38-3"></a>ssu_p_hist &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ssu_ps_samp_data,</span>
+<span id="cb38-4"><a href="#cb38-4"></a>       <span class="kw">aes</span>(ssu_ps_samp_data<span class="op">$</span>total_reads)) <span class="op">+</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="st">         </span><span class="kw">geom_histogram</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, ssu_max, <span class="dt">by =</span> <span class="dv">5000</span>),</span>
+<span id="cb38-6"><a href="#cb38-6"></a>                        <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a><span class="st">         </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Distribution of total reads (MERGED)&quot;</span>,</span>
+<span id="cb38-8"><a href="#cb38-8"></a>              <span class="dt">caption =</span> <span class="st">&quot;Bin width equals 5000 reads&quot;</span>) <span class="op">+</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;No. of reads&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;No. of samples&quot;</span>) <span class="op">+</span></span>
+<span id="cb38-10"><a href="#cb38-10"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="trepo-alpha_files/figure-html5/unnamed-chunk-68-1.png" width="624" /></p>
 </div>
 <h3 id="rarefaction-curves-1">Rarefaction Curves</h3>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>tmp_select &lt;-<span class="st"> </span>ssu_amp_data</span>
-<span id="cb40-2"><a href="#cb40-2"></a>tmp_select<span class="op">$</span>metadata<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_select<span class="op">$</span>metadata<span class="op">$</span>SITE, </span>
-<span id="cb40-3"><a href="#cb40-3"></a>                                   <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
-<span id="cb40-4"><a href="#cb40-4"></a>ssu_rare_curve1 &lt;-<span class="st"> </span><span class="kw">amp_rarecurve</span>(</span>
-<span id="cb40-5"><a href="#cb40-5"></a>  tmp_select,</span>
-<span id="cb40-6"><a href="#cb40-6"></a>  <span class="dt">stepsize =</span> <span class="dv">1000</span>,</span>
-<span id="cb40-7"><a href="#cb40-7"></a>  <span class="dt">color_by =</span> <span class="st">&quot;SITE&quot;</span></span>
-<span id="cb40-8"><a href="#cb40-8"></a>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col) </span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>tmp_select &lt;-<span class="st"> </span>ssu_amp_data</span>
+<span id="cb39-2"><a href="#cb39-2"></a>tmp_select<span class="op">$</span>metadata<span class="op">$</span>SITE &lt;-<span class="st"> </span><span class="kw">factor</span>(tmp_select<span class="op">$</span>metadata<span class="op">$</span>SITE, </span>
+<span id="cb39-3"><a href="#cb39-3"></a>                                   <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>))</span>
+<span id="cb39-4"><a href="#cb39-4"></a>ssu_rare_curve1 &lt;-<span class="st"> </span><span class="kw">amp_rarecurve</span>(</span>
+<span id="cb39-5"><a href="#cb39-5"></a>  tmp_select,</span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="dt">stepsize =</span> <span class="dv">1000</span>,</span>
+<span id="cb39-7"><a href="#cb39-7"></a>  <span class="dt">color_by =</span> <span class="st">&quot;SITE&quot;</span></span>
+<span id="cb39-8"><a href="#cb39-8"></a>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col) </span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>ssu_rare_curve1  </span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>ssu_rare_curve1  </span></code></pre></div>
 <p><img src="trepo-alpha_files/figure-html5/unnamed-chunk-70-1.png" width="624" /></p>
 </div>
 <p>For a quick comparison, we can facet the above data by Site.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>ssu_rare_curve2 &lt;-<span class="st"> </span><span class="kw">amp_rarecurve</span>(</span>
-<span id="cb42-2"><a href="#cb42-2"></a>  tmp_select,</span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="dt">stepsize =</span> <span class="dv">1000</span>,</span>
-<span id="cb42-4"><a href="#cb42-4"></a>  <span class="dt">color_by =</span> <span class="st">&quot;SITE&quot;</span>,</span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="dt">facet_by =</span> <span class="st">&quot;SITE&quot;</span>,</span>
-<span id="cb42-6"><a href="#cb42-6"></a>  <span class="dt">facet_scales =</span> <span class="st">&quot;free&quot;</span></span>
-<span id="cb42-7"><a href="#cb42-7"></a>)  <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>ssu_rare_curve2 &lt;-<span class="st"> </span><span class="kw">amp_rarecurve</span>(</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  tmp_select,</span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="dt">stepsize =</span> <span class="dv">1000</span>,</span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="dt">color_by =</span> <span class="st">&quot;SITE&quot;</span>,</span>
+<span id="cb41-5"><a href="#cb41-5"></a>  <span class="dt">facet_by =</span> <span class="st">&quot;SITE&quot;</span>,</span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="dt">facet_scales =</span> <span class="st">&quot;free&quot;</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a>)  <span class="op">+</span><span class="st"> </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> swel_col)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body-outset">
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>ssu_rare_curve2</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>ssu_rare_curve2</span></code></pre></div>
 <p><img src="trepo-alpha_files/figure-html5/unnamed-chunk-72-1.png" width="624" /></p>
 </div>
 <p>In the <strong>full</strong> data set, there was a minimum read count of 12882, a median of 44092 reads, and a maximum of 399900 reads. After PIME filtering, there was a minimum read count of 10654, a median of 11922 reads, and a maximum of 12171 reads.</p>
@@ -3441,56 +3471,56 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 <p><code>hill_div(count = x, qvalue = i, tree = ultrametric_tree)</code>, where <code>x</code> is the sample by ASV table, <code>i</code> is the q-value corresponding to the metric of interest and <code>tree</code> is an ultrametric formatted phylogenetic tree (see below).</p>
 <p>We first transform all the data to relative abundance values, and compute new trees.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>ssu_alpha_ds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>ssu_alpha_ds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="kw">objects</span>()</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds) {</span>
-<span id="cb45-2"><a href="#cb45-2"></a>  tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(<span class="kw">get</span>(i), <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
-<span id="cb45-3"><a href="#cb45-3"></a>  tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb45-4"><a href="#cb45-4"></a>  tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb45-5"><a href="#cb45-5"></a>                      <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
-<span id="cb45-6"><a href="#cb45-6"></a>  tmp_ps_norm &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
-<span id="cb45-7"><a href="#cb45-7"></a>  tmp_asv &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_ps_norm)))</span>
-<span id="cb45-8"><a href="#cb45-8"></a>  tmp_ps_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_norm&quot;</span>))</span>
-<span id="cb45-9"><a href="#cb45-9"></a>  <span class="kw">assign</span>(tmp_ps_name, tmp_ps_norm)</span>
-<span id="cb45-10"><a href="#cb45-10"></a>  tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb45-11"><a href="#cb45-11"></a>  <span class="kw">assign</span>(tmp_asv_name, tmp_asv)</span>
-<span id="cb45-12"><a href="#cb45-12"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb45-13"><a href="#cb45-13"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds) {</span>
+<span id="cb44-2"><a href="#cb44-2"></a>  tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(<span class="kw">get</span>(i), <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb44-3"><a href="#cb44-3"></a>  tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a>  tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb44-5"><a href="#cb44-5"></a>                      <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb44-6"><a href="#cb44-6"></a>  tmp_ps_norm &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_tree)</span>
+<span id="cb44-7"><a href="#cb44-7"></a>  tmp_asv &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_ps_norm)))</span>
+<span id="cb44-8"><a href="#cb44-8"></a>  tmp_ps_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_norm&quot;</span>))</span>
+<span id="cb44-9"><a href="#cb44-9"></a>  <span class="kw">assign</span>(tmp_ps_name, tmp_ps_norm)</span>
+<span id="cb44-10"><a href="#cb44-10"></a>  tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb44-11"><a href="#cb44-11"></a>  <span class="kw">assign</span>(tmp_asv_name, tmp_asv)</span>
+<span id="cb44-12"><a href="#cb44-12"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb44-13"><a href="#cb44-13"></a>}</span></code></pre></div>
 </div>
 <h4 id="no-phylogenetic-tree-1">No phylogenetic tree</h4>
 <p>Next, we run the analysis for all three metrics on the data sets without a tree.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a><span class="cf">for</span> (i <span class="cf">in</span> qvalue) {</span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> ssu_alpha_ds) {</span>
-<span id="cb46-4"><a href="#cb46-4"></a>     tmp_asv &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
-<span id="cb46-5"><a href="#cb46-5"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">hill_div</span>(tmp_asv, <span class="dt">qvalue =</span> i))</span>
-<span id="cb46-6"><a href="#cb46-6"></a>     tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;tmp_name&quot;</span> =<span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb46-7"><a href="#cb46-7"></a><span class="st">                              </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;SamName&quot;</span>)</span>
-<span id="cb46-8"><a href="#cb46-8"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h&quot;</span>, i))</span>
-<span id="cb46-9"><a href="#cb46-9"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb46-10"><a href="#cb46-10"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb46-11"><a href="#cb46-11"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb46-12"><a href="#cb46-12"></a>  }</span>
-<span id="cb46-13"><a href="#cb46-13"></a>}</span>
-<span id="cb46-14"><a href="#cb46-14"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_h&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="cf">for</span> (i <span class="cf">in</span> qvalue) {</span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> ssu_alpha_ds) {</span>
+<span id="cb45-4"><a href="#cb45-4"></a>     tmp_asv &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
+<span id="cb45-5"><a href="#cb45-5"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">hill_div</span>(tmp_asv, <span class="dt">qvalue =</span> i))</span>
+<span id="cb45-6"><a href="#cb45-6"></a>     tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;tmp_name&quot;</span> =<span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a><span class="st">                              </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;SamName&quot;</span>)</span>
+<span id="cb45-8"><a href="#cb45-8"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h&quot;</span>, i))</span>
+<span id="cb45-9"><a href="#cb45-9"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb45-10"><a href="#cb45-10"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb45-11"><a href="#cb45-11"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb45-12"><a href="#cb45-12"></a>  }</span>
+<span id="cb45-13"><a href="#cb45-13"></a>}</span>
+<span id="cb45-14"><a href="#cb45-14"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_h&quot;</span>)</span></code></pre></div>
 </div>
 <p>And make summary tables to add back into each <code>ps</code> object.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds) {</span>
-<span id="cb47-2"><a href="#cb47-2"></a>     tmp_obs &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h0&quot;</span>)))</span>
-<span id="cb47-3"><a href="#cb47-3"></a>     tmp_sha &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h1&quot;</span>)))</span>
-<span id="cb47-4"><a href="#cb47-4"></a>     tmp_sim &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h2&quot;</span>)))</span>
-<span id="cb47-5"><a href="#cb47-5"></a>     tmp_hill &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(tmp_obs, tmp_sha, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb47-6"><a href="#cb47-6"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(., tmp_sim, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb47-7"><a href="#cb47-7"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;Observed&quot;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&quot;Shannon_exp&quot;</span> =<span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;InvSimpson&quot;</span> =<span class="st"> </span><span class="dv">4</span>)</span>
-<span id="cb47-8"><a href="#cb47-8"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_hill&quot;</span>))</span>
-<span id="cb47-9"><a href="#cb47-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_hill)</span>
-<span id="cb47-10"><a href="#cb47-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb47-11"><a href="#cb47-11"></a>}</span>
-<span id="cb47-12"><a href="#cb47-12"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_hill&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds) {</span>
+<span id="cb46-2"><a href="#cb46-2"></a>     tmp_obs &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h0&quot;</span>)))</span>
+<span id="cb46-3"><a href="#cb46-3"></a>     tmp_sha &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h1&quot;</span>)))</span>
+<span id="cb46-4"><a href="#cb46-4"></a>     tmp_sim &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_h2&quot;</span>)))</span>
+<span id="cb46-5"><a href="#cb46-5"></a>     tmp_hill &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(tmp_obs, tmp_sha, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(., tmp_sim, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb46-7"><a href="#cb46-7"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;Observed&quot;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&quot;Shannon_exp&quot;</span> =<span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;InvSimpson&quot;</span> =<span class="st"> </span><span class="dv">4</span>)</span>
+<span id="cb46-8"><a href="#cb46-8"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_hill&quot;</span>))</span>
+<span id="cb46-9"><a href="#cb46-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_hill)</span>
+<span id="cb46-10"><a href="#cb46-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb46-11"><a href="#cb46-11"></a>}</span>
+<span id="cb46-12"><a href="#cb46-12"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_hill&quot;</span>)</span></code></pre></div>
 </div>
 <p>And then create the new objects with the diversity data.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3505,39 +3535,39 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>ssu_alpha_ds_tree &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb48-3"><a href="#cb48-3"></a><span class="cf">for</span> (i <span class="cf">in</span> qvalue) {</span>
-<span id="cb48-4"><a href="#cb48-4"></a>  <span class="cf">for</span> (j <span class="cf">in</span> ssu_alpha_ds_tree) {</span>
-<span id="cb48-5"><a href="#cb48-5"></a>     tmp_asv &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
-<span id="cb48-6"><a href="#cb48-6"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>)))</span>
-<span id="cb48-7"><a href="#cb48-7"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">hill_div</span>(tmp_asv, <span class="dt">qvalue =</span> i, <span class="dt">tree =</span> tmp_tree))</span>
-<span id="cb48-8"><a href="#cb48-8"></a>     tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;tmp_name&quot;</span> =<span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb48-9"><a href="#cb48-9"></a><span class="st">                              </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;SamName&quot;</span>)</span>
-<span id="cb48-10"><a href="#cb48-10"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht&quot;</span>, i))</span>
-<span id="cb48-11"><a href="#cb48-11"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb48-12"><a href="#cb48-12"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb48-13"><a href="#cb48-13"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb48-14"><a href="#cb48-14"></a>  }</span>
-<span id="cb48-15"><a href="#cb48-15"></a>}</span>
-<span id="cb48-16"><a href="#cb48-16"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_ht&quot;</span>)</span>
-<span id="cb48-17"><a href="#cb48-17"></a><span class="kw">save</span>(ssu_ps_pime_ht0, ssu_ps_pime_ht1, ssu_ps_pime_ht2, ssu_ps_pime_merge_ht0, </span>
-<span id="cb48-18"><a href="#cb48-18"></a>     ssu_ps_pime_merge_ht1, ssu_ps_pime_merge_ht2, </span>
-<span id="cb48-19"><a href="#cb48-19"></a>     <span class="dt">file =</span> <span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_pime_hill_tree_tests.rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>ssu_alpha_ds_tree &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="cf">for</span> (i <span class="cf">in</span> qvalue) {</span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="cf">for</span> (j <span class="cf">in</span> ssu_alpha_ds_tree) {</span>
+<span id="cb47-5"><a href="#cb47-5"></a>     tmp_asv &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
+<span id="cb47-6"><a href="#cb47-6"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>)))</span>
+<span id="cb47-7"><a href="#cb47-7"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">hill_div</span>(tmp_asv, <span class="dt">qvalue =</span> i, <span class="dt">tree =</span> tmp_tree))</span>
+<span id="cb47-8"><a href="#cb47-8"></a>     tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;tmp_name&quot;</span> =<span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span></span>
+<span id="cb47-9"><a href="#cb47-9"></a><span class="st">                              </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;SamName&quot;</span>)</span>
+<span id="cb47-10"><a href="#cb47-10"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(j, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht&quot;</span>, i))</span>
+<span id="cb47-11"><a href="#cb47-11"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb47-12"><a href="#cb47-12"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb47-13"><a href="#cb47-13"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb47-14"><a href="#cb47-14"></a>  }</span>
+<span id="cb47-15"><a href="#cb47-15"></a>}</span>
+<span id="cb47-16"><a href="#cb47-16"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_ht&quot;</span>)</span>
+<span id="cb47-17"><a href="#cb47-17"></a><span class="kw">save</span>(ssu_ps_pime_ht0, ssu_ps_pime_ht1, ssu_ps_pime_ht2, ssu_ps_pime_merge_ht0, </span>
+<span id="cb47-18"><a href="#cb47-18"></a>     ssu_ps_pime_merge_ht1, ssu_ps_pime_merge_ht2, </span>
+<span id="cb47-19"><a href="#cb47-19"></a>     <span class="dt">file =</span> <span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_pime_hill_tree_tests.rdata&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds_tree) {</span>
-<span id="cb49-2"><a href="#cb49-2"></a>     tmp_obs &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht0&quot;</span>)))</span>
-<span id="cb49-3"><a href="#cb49-3"></a>     tmp_sha &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht1&quot;</span>)))</span>
-<span id="cb49-4"><a href="#cb49-4"></a>     tmp_sim &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht2&quot;</span>)))</span>
-<span id="cb49-5"><a href="#cb49-5"></a>     tmp_hill &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(tmp_obs, tmp_sha, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb49-6"><a href="#cb49-6"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(., tmp_sim, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb49-7"><a href="#cb49-7"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;Observed_pt&quot;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&quot;Shannon_exp_pt&quot;</span> =<span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;InvSimpson_pt&quot;</span> =<span class="st"> </span><span class="dv">4</span>)</span>
-<span id="cb49-8"><a href="#cb49-8"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_hill_t&quot;</span>))</span>
-<span id="cb49-9"><a href="#cb49-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_hill)</span>
-<span id="cb49-10"><a href="#cb49-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb49-11"><a href="#cb49-11"></a>}</span>
-<span id="cb49-12"><a href="#cb49-12"></a><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds_tree) {</span>
+<span id="cb48-2"><a href="#cb48-2"></a>     tmp_obs &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht0&quot;</span>)))</span>
+<span id="cb48-3"><a href="#cb48-3"></a>     tmp_sha &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht1&quot;</span>)))</span>
+<span id="cb48-4"><a href="#cb48-4"></a>     tmp_sim &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ht2&quot;</span>)))</span>
+<span id="cb48-5"><a href="#cb48-5"></a>     tmp_hill &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(tmp_obs, tmp_sha, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(., tmp_sim, <span class="dt">by =</span> <span class="st">&quot;SamName&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a><span class="st">       </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;Observed_pt&quot;</span> =<span class="st"> </span><span class="dv">2</span>, <span class="st">&quot;Shannon_exp_pt&quot;</span> =<span class="st"> </span><span class="dv">3</span>, <span class="st">&quot;InvSimpson_pt&quot;</span> =<span class="st"> </span><span class="dv">4</span>)</span>
+<span id="cb48-8"><a href="#cb48-8"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_hill_t&quot;</span>))</span>
+<span id="cb48-9"><a href="#cb48-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_hill)</span>
+<span id="cb48-10"><a href="#cb48-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb48-11"><a href="#cb48-11"></a>}</span>
+<span id="cb48-12"><a href="#cb48-12"></a><span class="kw">objects</span>()</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -3561,44 +3591,44 @@ phy_tree()    Phylogenetic Tree: [ 20042 tips and 20041 internal nodes ]</code><
 <p><code>bartlett.test(Value ~ Group, data = df)</code> Where <code>Value</code> is the metric of interest, <code>Group</code> in the treatment to compare, and <code>df</code> is the data frame.</p>
 <p>First the Shapiro-Wilk Normality test.</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>ssu_div_tab &lt;-<span class="st"> </span>ssu_samp_data_tab</span>
+<span id="cb49-2"><a href="#cb49-2"></a>ssu_shap_tests &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">colnames</span>(ssu_div_tab[,<span class="dv">7</span><span class="op">:</span><span class="dv">15</span>])) {</span>
+<span id="cb49-4"><a href="#cb49-4"></a>   tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_shap_&quot;</span>, .))</span>
+<span id="cb49-5"><a href="#cb49-5"></a>   ssu_shap_tests &lt;-<span class="st"> </span><span class="kw">append</span>(ssu_shap_tests, tmp_name)</span>
+<span id="cb49-6"><a href="#cb49-6"></a>   tmp_test &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">shapiro.test</span>(ssu_div_tab[[i]]))</span>
+<span id="cb49-7"><a href="#cb49-7"></a>   tmp_test<span class="op">$</span>data.name &lt;-<span class="st"> </span>tmp_name</span>
+<span id="cb49-8"><a href="#cb49-8"></a>   <span class="kw">assign</span>(tmp_name, tmp_test)</span>
+<span id="cb49-9"><a href="#cb49-9"></a>   <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb49-10"><a href="#cb49-10"></a>}</span></code></pre></div>
+</div>
+<p>And then the Bartlett Test of Homogeneity of Variances.</p>
+<div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>ssu_div_tab &lt;-<span class="st"> </span>ssu_samp_data_tab</span>
-<span id="cb50-2"><a href="#cb50-2"></a>ssu_shap_tests &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
+<span id="cb50-2"><a href="#cb50-2"></a>ssu_bart_tests &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
 <span id="cb50-3"><a href="#cb50-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">colnames</span>(ssu_div_tab[,<span class="dv">7</span><span class="op">:</span><span class="dv">15</span>])) {</span>
-<span id="cb50-4"><a href="#cb50-4"></a>   tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_shap_&quot;</span>, .))</span>
-<span id="cb50-5"><a href="#cb50-5"></a>   ssu_shap_tests &lt;-<span class="st"> </span><span class="kw">append</span>(ssu_shap_tests, tmp_name)</span>
-<span id="cb50-6"><a href="#cb50-6"></a>   tmp_test &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">shapiro.test</span>(ssu_div_tab[[i]]))</span>
+<span id="cb50-4"><a href="#cb50-4"></a>   tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_bart_&quot;</span>, .))</span>
+<span id="cb50-5"><a href="#cb50-5"></a>   ssu_bart_tests &lt;-<span class="st"> </span><span class="kw">append</span>(ssu_bart_tests, tmp_name)</span>
+<span id="cb50-6"><a href="#cb50-6"></a>   tmp_test &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">bartlett.test</span>(ssu_div_tab[[i]] <span class="op">~</span><span class="st"> </span>SITE, <span class="dt">data =</span> ssu_div_tab))</span>
 <span id="cb50-7"><a href="#cb50-7"></a>   tmp_test<span class="op">$</span>data.name &lt;-<span class="st"> </span>tmp_name</span>
 <span id="cb50-8"><a href="#cb50-8"></a>   <span class="kw">assign</span>(tmp_name, tmp_test)</span>
 <span id="cb50-9"><a href="#cb50-9"></a>   <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
 <span id="cb50-10"><a href="#cb50-10"></a>}</span></code></pre></div>
 </div>
-<p>And then the Bartlett Test of Homogeneity of Variances.</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>ssu_div_tab &lt;-<span class="st"> </span>ssu_samp_data_tab</span>
-<span id="cb51-2"><a href="#cb51-2"></a>ssu_bart_tests &lt;-<span class="st"> </span><span class="kw">c</span>()</span>
-<span id="cb51-3"><a href="#cb51-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">colnames</span>(ssu_div_tab[,<span class="dv">7</span><span class="op">:</span><span class="dv">15</span>])) {</span>
-<span id="cb51-4"><a href="#cb51-4"></a>   tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_bart_&quot;</span>, .))</span>
-<span id="cb51-5"><a href="#cb51-5"></a>   ssu_bart_tests &lt;-<span class="st"> </span><span class="kw">append</span>(ssu_bart_tests, tmp_name)</span>
-<span id="cb51-6"><a href="#cb51-6"></a>   tmp_test &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">bartlett.test</span>(ssu_div_tab[[i]] <span class="op">~</span><span class="st"> </span>SITE, <span class="dt">data =</span> ssu_div_tab))</span>
-<span id="cb51-7"><a href="#cb51-7"></a>   tmp_test<span class="op">$</span>data.name &lt;-<span class="st"> </span>tmp_name</span>
-<span id="cb51-8"><a href="#cb51-8"></a>   <span class="kw">assign</span>(tmp_name, tmp_test)</span>
-<span id="cb51-9"><a href="#cb51-9"></a>   <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb51-10"><a href="#cb51-10"></a>}</span></code></pre></div>
-</div>
 <p>Here we see which Shapiro-Wilk Normality <strong>and</strong> Bartlett tests were significant and which were not for the FULL data set analysis?</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">colnames</span>(ssu_div_tab[,<span class="dv">7</span><span class="op">:</span><span class="dv">15</span>])) {</span>
-<span id="cb52-2"><a href="#cb52-2"></a>  tmp_get_shap &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_shap_&quot;</span>, .)))</span>
-<span id="cb52-3"><a href="#cb52-3"></a>  tmp_shap_p &lt;-<span class="st"> </span><span class="kw">round</span>(tmp_get_shap[[<span class="dv">2</span>]], <span class="dv">4</span>)</span>
-<span id="cb52-4"><a href="#cb52-4"></a>  tmp_get_bart &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_bart_&quot;</span>, .)))</span>
-<span id="cb52-5"><a href="#cb52-5"></a>  tmp_bart_p &lt;-<span class="st"> </span><span class="kw">round</span>(tmp_get_bart[[<span class="dv">3</span>]], <span class="dv">4</span>)</span>
-<span id="cb52-6"><a href="#cb52-6"></a>  tmp_res &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">isTRUE</span>(tmp_get_shap[[<span class="dv">2</span>]] <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">&amp;</span><span class="st"> </span><span class="kw">isTRUE</span>(tmp_get_bart[[<span class="dv">3</span>]] <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>))</span>
-<span id="cb52-7"><a href="#cb52-7"></a>  tmp_print &lt;-<span class="st"> </span><span class="kw">c</span>(i, <span class="st">&quot;Shapiro p-value =&quot;</span>, tmp_shap_p, </span>
-<span id="cb52-8"><a href="#cb52-8"></a>                 <span class="st">&quot;Bartlett p-value =&quot;</span>, tmp_bart_p, </span>
-<span id="cb52-9"><a href="#cb52-9"></a>                 <span class="st">&quot;Are both p-values &gt; 0.05?&quot;</span>, tmp_res)</span>
-<span id="cb52-10"><a href="#cb52-10"></a>  <span class="kw">cat</span>(tmp_print,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb52-11"><a href="#cb52-11"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb52-12"><a href="#cb52-12"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">colnames</span>(ssu_div_tab[,<span class="dv">7</span><span class="op">:</span><span class="dv">15</span>])) {</span>
+<span id="cb51-2"><a href="#cb51-2"></a>  tmp_get_shap &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_shap_&quot;</span>, .)))</span>
+<span id="cb51-3"><a href="#cb51-3"></a>  tmp_shap_p &lt;-<span class="st"> </span><span class="kw">round</span>(tmp_get_shap[[<span class="dv">2</span>]], <span class="dv">4</span>)</span>
+<span id="cb51-4"><a href="#cb51-4"></a>  tmp_get_bart &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_bart_&quot;</span>, .)))</span>
+<span id="cb51-5"><a href="#cb51-5"></a>  tmp_bart_p &lt;-<span class="st"> </span><span class="kw">round</span>(tmp_get_bart[[<span class="dv">3</span>]], <span class="dv">4</span>)</span>
+<span id="cb51-6"><a href="#cb51-6"></a>  tmp_res &lt;-<span class="st"> </span><span class="kw">eval</span>(<span class="kw">isTRUE</span>(tmp_get_shap[[<span class="dv">2</span>]] <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>) <span class="op">&amp;</span><span class="st"> </span><span class="kw">isTRUE</span>(tmp_get_bart[[<span class="dv">3</span>]] <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>))</span>
+<span id="cb51-7"><a href="#cb51-7"></a>  tmp_print &lt;-<span class="st"> </span><span class="kw">c</span>(i, <span class="st">&quot;Shapiro p-value =&quot;</span>, tmp_shap_p, </span>
+<span id="cb51-8"><a href="#cb51-8"></a>                 <span class="st">&quot;Bartlett p-value =&quot;</span>, tmp_bart_p, </span>
+<span id="cb51-9"><a href="#cb51-9"></a>                 <span class="st">&quot;Are both p-values &gt; 0.05?&quot;</span>, tmp_res)</span>
+<span id="cb51-10"><a href="#cb51-10"></a>  <span class="kw">cat</span>(tmp_print,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb51-11"><a href="#cb51-11"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb51-12"><a href="#cb51-12"></a>}</span></code></pre></div>
 <pre><code>Observed Shapiro p-value = 0 Bartlett p-value = 0.0895 Are both p-values &gt; 0.05? FALSE 
 Observed_p Shapiro p-value = 0.2399 Bartlett p-value = 0.4321 Are both p-values &gt; 0.05? TRUE 
 Observed_pt Shapiro p-value = 0.2994 Bartlett p-value = 0.4728 Are both p-values &gt; 0.05? TRUE 
@@ -3613,88 +3643,65 @@ InvSimpson_pt Shapiro p-value = 0 Bartlett p-value = 0.0037 Are both p-values &g
 <h3 id="significance-tests-1">Significance Tests</h3>
 <p>To begin, we need to create a hierarchy variable; a two-column matrix specifying the relationship between samples (first column) and groups (second column).</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_samp_data_tab</span>
-<span id="cb54-2"><a href="#cb54-2"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_hill_hier <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">&quot;sample_id&quot;</span>, <span class="st">&quot;SITE&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb54-3"><a href="#cb54-3"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
-<span id="cb54-4"><a href="#cb54-4"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_hill_hier[<span class="kw">order</span>(ssu_hill_hier<span class="op">$</span>SITE), ]</span>
-<span id="cb54-5"><a href="#cb54-5"></a><span class="co">#ssu_hill_hier$SITE = paste(ssu_hill_hier$SITE, &#39;C&#39;, sep=&#39;&#39;)</span></span>
-<span id="cb54-6"><a href="#cb54-6"></a><span class="co"># ADD NEXT LINE TO REORDER BY SITE</span></span>
-<span id="cb54-7"><a href="#cb54-7"></a><span class="co">#ssu_hill_hier &lt;- ssu_hill_hier[order(factor(ssu_hill_hier$SITE,levels=c(c(&quot;ALMR&quot;, &quot;PAST&quot;, &quot;CRIS&quot;, &quot;PUCL&quot;)))),]</span></span>
-<span id="cb54-8"><a href="#cb54-8"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_hill_hier <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
-<span id="cb54-9"><a href="#cb54-9"></a><span class="kw">saveRDS</span>(ssu_hill_hier, <span class="st">&quot;files/trepo/alpha/rdata/ssu_merge_hill_hier.rds&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_samp_data_tab</span>
+<span id="cb53-2"><a href="#cb53-2"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_hill_hier <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="st">&quot;sample_id&quot;</span>, <span class="st">&quot;SITE&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="st">  </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
+<span id="cb53-4"><a href="#cb53-4"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_hill_hier[<span class="kw">order</span>(ssu_hill_hier<span class="op">$</span>SITE), ]</span>
+<span id="cb53-5"><a href="#cb53-5"></a><span class="co">#ssu_hill_hier$SITE = paste(ssu_hill_hier$SITE, &#39;C&#39;, sep=&#39;&#39;)</span></span>
+<span id="cb53-6"><a href="#cb53-6"></a><span class="co"># ADD NEXT LINE TO REORDER BY SITE</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a><span class="co">#ssu_hill_hier &lt;- ssu_hill_hier[order(factor(ssu_hill_hier$SITE,levels=c(c(&quot;ALMR&quot;, &quot;PAST&quot;, &quot;CRIS&quot;, &quot;PUCL&quot;)))),]</span></span>
+<span id="cb53-8"><a href="#cb53-8"></a>ssu_hill_hier &lt;-<span class="st"> </span>ssu_hill_hier <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
+<span id="cb53-9"><a href="#cb53-9"></a><span class="kw">saveRDS</span>(ssu_hill_hier, <span class="st">&quot;files/trepo/alpha/rdata/ssu_merge_hill_hier.rds&quot;</span>)</span></code></pre></div>
 </div>
 <p>Again, we start by testing significance of ASV diversity for the full data set against each of the three metrics using the <code>div_test</code> function.</p>
 <p>The command is as follows:</p>
 <p><code>div_test(countable = x, qvalue = i, hierarchy = hier, tree = ultrametric_tree, posthoc = TRUE)</code>, where <code>x</code> is ASV by sample table, <code>i</code> is the q-value corresponding to the metric of interest, <code>hier</code> is the hierarchy matrix, <code>tree</code> is an ultrametric formatted phylogenetic tree (see below), and <code>posthoc</code> indicates whether to run post hoc pairwise analyses.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>ssu_alpha_ds_full &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
-<span id="cb55-2"><a href="#cb55-2"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb55-3"><a href="#cb55-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds_full) {</span>
-<span id="cb55-4"><a href="#cb55-4"></a>     <span class="cf">for</span> (j <span class="cf">in</span> qvalue) {</span>
-<span id="cb55-5"><a href="#cb55-5"></a>         tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
-<span id="cb55-6"><a href="#cb55-6"></a>         tmp_test &lt;-<span class="st"> </span><span class="kw">div_test</span>(tmp_get, <span class="dt">qvalue =</span> j,</span>
-<span id="cb55-7"><a href="#cb55-7"></a>                      <span class="dt">hierarchy =</span> ssu_hill_hier,</span>
-<span id="cb55-8"><a href="#cb55-8"></a>                      <span class="dt">posthoc =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb55-9"><a href="#cb55-9"></a>         tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_q&quot;</span>, j, <span class="st">&quot;_adt&quot;</span>))</span>
-<span id="cb55-10"><a href="#cb55-10"></a>         <span class="kw">print</span>(tmp_name)</span>
-<span id="cb55-11"><a href="#cb55-11"></a>         <span class="kw">assign</span>(tmp_name, tmp_test)</span>
-<span id="cb55-12"><a href="#cb55-12"></a>         <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb55-13"><a href="#cb55-13"></a> }</span>
-<span id="cb55-14"><a href="#cb55-14"></a>}</span>
-<span id="cb55-15"><a href="#cb55-15"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_t&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>ssu_alpha_ds_full &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge&quot;</span>, <span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
+<span id="cb54-2"><a href="#cb54-2"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds_full) {</span>
+<span id="cb54-4"><a href="#cb54-4"></a>     <span class="cf">for</span> (j <span class="cf">in</span> qvalue) {</span>
+<span id="cb54-5"><a href="#cb54-5"></a>         tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
+<span id="cb54-6"><a href="#cb54-6"></a>         tmp_test &lt;-<span class="st"> </span><span class="kw">div_test</span>(tmp_get, <span class="dt">qvalue =</span> j,</span>
+<span id="cb54-7"><a href="#cb54-7"></a>                      <span class="dt">hierarchy =</span> ssu_hill_hier,</span>
+<span id="cb54-8"><a href="#cb54-8"></a>                      <span class="dt">posthoc =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb54-9"><a href="#cb54-9"></a>         tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_q&quot;</span>, j, <span class="st">&quot;_adt&quot;</span>))</span>
+<span id="cb54-10"><a href="#cb54-10"></a>         <span class="kw">print</span>(tmp_name)</span>
+<span id="cb54-11"><a href="#cb54-11"></a>         <span class="kw">assign</span>(tmp_name, tmp_test)</span>
+<span id="cb54-12"><a href="#cb54-12"></a>         <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb54-13"><a href="#cb54-13"></a> }</span>
+<span id="cb54-14"><a href="#cb54-14"></a>}</span>
+<span id="cb54-15"><a href="#cb54-15"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_t&quot;</span>)</span></code></pre></div>
 </div>
 <p>And then test significance of lineage diversity for the PIME filtered data set only.</p>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>ssu_alpha_ds_full_tree &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
-<span id="cb56-2"><a href="#cb56-2"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb56-3"><a href="#cb56-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds_full_tree) {</span>
-<span id="cb56-4"><a href="#cb56-4"></a>     <span class="cf">for</span> (j <span class="cf">in</span> qvalue) {</span>
-<span id="cb56-5"><a href="#cb56-5"></a>         tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
-<span id="cb56-6"><a href="#cb56-6"></a>         tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>)))</span>
-<span id="cb56-7"><a href="#cb56-7"></a>         tmp_test &lt;-<span class="st"> </span><span class="kw">div_test</span>(tmp_get, <span class="dt">qvalue =</span> j,</span>
-<span id="cb56-8"><a href="#cb56-8"></a>                      <span class="dt">hierarchy =</span> ssu_hill_hier,</span>
-<span id="cb56-9"><a href="#cb56-9"></a>                      <span class="dt">posthoc =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb56-10"><a href="#cb56-10"></a>                      <span class="dt">tree =</span> tmp_tree)</span>
-<span id="cb56-11"><a href="#cb56-11"></a>         tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_t_q&quot;</span>, j, <span class="st">&quot;_adt&quot;</span>))</span>
-<span id="cb56-12"><a href="#cb56-12"></a>         <span class="kw">print</span>(tmp_name)</span>
-<span id="cb56-13"><a href="#cb56-13"></a>         <span class="kw">assign</span>(tmp_name, tmp_test)</span>
-<span id="cb56-14"><a href="#cb56-14"></a>         <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb56-15"><a href="#cb56-15"></a> }</span>
-<span id="cb56-16"><a href="#cb56-16"></a>}</span>
-<span id="cb56-17"><a href="#cb56-17"></a><span class="kw">save</span>(ssu_ps_pime_merge_t_q0_adt, ssu_ps_pime_merge_t_q1_adt, ssu_ps_pime_merge_t_q2_adt, </span>
-<span id="cb56-18"><a href="#cb56-18"></a>     <span class="dt">file =</span> <span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_pime_merge_hill_lineage_test.rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>ssu_alpha_ds_full_tree &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_pime_merge&quot;</span>)</span>
+<span id="cb55-2"><a href="#cb55-2"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_alpha_ds_full_tree) {</span>
+<span id="cb55-4"><a href="#cb55-4"></a>     <span class="cf">for</span> (j <span class="cf">in</span> qvalue) {</span>
+<span id="cb55-5"><a href="#cb55-5"></a>         tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>)))</span>
+<span id="cb55-6"><a href="#cb55-6"></a>         tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>)))</span>
+<span id="cb55-7"><a href="#cb55-7"></a>         tmp_test &lt;-<span class="st"> </span><span class="kw">div_test</span>(tmp_get, <span class="dt">qvalue =</span> j,</span>
+<span id="cb55-8"><a href="#cb55-8"></a>                      <span class="dt">hierarchy =</span> ssu_hill_hier,</span>
+<span id="cb55-9"><a href="#cb55-9"></a>                      <span class="dt">posthoc =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb55-10"><a href="#cb55-10"></a>                      <span class="dt">tree =</span> tmp_tree)</span>
+<span id="cb55-11"><a href="#cb55-11"></a>         tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_t_q&quot;</span>, j, <span class="st">&quot;_adt&quot;</span>))</span>
+<span id="cb55-12"><a href="#cb55-12"></a>         <span class="kw">print</span>(tmp_name)</span>
+<span id="cb55-13"><a href="#cb55-13"></a>         <span class="kw">assign</span>(tmp_name, tmp_test)</span>
+<span id="cb55-14"><a href="#cb55-14"></a>         <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb55-15"><a href="#cb55-15"></a> }</span>
+<span id="cb55-16"><a href="#cb55-16"></a>}</span>
+<span id="cb55-17"><a href="#cb55-17"></a><span class="kw">save</span>(ssu_ps_pime_merge_t_q0_adt, ssu_ps_pime_merge_t_q1_adt, ssu_ps_pime_merge_t_q2_adt, </span>
+<span id="cb55-18"><a href="#cb55-18"></a>     <span class="dt">file =</span> <span class="st">&quot;files/trepo/alpha/rdata/ssu_ps_pime_merge_hill_lineage_test.rdata&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co">## Format as follows:</span></span>
-<span id="cb57-2"><a href="#cb57-2"></a><span class="co">## FALSE Kruskal-Wallis Test = ssu_ps_pime_q1_adt$test[[3]]</span></span>
-<span id="cb57-3"><a href="#cb57-3"></a><span class="co">## TRUE Tukey post-hoc  =      ssu_ps_work_q1_adt$test[[1]][[1, 5]]</span></span>
-<span id="cb57-4"><a href="#cb57-4"></a></span>
-<span id="cb57-5"><a href="#cb57-5"></a>tmp_pvalue &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">c</span>(ssu_ps_work_merge_q0_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb57-6"><a href="#cb57-6"></a>                           ssu_ps_work_merge_q1_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb57-7"><a href="#cb57-7"></a>                           ssu_ps_work_merge_q2_adt<span class="op">$</span>test[[<span class="dv">3</span>]]))</span>
-<span id="cb57-8"><a href="#cb57-8"></a>ssu_ps_work_sig_tab &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_cols</span>(ssu_ps_work_merge_sig_tab, tmp_pvalue) <span class="op">%&gt;%</span></span>
-<span id="cb57-9"><a href="#cb57-9"></a><span class="st">                         </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;posthoc p-value&quot;</span> =<span class="st"> </span><span class="dv">7</span>)</span>
-<span id="cb57-10"><a href="#cb57-10"></a><span class="co">#####################################################################################</span></span>
-<span id="cb57-11"><a href="#cb57-11"></a>tmp_pvalue &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">c</span>(ssu_ps_pime_merge_q0_adt<span class="op">$</span>test[[<span class="dv">1</span>]][[<span class="dv">1</span>, <span class="dv">5</span>]],</span>
-<span id="cb57-12"><a href="#cb57-12"></a>                           ssu_ps_pime_merge_q1_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb57-13"><a href="#cb57-13"></a>                           ssu_ps_pime_merge_q2_adt<span class="op">$</span>test[[<span class="dv">3</span>]]))</span>
-<span id="cb57-14"><a href="#cb57-14"></a>ssu_ps_pime_sig_tab &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_cols</span>(ssu_ps_pime_merge_sig_tab, tmp_pvalue) <span class="op">%&gt;%</span></span>
-<span id="cb57-15"><a href="#cb57-15"></a><span class="st">                         </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;posthoc p-value&quot;</span> =<span class="st"> </span><span class="dv">7</span>)</span>
-<span id="cb57-16"><a href="#cb57-16"></a><span class="co">#####################################################################################</span></span>
-<span id="cb57-17"><a href="#cb57-17"></a>tmp_pvalue &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">c</span>(ssu_ps_pime_merge_t_q0_adt<span class="op">$</span>test[[<span class="dv">1</span>]][[<span class="dv">1</span>, <span class="dv">5</span>]],</span>
-<span id="cb57-18"><a href="#cb57-18"></a>                           ssu_ps_pime_merge_t_q1_adt<span class="op">$</span>test[[<span class="dv">3</span>]],</span>
-<span id="cb57-19"><a href="#cb57-19"></a>                           ssu_ps_pime_merge_t_q2_adt<span class="op">$</span>test[[<span class="dv">3</span>]]))</span>
-<span id="cb57-20"><a href="#cb57-20"></a>ssu_ps_pime_t_sig_tab &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">bind_cols</span>(ssu_ps_pime_merge_t_sig_tab, tmp_pvalue) <span class="op">%&gt;%</span></span>
-<span id="cb57-21"><a href="#cb57-21"></a><span class="st">                         </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;posthoc p-value&quot;</span> =<span class="st"> </span><span class="dv">7</span>)</span>
-<span id="cb57-22"><a href="#cb57-22"></a><span class="co">#####################################################################################</span></span>
-<span id="cb57-23"><a href="#cb57-23"></a></span>
-<span id="cb57-24"><a href="#cb57-24"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span></code></pre></div>
+
 </div>
 <p><br/></p>
 <div class="layout-chunk" data-layout="l-page">
@@ -3998,22 +4005,22 @@ PASTC-PUCLC 0.000215519642013807630</code></pre>
 <p>The command is as follows:</p>
 <p><code>div_test_plot(divtest = x, chart = "type", colour = col.pal, posthoc = TRUE, threshold = value))</code>, where <code>x</code> is the results from the <code>div_test</code> function, <code>"type"</code> is chart type (box, jitter, or violin),<code>colour</code> is is a color palette, <code>posthoc</code> indicates whether to run posthoc pairwise analyses, and <code>value</code> is the maximum p-value to show in pairwise posthoc results. <strong>WARNING</strong> if none of the posthoc results are below the specified threshold, the function will throw an error. Therefore, until this is fixed, all posthoc values are shown.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="kw">source</span>(<span class="st">&quot;hack_code/div_test_plot_jjs.R&quot;</span>)</span>
-<span id="cb67-2"><a href="#cb67-2"></a><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt_plot&quot;</span>))</span>
-<span id="cb67-3"><a href="#cb67-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt&quot;</span>)) {</span>
-<span id="cb67-4"><a href="#cb67-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_plot&quot;</span>))</span>
-<span id="cb67-5"><a href="#cb67-5"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb67-6"><a href="#cb67-6"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data[<span class="kw">order</span>(<span class="kw">factor</span>(tmp_get<span class="op">$</span>data<span class="op">$</span>Group,</span>
-<span id="cb67-7"><a href="#cb67-7"></a>                                <span class="dt">levels=</span><span class="kw">c</span>(<span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)))),]</span>
-<span id="cb67-8"><a href="#cb67-8"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
-<span id="cb67-9"><a href="#cb67-9"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">div_test_plot_jjs</span>(tmp_get, <span class="dt">chart =</span> <span class="st">&quot;box&quot;</span>,</span>
-<span id="cb67-10"><a href="#cb67-10"></a>                                 <span class="dt">colour =</span> swel_col, <span class="dt">posthoc =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb67-11"><a href="#cb67-11"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">ggpar</span>(tmp_df, <span class="dt">legend =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb67-12"><a href="#cb67-12"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb67-13"><a href="#cb67-13"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb67-14"><a href="#cb67-14"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb67-15"><a href="#cb67-15"></a>}</span>
-<span id="cb67-16"><a href="#cb67-16"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_adt&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="kw">source</span>(<span class="st">&quot;hack_code/div_test_plot_jjs.R&quot;</span>)</span>
+<span id="cb65-2"><a href="#cb65-2"></a><span class="kw">rm</span>(<span class="dt">list=</span><span class="kw">ls</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt_plot&quot;</span>))</span>
+<span id="cb65-3"><a href="#cb65-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_adt&quot;</span>)) {</span>
+<span id="cb65-4"><a href="#cb65-4"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_plot&quot;</span>))</span>
+<span id="cb65-5"><a href="#cb65-5"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb65-6"><a href="#cb65-6"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data[<span class="kw">order</span>(<span class="kw">factor</span>(tmp_get<span class="op">$</span>data<span class="op">$</span>Group,</span>
+<span id="cb65-7"><a href="#cb65-7"></a>                                <span class="dt">levels=</span><span class="kw">c</span>(<span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>, <span class="st">&quot;PAST&quot;</span>, <span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)))),]</span>
+<span id="cb65-8"><a href="#cb65-8"></a>     tmp_get<span class="op">$</span>data &lt;-<span class="st"> </span>tmp_get<span class="op">$</span>data <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
+<span id="cb65-9"><a href="#cb65-9"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">div_test_plot_jjs</span>(tmp_get, <span class="dt">chart =</span> <span class="st">&quot;box&quot;</span>,</span>
+<span id="cb65-10"><a href="#cb65-10"></a>                                 <span class="dt">colour =</span> swel_col, <span class="dt">posthoc =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb65-11"><a href="#cb65-11"></a>     tmp_df &lt;-<span class="st"> </span><span class="kw">ggpar</span>(tmp_df, <span class="dt">legend =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb65-12"><a href="#cb65-12"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb65-13"><a href="#cb65-13"></a>     <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb65-14"><a href="#cb65-14"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb65-15"><a href="#cb65-15"></a>}</span>
+<span id="cb65-16"><a href="#cb65-16"></a><span class="kw">objects</span>(<span class="dt">pattern =</span> <span class="st">&quot;_adt&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
@@ -4038,138 +4045,141 @@ Figure 2: <strong>Top row</strong> = Observed; <strong>middle row</strong> = Sha
 <h3 id="full-data-set-split-by-site-1">Full data set split by site</h3>
 <p>We will start by splitting the full data set by treatment then generating new trees and ASV tables for each split.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
-<span id="cb68-2"><a href="#cb68-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb68-3"><a href="#cb68-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, .))</span>
-<span id="cb68-4"><a href="#cb68-4"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ssu_ps_work_merge, SITE <span class="op">==</span><span class="st"> </span>i)</span>
-<span id="cb68-5"><a href="#cb68-5"></a>     tmp_ps &lt;-<span class="st">  </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
-<span id="cb68-6"><a href="#cb68-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb68-7"><a href="#cb68-7"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb68-8"><a href="#cb68-8"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
-<span id="cb68-9"><a href="#cb68-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
-<span id="cb68-10"><a href="#cb68-10"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb68-11"><a href="#cb68-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
-<span id="cb68-12"><a href="#cb68-12"></a>     tmp_asv &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb68-13"><a href="#cb68-13"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb68-14"><a href="#cb68-14"></a>     tmp_get_asv &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
-<span id="cb68-15"><a href="#cb68-15"></a>     <span class="kw">print</span>(tmp_asv)</span>
-<span id="cb68-16"><a href="#cb68-16"></a>     <span class="kw">assign</span>(tmp_asv, tmp_get_asv)</span>
-<span id="cb68-17"><a href="#cb68-17"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb68-18"><a href="#cb68-18"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb66-3"><a href="#cb66-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, .))</span>
+<span id="cb66-4"><a href="#cb66-4"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">subset_samples</span>(ssu_ps_work_merge, SITE <span class="op">==</span><span class="st"> </span>i)</span>
+<span id="cb66-5"><a href="#cb66-5"></a>     tmp_ps &lt;-<span class="st">  </span><span class="kw">prune_taxa</span>(<span class="kw">taxa_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb66-6"><a href="#cb66-6"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb66-7"><a href="#cb66-7"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb66-8"><a href="#cb66-8"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb66-9"><a href="#cb66-9"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
+<span id="cb66-10"><a href="#cb66-10"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb66-11"><a href="#cb66-11"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb66-12"><a href="#cb66-12"></a>     tmp_asv &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb66-13"><a href="#cb66-13"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb66-14"><a href="#cb66-14"></a>     tmp_get_asv &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
+<span id="cb66-15"><a href="#cb66-15"></a>     <span class="kw">print</span>(tmp_asv)</span>
+<span id="cb66-16"><a href="#cb66-16"></a>     <span class="kw">assign</span>(tmp_asv, tmp_get_asv)</span>
+<span id="cb66-17"><a href="#cb66-17"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb66-18"><a href="#cb66-18"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
 </div>
 <p>As mentioned above, any tree used in the <code>hilldv</code> package must be <strong>ultrametric</strong>. So we need to convert the trees in order to look at lineage diversity. We will also save copies of each tree since this process takes a while to run.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>site &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ALMR&quot;</span>,<span class="st">&quot;PAST&quot;</span>,<span class="st">&quot;CRIS&quot;</span>, <span class="st">&quot;PUCL&quot;</span>)</span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb67-3"><a href="#cb67-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, .))</span>
+<span id="cb67-4"><a href="#cb67-4"></a>     tmp_name_tr &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb67-5"><a href="#cb67-5"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb67-6"><a href="#cb67-6"></a>     tmp_ult_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
+<span id="cb67-7"><a href="#cb67-7"></a>     <span class="kw">print</span>(tmp_name_tr)</span>
+<span id="cb67-8"><a href="#cb67-8"></a>     <span class="kw">assign</span>(tmp_name_tr, tmp_ult_tree)</span>
+<span id="cb67-9"><a href="#cb67-9"></a>     save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name_tr, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
+<span id="cb67-10"><a href="#cb67-10"></a>     tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name_tr)</span>
+<span id="cb67-11"><a href="#cb67-11"></a>     <span class="kw">saveRDS</span>(tree, save_name)</span>
+<span id="cb67-12"><a href="#cb67-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb67-13"><a href="#cb67-13"></a>     <span class="kw">rm</span>(save_name)</span>
+<span id="cb67-14"><a href="#cb67-14"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb68-2"><a href="#cb68-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb68-3"><a href="#cb68-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
+<span id="cb68-4"><a href="#cb68-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb68-5"><a href="#cb68-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
+<span id="cb68-6"><a href="#cb68-6"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
+<span id="cb68-7"><a href="#cb68-7"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb68-8"><a href="#cb68-8"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
+<span id="cb68-9"><a href="#cb68-9"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
+<span id="cb68-10"><a href="#cb68-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb68-11"><a href="#cb68-11"></a>  }</span>
+<span id="cb68-12"><a href="#cb68-12"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
 <span id="cb69-2"><a href="#cb69-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb69-3"><a href="#cb69-3"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, .))</span>
-<span id="cb69-4"><a href="#cb69-4"></a>     tmp_name_tr &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb69-5"><a href="#cb69-5"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb69-6"><a href="#cb69-6"></a>     tmp_ult_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
-<span id="cb69-7"><a href="#cb69-7"></a>     <span class="kw">print</span>(tmp_name_tr)</span>
-<span id="cb69-8"><a href="#cb69-8"></a>     <span class="kw">assign</span>(tmp_name_tr, tmp_ult_tree)</span>
-<span id="cb69-9"><a href="#cb69-9"></a>     save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name_tr, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
-<span id="cb69-10"><a href="#cb69-10"></a>     tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name_tr)</span>
-<span id="cb69-11"><a href="#cb69-11"></a>     <span class="kw">saveRDS</span>(tree, save_name)</span>
+<span id="cb69-3"><a href="#cb69-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
+<span id="cb69-4"><a href="#cb69-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb69-5"><a href="#cb69-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
+<span id="cb69-6"><a href="#cb69-6"></a>     tmp_tree_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb69-7"><a href="#cb69-7"></a>     tmp_tree_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tree_name)</span>
+<span id="cb69-8"><a href="#cb69-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
+<span id="cb69-9"><a href="#cb69-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb69-10"><a href="#cb69-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_tree_name)</span>
+<span id="cb69-11"><a href="#cb69-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
 <span id="cb69-12"><a href="#cb69-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb69-13"><a href="#cb69-13"></a>     <span class="kw">rm</span>(save_name)</span>
+<span id="cb69-13"><a href="#cb69-13"></a>  }</span>
 <span id="cb69-14"><a href="#cb69-14"></a>}</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb70-2"><a href="#cb70-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb70-3"><a href="#cb70-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
-<span id="cb70-4"><a href="#cb70-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb70-5"><a href="#cb70-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb70-6"><a href="#cb70-6"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
-<span id="cb70-7"><a href="#cb70-7"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb70-8"><a href="#cb70-8"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
-<span id="cb70-9"><a href="#cb70-9"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb70-10"><a href="#cb70-10"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb70-11"><a href="#cb70-11"></a>  }</span>
-<span id="cb70-12"><a href="#cb70-12"></a>}</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb71-2"><a href="#cb71-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb71-3"><a href="#cb71-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
-<span id="cb71-4"><a href="#cb71-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb71-5"><a href="#cb71-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb71-6"><a href="#cb71-6"></a>     tmp_tree_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb71-7"><a href="#cb71-7"></a>     tmp_tree_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tree_name)</span>
-<span id="cb71-8"><a href="#cb71-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_work_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
-<span id="cb71-9"><a href="#cb71-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb71-10"><a href="#cb71-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_tree_name)</span>
-<span id="cb71-11"><a href="#cb71-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb71-12"><a href="#cb71-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb71-13"><a href="#cb71-13"></a>  }</span>
-<span id="cb71-14"><a href="#cb71-14"></a>}</span></code></pre></div>
 </div>
 <h3 id="pime-filtered-data-set-1">PIME filtered data set</h3>
 <p>For this step, we will use the PIME data set. We start by making new trees and ASV tables for each split.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb72-2"><a href="#cb72-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, .))</span>
-<span id="cb72-3"><a href="#cb72-3"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb72-4"><a href="#cb72-4"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb72-5"><a href="#cb72-5"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb72-6"><a href="#cb72-6"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
-<span id="cb72-7"><a href="#cb72-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
-<span id="cb72-8"><a href="#cb72-8"></a>     <span class="kw">print</span>(tmp_name)</span>
-<span id="cb72-9"><a href="#cb72-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
-<span id="cb72-10"><a href="#cb72-10"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb72-11"><a href="#cb72-11"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb72-12"><a href="#cb72-12"></a>     tmp_asv_tab &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
-<span id="cb72-13"><a href="#cb72-13"></a>     <span class="kw">print</span>(tmp_asv_name)</span>
-<span id="cb72-14"><a href="#cb72-14"></a>     <span class="kw">assign</span>(tmp_asv_name, tmp_asv_tab)</span>
-<span id="cb72-15"><a href="#cb72-15"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb72-16"><a href="#cb72-16"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb70-2"><a href="#cb70-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, .))</span>
+<span id="cb70-3"><a href="#cb70-3"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb70-4"><a href="#cb70-4"></a>     tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb70-5"><a href="#cb70-5"></a>     tmp_ps_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_ps), <span class="dt">rooted =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb70-6"><a href="#cb70-6"></a>                            <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_ps))</span>
+<span id="cb70-7"><a href="#cb70-7"></a>     tmp_ps &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_ps, sample_data, tmp_ps_tree)</span>
+<span id="cb70-8"><a href="#cb70-8"></a>     <span class="kw">print</span>(tmp_name)</span>
+<span id="cb70-9"><a href="#cb70-9"></a>     <span class="kw">assign</span>(tmp_name, tmp_ps)</span>
+<span id="cb70-10"><a href="#cb70-10"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb70-11"><a href="#cb70-11"></a>     tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb70-12"><a href="#cb70-12"></a>     tmp_asv_tab &lt;-<span class="st"> </span><span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get))</span>
+<span id="cb70-13"><a href="#cb70-13"></a>     <span class="kw">print</span>(tmp_asv_name)</span>
+<span id="cb70-14"><a href="#cb70-14"></a>     <span class="kw">assign</span>(tmp_asv_name, tmp_asv_tab)</span>
+<span id="cb70-15"><a href="#cb70-15"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb70-16"><a href="#cb70-16"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb73-2"><a href="#cb73-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, .))</span>
-<span id="cb73-3"><a href="#cb73-3"></a>     tmp_tr_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb73-4"><a href="#cb73-4"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
-<span id="cb73-5"><a href="#cb73-5"></a>     ultra_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
-<span id="cb73-6"><a href="#cb73-6"></a>     <span class="kw">print</span>(tmp_tr_name)</span>
-<span id="cb73-7"><a href="#cb73-7"></a>     <span class="kw">assign</span>(tmp_tr_name, ultra_tree)</span>
-<span id="cb73-8"><a href="#cb73-8"></a>     tmp_save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_tr_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
-<span id="cb73-9"><a href="#cb73-9"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tr_name)</span>
-<span id="cb73-10"><a href="#cb73-10"></a>     <span class="kw">saveRDS</span>(tmp_tree, tmp_save_name)</span>
-<span id="cb73-11"><a href="#cb73-11"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb73-12"><a href="#cb73-12"></a>     <span class="kw">rm</span>(ultra_tree)</span>
-<span id="cb73-13"><a href="#cb73-13"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb71-2"><a href="#cb71-2"></a>     tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, .))</span>
+<span id="cb71-3"><a href="#cb71-3"></a>     tmp_tr_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb71-4"><a href="#cb71-4"></a>     tmp_get_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_name)</span>
+<span id="cb71-5"><a href="#cb71-5"></a>     ultra_tree &lt;-<span class="st"> </span><span class="kw">force.ultrametric</span>(tmp_get_name<span class="op">@</span>phy_tree, <span class="dt">method=</span><span class="kw">c</span>(<span class="st">&quot;extend&quot;</span>))</span>
+<span id="cb71-6"><a href="#cb71-6"></a>     <span class="kw">print</span>(tmp_tr_name)</span>
+<span id="cb71-7"><a href="#cb71-7"></a>     <span class="kw">assign</span>(tmp_tr_name, ultra_tree)</span>
+<span id="cb71-8"><a href="#cb71-8"></a>     tmp_save_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(tmp_tr_name, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;files/trepo/alpha/rdata/&quot;</span>, ., <span class="st">&quot;.rds&quot;</span>))</span>
+<span id="cb71-9"><a href="#cb71-9"></a>     tmp_tree &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_tr_name)</span>
+<span id="cb71-10"><a href="#cb71-10"></a>     <span class="kw">saveRDS</span>(tmp_tree, tmp_save_name)</span>
+<span id="cb71-11"><a href="#cb71-11"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb71-12"><a href="#cb71-12"></a>     <span class="kw">rm</span>(ultra_tree)</span>
+<span id="cb71-13"><a href="#cb71-13"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb74-3"><a href="#cb74-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
-<span id="cb74-4"><a href="#cb74-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb74-5"><a href="#cb74-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb74-6"><a href="#cb74-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb74-7"><a href="#cb74-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
-<span id="cb74-8"><a href="#cb74-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
-<span id="cb74-9"><a href="#cb74-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb74-10"><a href="#cb74-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
-<span id="cb74-11"><a href="#cb74-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb74-12"><a href="#cb74-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb74-13"><a href="#cb74-13"></a>  }</span>
-<span id="cb74-14"><a href="#cb74-14"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb72-3"><a href="#cb72-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
+<span id="cb72-4"><a href="#cb72-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb72-5"><a href="#cb72-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
+<span id="cb72-6"><a href="#cb72-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb72-7"><a href="#cb72-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
+<span id="cb72-8"><a href="#cb72-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j))</span>
+<span id="cb72-9"><a href="#cb72-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb72-10"><a href="#cb72-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j)</span>
+<span id="cb72-11"><a href="#cb72-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
+<span id="cb72-12"><a href="#cb72-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb72-13"><a href="#cb72-13"></a>  }</span>
+<span id="cb72-14"><a href="#cb72-14"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
-<span id="cb75-2"><a href="#cb75-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
-<span id="cb75-3"><a href="#cb75-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
-<span id="cb75-4"><a href="#cb75-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
-<span id="cb75-5"><a href="#cb75-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
-<span id="cb75-6"><a href="#cb75-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
-<span id="cb75-7"><a href="#cb75-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
-<span id="cb75-8"><a href="#cb75-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
-<span id="cb75-9"><a href="#cb75-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
-<span id="cb75-10"><a href="#cb75-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_spl_name)</span>
-<span id="cb75-11"><a href="#cb75-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
-<span id="cb75-12"><a href="#cb75-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb75-13"><a href="#cb75-13"></a>  }</span>
-<span id="cb75-14"><a href="#cb75-14"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>qvalue &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb73-2"><a href="#cb73-2"></a><span class="cf">for</span> (i <span class="cf">in</span> site) {</span>
+<span id="cb73-3"><a href="#cb73-3"></a>  <span class="cf">for</span> (j <span class="cf">in</span> qvalue){</span>
+<span id="cb73-4"><a href="#cb73-4"></a>     tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tu&quot;</span>))</span>
+<span id="cb73-5"><a href="#cb73-5"></a>     tmp_asv_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_asv_name)</span>
+<span id="cb73-6"><a href="#cb73-6"></a>     tmp_spl_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_tree_ult&quot;</span>))</span>
+<span id="cb73-7"><a href="#cb73-7"></a>     tmp_spl_name &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_spl_name)</span>
+<span id="cb73-8"><a href="#cb73-8"></a>     tmp_div_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;ssu_ps_pime_merge_&quot;</span>, ., <span class="st">&quot;_aldiv_&quot;</span>, j, <span class="st">&quot;t&quot;</span>))</span>
+<span id="cb73-9"><a href="#cb73-9"></a>     <span class="kw">print</span>(tmp_div_name)</span>
+<span id="cb73-10"><a href="#cb73-10"></a>     tmp_alpha_div &lt;-<span class="st"> </span><span class="kw">alpha_div</span>(<span class="dt">countable =</span> tmp_asv_name, <span class="dt">qvalue =</span> j, <span class="dt">tree =</span> tmp_spl_name)</span>
+<span id="cb73-11"><a href="#cb73-11"></a>     <span class="kw">assign</span>(tmp_div_name, tmp_alpha_div)</span>
+<span id="cb73-12"><a href="#cb73-12"></a>     <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb73-13"><a href="#cb73-13"></a>  }</span>
+<span id="cb73-14"><a href="#cb73-14"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 

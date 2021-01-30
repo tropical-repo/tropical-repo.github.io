@@ -445,8 +445,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     top: 0;
   }
   
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+  
   </style>
   
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -554,19 +561,21 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
             var results = fuse.search(query, searchOptions);
             callback(results
               .map(function(result) { return result.item; })
-              .filter(function(item) { return !!item.description; })
             );
           },
           templates: {
             suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
               var html = `
                 <div class="search-item">
                   <h3>${suggestion.title}</h3>
                   <div class="search-item-description">
-                    ${suggestion.description}
+                    ${suggestion.description || ''}
                   </div>
                   <div class="search-item-preview">
-                    <img src="${suggestion.preview ? offsetURL(suggestion.preview) : ''}"</img>
+                    ${img}
                   </div>
                 </div>
               `;
@@ -589,6 +598,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   </script>
   
   <style type="text/css">
+  
+  .nav-search {
+    font-size: x-small;
+  }
   
   /* Algolioa Autocomplete */
   
@@ -664,6 +677,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   }
   
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
@@ -891,6 +905,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-decoration: underline;
   }
   
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+  
   @media(min-width: 768px) {
   
   d-article pre,
@@ -1045,6 +1064,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
+  }
+  
+  /* Citation hover box */
+  
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+  
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
   }
   
   
@@ -1712,7 +1742,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       var layout = $(this).attr('data-layout');
   
       // apply layout to markdown level block elements
-      var elements = $(this).children().not('div.sourceCode, pre, script');
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
         var layout_div = $('<div class="' + layout + '"></div>');
         if (layout_div.hasClass('shaded')) {
@@ -1827,6 +1857,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
+  
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
   
       // clear polling timer
       clearInterval(tid);
@@ -1988,9 +2032,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   
   <!--/radix_placeholder_distill-->
   <script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-  <script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+  <script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
   <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-  <script src="site_libs/datatables-binding-0.16/datatables.js"></script>
+  <script src="site_libs/datatables-binding-0.17/datatables.js"></script>
   <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
   <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
   <script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
@@ -2005,8 +2049,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   <script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
   <link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
   <script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
-  <link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-  <script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+  <link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+  <script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
   <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
   <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
@@ -2245,6 +2293,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     content: "\f146";
   }
   
+  
+  /********************************/
+  /* dygraph*/
+  /********************************/
+  
   </style>
   <!--/radix_placeholder_site_in_header-->
 
@@ -2272,9 +2325,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="intro.html">Introduction</a>
-<a href="temp.html">Physical</a>
-<a href="temp.html">Inverts</a>
+<a href="trepo-intro.html">Introduction</a>
+<a href="trepo-physical.html">Physical</a>
+<a href="trepo-inverts.html">Inverts</a>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Microbial
@@ -2298,7 +2351,7 @@ Microbial
 <hr/>
 </div>
 </div>
-<a href="temp.html">Data</a>
+<a href="trepo-data.html">Data</a>
 <a href="https://github.com/tropical-repo/web/" aria-label="Link to source">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
