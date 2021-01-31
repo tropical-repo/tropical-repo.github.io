@@ -3013,47 +3013,47 @@ Don’t forget to hit the <strong>Show Code</strong> button above if you want to
 </div>
 <h2 id="alphaproteobacteria">Alphaproteobacteria</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-40-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-235-1.png" width="624" /></p>
 </div>
 <h2 id="gammaproteobacteria">Gammaproteobacteria</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-41-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-236-1.png" width="624" /></p>
 </div>
 <h2 id="acidobacteriota">Acidobacteriota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-42-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-237-1.png" width="624" /></p>
 </div>
 <h2 id="chloroflexi">Chloroflexi</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-43-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-238-1.png" width="624" /></p>
 </div>
 <h2 id="desulfobacterota">Desulfobacterota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-44-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-239-1.png" width="624" /></p>
 </div>
 <h2 id="gemmatimonadota">Gemmatimonadota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-45-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-240-1.png" width="624" /></p>
 </div>
 <h2 id="latescibacterota">Latescibacterota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-46-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-241-1.png" width="624" /></p>
 </div>
 <h2 id="nitrospirota">Nitrospirota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-47-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-242-1.png" width="624" /></p>
 </div>
 <h2 id="thermoplasmatota">Thermoplasmatota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-48-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-243-1.png" width="624" /></p>
 </div>
 <h2 id="planctomycetota">Planctomycetota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-49-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-244-1.png" width="624" /></p>
 </div>
 <h2 id="crenarchaeota">Crenarchaeota</h2>
 <div class="layout-chunk" data-layout="l-body-outset">
-<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-50-1.png" width="624" /></p>
+<p><img src="trepo-taxa_files/figure-html5/unnamed-chunk-245-1.png" width="624" /></p>
 </div>
 <h1 id="lineage-maps">Lineage Maps</h1>
 <div class="layout-chunk" data-layout="l-body">
@@ -3099,337 +3099,353 @@ Don’t forget to hit the <strong>Show Code</strong> button above if you want to
 </div>
 <h2 id="bacteria">Bacteria</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co">#set.seed(1999)</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>obj <span class="op">%&gt;%</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacteria&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_ranks <span class="op">==</span><span class="st"> &quot;f&quot;</span>, <span class="dt">supertaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># subset to the order rank</span></span>
-<span id="cb32-5"><a href="#cb32-5"></a><span class="co">#  filter_taxa(taxon_names %in% c(&quot;Proteobacteria&quot;, &quot;Bacteroidia&quot;, &quot;Archaea&quot;), subtaxa = TRUE, invert = TRUE) # to remove taxa</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="st">  </span><span class="kw">heat_tree</span>(</span>
-<span id="cb32-7"><a href="#cb32-7"></a>          <span class="dt">node_label =</span> taxon_names,</span>
-<span id="cb32-8"><a href="#cb32-8"></a>          <span class="dt">node_size =</span> n_obs,</span>
-<span id="cb32-9"><a href="#cb32-9"></a>         <span class="co"># node_size_range = c(0.01, 0.05),</span></span>
-<span id="cb32-10"><a href="#cb32-10"></a>          <span class="dt">node_label_size_range =</span> <span class="kw">c</span>(<span class="fl">0.008</span>, <span class="fl">0.04</span>),</span>
-<span id="cb32-11"><a href="#cb32-11"></a>          <span class="dt">node_color =</span> log2_median_ratio,</span>
-<span id="cb32-12"><a href="#cb32-12"></a>          <span class="dt">node_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">5.5</span>, <span class="dv">4</span>),</span>
-<span id="cb32-13"><a href="#cb32-13"></a>          <span class="dt">edge_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">5.5</span>, <span class="dv">4</span>),</span>
-<span id="cb32-14"><a href="#cb32-14"></a>          <span class="dt">node_color_trans =</span> <span class="st">&quot;area&quot;</span>,</span>
-<span id="cb32-15"><a href="#cb32-15"></a>          <span class="dt">node_color_range =</span> <span class="kw">c</span>(<span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>),</span>
-<span id="cb32-16"><a href="#cb32-16"></a>          <span class="dt">node_size_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
-<span id="cb32-17"><a href="#cb32-17"></a>          <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log 2 median ratio&quot;</span>,</span>
-<span id="cb32-18"><a href="#cb32-18"></a>          <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
-<span id="cb32-19"><a href="#cb32-19"></a>          <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>,</span>
-<span id="cb32-20"><a href="#cb32-20"></a>          <span class="dt">overlap_avoidance =</span> <span class="dv">2</span>,</span>
-<span id="cb32-21"><a href="#cb32-21"></a>          <span class="dt">output_file =</span> <span class="st">&quot;files/trepo/taxa/figures/differential_heat_tree_merged_Bacteria.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">range.default</span>(obj<span class="op">$</span>data<span class="op">$</span>diff_table<span class="op">$</span>log2_median_ratio, <span class="dt">finite=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>[1] -7.957102  8.071462</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co">#set.seed(1999)</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>obj <span class="op">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacteria&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="co">#  filter_taxa(taxon_ranks == &quot;f&quot;, supertaxa = TRUE) %&gt;% # subset to the order rank</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a><span class="co">#  filter_taxa(taxon_names %in% c(&quot;Proteobacteria&quot;, &quot;Bacteroidia&quot;, &quot;Archaea&quot;), subtaxa = TRUE, invert = TRUE) # to remove taxa</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a><span class="st">  </span><span class="kw">heat_tree</span>(</span>
+<span id="cb34-7"><a href="#cb34-7"></a>          <span class="dt">node_label =</span> taxon_names,</span>
+<span id="cb34-8"><a href="#cb34-8"></a>          <span class="dt">node_size =</span> n_obs,</span>
+<span id="cb34-9"><a href="#cb34-9"></a>         <span class="co"># node_size_range = c(0.01, 0.05),</span></span>
+<span id="cb34-10"><a href="#cb34-10"></a>          <span class="dt">node_label_size_range =</span> <span class="kw">c</span>(<span class="fl">0.008</span>, <span class="fl">0.04</span>),</span>
+<span id="cb34-11"><a href="#cb34-11"></a>          <span class="dt">node_color =</span> log2_median_ratio,</span>
+<span id="cb34-12"><a href="#cb34-12"></a>          <span class="dt">node_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">8</span>, <span class="dv">8</span>),</span>
+<span id="cb34-13"><a href="#cb34-13"></a>          <span class="dt">edge_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">8</span>, <span class="dv">8</span>),</span>
+<span id="cb34-14"><a href="#cb34-14"></a>          <span class="dt">node_color_trans =</span> <span class="st">&quot;area&quot;</span>,</span>
+<span id="cb34-15"><a href="#cb34-15"></a>          <span class="dt">node_color_range =</span> <span class="kw">c</span>(<span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>),</span>
+<span id="cb34-16"><a href="#cb34-16"></a>          <span class="dt">node_size_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
+<span id="cb34-17"><a href="#cb34-17"></a>          <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log 2 median ratio&quot;</span>,</span>
+<span id="cb34-18"><a href="#cb34-18"></a>          <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
+<span id="cb34-19"><a href="#cb34-19"></a>          <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>,</span>
+<span id="cb34-20"><a href="#cb34-20"></a>          <span class="dt">overlap_avoidance =</span> <span class="dv">2</span>,</span>
+<span id="cb34-21"><a href="#cb34-21"></a>          <span class="dt">output_file =</span> <span class="st">&quot;files/trepo/taxa/figures/differential_heat_tree_merged_Bacteria.png&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-page">
 <p><img src="include/trepo/taxa/differential_heat_tree_merged_Bacteria.png" width="1500" /></p>
 </div>
 <h2 id="archaea">Archaea</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co">#set.seed(1999)</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>obj <span class="op">%&gt;%</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Archaea&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="co">#  filter_taxa(taxon_ranks == &quot;o&quot;, supertaxa = TRUE) %&gt;% # subset to the order rank</span></span>
-<span id="cb33-5"><a href="#cb33-5"></a><span class="co">#  filter_taxa(taxon_names %in% c(&quot;Proteobacteria&quot;, &quot;Bacteroidia&quot;, &quot;Archaea&quot;), subtaxa = TRUE, invert = TRUE) # to remove taxa</span></span>
-<span id="cb33-6"><a href="#cb33-6"></a><span class="st">  </span><span class="kw">heat_tree</span>(</span>
-<span id="cb33-7"><a href="#cb33-7"></a>          <span class="dt">node_label =</span> taxon_names,</span>
-<span id="cb33-8"><a href="#cb33-8"></a>          <span class="dt">node_size =</span> n_obs,</span>
-<span id="cb33-9"><a href="#cb33-9"></a>         <span class="co"># node_size_range = c(0.01, 0.05),</span></span>
-<span id="cb33-10"><a href="#cb33-10"></a>          <span class="dt">node_label_size_range =</span> <span class="kw">c</span>(<span class="fl">0.008</span>, <span class="fl">0.04</span>),</span>
-<span id="cb33-11"><a href="#cb33-11"></a>          <span class="dt">node_color =</span> log2_median_ratio,</span>
-<span id="cb33-12"><a href="#cb33-12"></a>          <span class="dt">node_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">5.5</span>, <span class="dv">4</span>),</span>
-<span id="cb33-13"><a href="#cb33-13"></a>          <span class="dt">edge_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">5.5</span>, <span class="dv">4</span>),</span>
-<span id="cb33-14"><a href="#cb33-14"></a>          <span class="dt">node_color_trans =</span> <span class="st">&quot;area&quot;</span>,</span>
-<span id="cb33-15"><a href="#cb33-15"></a>          <span class="dt">node_color_range =</span> <span class="kw">c</span>(<span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>),</span>
-<span id="cb33-16"><a href="#cb33-16"></a>          <span class="dt">node_size_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
-<span id="cb33-17"><a href="#cb33-17"></a>          <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log 2 median ratio&quot;</span>,</span>
-<span id="cb33-18"><a href="#cb33-18"></a>          <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
-<span id="cb33-19"><a href="#cb33-19"></a>          <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>,</span>
-<span id="cb33-20"><a href="#cb33-20"></a>          <span class="dt">overlap_avoidance =</span> <span class="dv">2</span>,</span>
-<span id="cb33-21"><a href="#cb33-21"></a>          <span class="dt">output_file =</span> <span class="st">&quot;files/trepo/taxa/figures/differential_heat_tree_merged_Archaea.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>arch_only &lt;-<span class="st"> </span>obj <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Archaea&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="kw">range.default</span>(arch_only<span class="op">$</span>data<span class="op">$</span>diff_table<span class="op">$</span>log2_median_ratio, <span class="dt">finite=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>[1] -4.990307  7.108524</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co">#set.seed(1999)</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>obj <span class="op">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Archaea&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="co">#  filter_taxa(taxon_ranks == &quot;o&quot;, supertaxa = TRUE) %&gt;% # subset to the order rank</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="co">#  filter_taxa(taxon_names %in% c(&quot;Proteobacteria&quot;, &quot;Bacteroidia&quot;, &quot;Archaea&quot;), subtaxa = TRUE, invert = TRUE) # to remove taxa</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a><span class="st">  </span><span class="kw">heat_tree</span>(</span>
+<span id="cb37-7"><a href="#cb37-7"></a>          <span class="dt">node_label =</span> taxon_names,</span>
+<span id="cb37-8"><a href="#cb37-8"></a>          <span class="dt">node_size =</span> n_obs,</span>
+<span id="cb37-9"><a href="#cb37-9"></a>         <span class="co"># node_size_range = c(0.01, 0.05),</span></span>
+<span id="cb37-10"><a href="#cb37-10"></a>          <span class="dt">node_label_size_range =</span> <span class="kw">c</span>(<span class="fl">0.008</span>, <span class="fl">0.04</span>),</span>
+<span id="cb37-11"><a href="#cb37-11"></a>          <span class="dt">node_color =</span> log2_median_ratio,</span>
+<span id="cb37-12"><a href="#cb37-12"></a>          <span class="dt">node_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">7</span>),</span>
+<span id="cb37-13"><a href="#cb37-13"></a>          <span class="dt">edge_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">7</span>),</span>
+<span id="cb37-14"><a href="#cb37-14"></a>          <span class="dt">node_color_trans =</span> <span class="st">&quot;area&quot;</span>,</span>
+<span id="cb37-15"><a href="#cb37-15"></a>          <span class="dt">node_color_range =</span> <span class="kw">c</span>(<span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>),</span>
+<span id="cb37-16"><a href="#cb37-16"></a>          <span class="dt">node_size_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
+<span id="cb37-17"><a href="#cb37-17"></a>          <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log 2 median ratio&quot;</span>,</span>
+<span id="cb37-18"><a href="#cb37-18"></a>          <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
+<span id="cb37-19"><a href="#cb37-19"></a>          <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>,</span>
+<span id="cb37-20"><a href="#cb37-20"></a>          <span class="dt">overlap_avoidance =</span> <span class="dv">2</span>,</span>
+<span id="cb37-21"><a href="#cb37-21"></a>          <span class="dt">output_file =</span> <span class="st">&quot;files/trepo/taxa/figures/differential_heat_tree_merged_Archaea.png&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-page">
 <p><img src="include/trepo/taxa/differential_heat_tree_merged_Archaea.png" width="1500" /></p>
 </div>
 <h2 id="top-phyla">Top Phyla</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co">#set.seed(10)</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>obj <span class="op">%&gt;%</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Proteobacteria&quot;</span>, <span class="st">&quot;Acidobacteriota&quot;</span>, <span class="st">&quot;Chloroflexi&quot;</span>, <span class="st">&quot;Planctomycetota&quot;</span>),</span>
-<span id="cb34-4"><a href="#cb34-4"></a>              <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a><span class="st">  </span><span class="kw">heat_tree</span>(<span class="dt">node_label =</span> taxon_names,</span>
-<span id="cb34-6"><a href="#cb34-6"></a>            <span class="dt">node_size =</span> n_obs,</span>
-<span id="cb34-7"><a href="#cb34-7"></a>            <span class="dt">node_color =</span> log2_median_ratio,</span>
-<span id="cb34-8"><a href="#cb34-8"></a>            <span class="dt">node_color_range =</span> <span class="kw">c</span>(<span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>),</span>
-<span id="cb34-9"><a href="#cb34-9"></a>            <span class="dt">node_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
-<span id="cb34-10"><a href="#cb34-10"></a>            <span class="co">#edge_color_interval = c(-5.5, 4),</span></span>
-<span id="cb34-11"><a href="#cb34-11"></a>            <span class="co">#node_color_trans = &quot;area&quot;,</span></span>
-<span id="cb34-12"><a href="#cb34-12"></a>            <span class="dt">tree_label =</span> taxon_names,</span>
-<span id="cb34-13"><a href="#cb34-13"></a>            <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>, <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
-<span id="cb34-14"><a href="#cb34-14"></a>            <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Sum of root reads&quot;</span>,</span>
-<span id="cb34-15"><a href="#cb34-15"></a>            <span class="dt">node_size_axis_label =</span> <span class="st">&quot;Number of OTUs&quot;</span>,</span>
-<span id="cb34-16"><a href="#cb34-16"></a>            <span class="co">#overlap_avoidance = 2,</span></span>
-<span id="cb34-17"><a href="#cb34-17"></a>            <span class="dt">output_file =</span> <span class="st">&quot;files/trepo/taxa/figures/differential_heat_tree_merged_phyla.png&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>top_phyl &lt;-<span class="st"> </span>obj <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Proteobacteria&quot;</span>, <span class="st">&quot;Acidobacteriota&quot;</span>, <span class="st">&quot;Chloroflexi&quot;</span>, <span class="st">&quot;Planctomycetota&quot;</span>),  <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="kw">range.default</span>(top_phyl<span class="op">$</span>data<span class="op">$</span>diff_table<span class="op">$</span>log2_median_ratio, <span class="dt">finite=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>[1] -6.505150  8.071462</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co">#set.seed(10)</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>obj <span class="op">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Proteobacteria&quot;</span>, <span class="st">&quot;Acidobacteriota&quot;</span>, <span class="st">&quot;Chloroflexi&quot;</span>, <span class="st">&quot;Planctomycetota&quot;</span>),</span>
+<span id="cb40-4"><a href="#cb40-4"></a>              <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="st">  </span><span class="kw">heat_tree</span>(<span class="dt">node_label =</span> taxon_names,</span>
+<span id="cb40-6"><a href="#cb40-6"></a>            <span class="dt">node_size =</span> n_obs,</span>
+<span id="cb40-7"><a href="#cb40-7"></a>            <span class="dt">node_color =</span> log2_median_ratio,</span>
+<span id="cb40-8"><a href="#cb40-8"></a>            <span class="dt">node_color_range =</span> <span class="kw">c</span>(<span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>),</span>
+<span id="cb40-9"><a href="#cb40-9"></a>            <span class="dt">node_color_interval =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">3</span>),</span>
+<span id="cb40-10"><a href="#cb40-10"></a>            <span class="co">#edge_color_interval = c(-5.5, 4),</span></span>
+<span id="cb40-11"><a href="#cb40-11"></a>            <span class="co">#node_color_trans = &quot;area&quot;,</span></span>
+<span id="cb40-12"><a href="#cb40-12"></a>            <span class="dt">tree_label =</span> taxon_names,</span>
+<span id="cb40-13"><a href="#cb40-13"></a>            <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>, <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
+<span id="cb40-14"><a href="#cb40-14"></a>            <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Sum of root reads&quot;</span>,</span>
+<span id="cb40-15"><a href="#cb40-15"></a>            <span class="dt">node_size_axis_label =</span> <span class="st">&quot;Number of OTUs&quot;</span>,</span>
+<span id="cb40-16"><a href="#cb40-16"></a>            <span class="co">#overlap_avoidance = 2,</span></span>
+<span id="cb40-17"><a href="#cb40-17"></a>            <span class="dt">output_file =</span> <span class="st">&quot;files/trepo/taxa/figures/differential_heat_tree_merged_phyla.png&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-page">
 <p><img src="include/trepo/taxa/differential_heat_tree_merged_phyla.png" width="1500" /></p>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">save.image</span>(<span class="st">&quot;page_build/trepo/taxa_ssu_wf_part_3.rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="kw">rm</span>(ps_work_merge)</span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="kw">objects</span>()</span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="kw">save.image</span>(<span class="st">&quot;page_build/trepo/taxa_ssu_wf_part_3.rdata&quot;</span>)</span></code></pre></div>
 </div>
 <details>
 <p><summary>Scratch Code</summary></p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">load</span>(<span class="st">&quot;files/trepo/data-prep/rdata/ssu_merge_taxmap.rdata&quot;</span>)</span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="kw">objects</span>()</span>
-<span id="cb36-3"><a href="#cb36-3"></a></span>
-<span id="cb36-4"><a href="#cb36-4"></a></span>
-<span id="cb36-5"><a href="#cb36-5"></a>obj_merge <span class="op">%&gt;%</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a><span class="st">  </span><span class="kw">filter_taxa</span>(<span class="kw">grepl</span>(<span class="dt">pattern =</span> <span class="st">&quot;^[a-zA-Z]+$&quot;</span>, taxon_names)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove &quot;odd&quot; taxa</span></span>
-<span id="cb36-7"><a href="#cb36-7"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_ranks <span class="op">==</span><span class="st"> &quot;o&quot;</span>, <span class="dt">supertaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># subset to the order rank</span></span>
-<span id="cb36-8"><a href="#cb36-8"></a><span class="st">  </span><span class="kw">heat_tree</span>(<span class="dt">node_label =</span> <span class="kw">gsub</span>(<span class="dt">pattern =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">[|</span><span class="ch">\\</span><span class="st">]&quot;</span>, <span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>, taxon_names),</span>
-<span id="cb36-9"><a href="#cb36-9"></a>            <span class="dt">node_size =</span> n_obs,</span>
-<span id="cb36-10"><a href="#cb36-10"></a>            <span class="dt">node_color =</span> n_obs,</span>
-<span id="cb36-11"><a href="#cb36-11"></a>            <span class="dt">node_color_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
-<span id="cb36-12"><a href="#cb36-12"></a>            <span class="dt">layout =</span> <span class="st">&quot;davidson-harel&quot;</span>, <span class="dt">initial_layout =</span> <span class="st">&quot;reingold-tilford&quot;</span>)</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">heat_tree</span>(obj_merge)</span>
-<span id="cb37-2"><a href="#cb37-2"></a>obj<span class="op">$</span><span class="kw">taxon_names</span>()</span>
-<span id="cb37-3"><a href="#cb37-3"></a>ps_obj_mc_obj<span class="op">$</span><span class="kw">n_obs_1</span>()</span>
-<span id="cb37-4"><a href="#cb37-4"></a><span class="kw">heat_tree</span>(obj,</span>
-<span id="cb37-5"><a href="#cb37-5"></a>          <span class="dt">node_label =</span> taxon_names,</span>
-<span id="cb37-6"><a href="#cb37-6"></a>          <span class="dt">node_size =</span> n_obs,</span>
-<span id="cb37-7"><a href="#cb37-7"></a>          <span class="dt">node_color =</span> roots)</span>
-<span id="cb37-8"><a href="#cb37-8"></a></span>
-<span id="cb37-9"><a href="#cb37-9"></a>obj<span class="op">$</span>data<span class="op">$</span>tax_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(obj, <span class="st">&quot;otu_counts&quot;</span>,</span>
-<span id="cb37-10"><a href="#cb37-10"></a>                                       <span class="dt">cols =</span> sample_data<span class="op">$</span>SampleID,</span>
-<span id="cb37-11"><a href="#cb37-11"></a>                                       <span class="dt">groups =</span> sample_data<span class="op">$</span>Type)</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>ssu_make_metac &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ps_obj&quot;</span>)</span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_make_metac){</span>
-<span id="cb38-4"><a href="#cb38-4"></a>        tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb38-5"><a href="#cb38-5"></a>        tmp_tax &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">tax_table</span>(tmp_get))</span>
-<span id="cb38-6"><a href="#cb38-6"></a>        tmp_tax &lt;-<span class="st"> </span>tmp_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;otu_id&quot;</span>)</span>
-<span id="cb38-7"><a href="#cb38-7"></a>        tmp_asv &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get)))</span>
-<span id="cb38-8"><a href="#cb38-8"></a>        tmp_asv &lt;-<span class="st"> </span>tmp_asv <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;otu_id&quot;</span>)</span>
-<span id="cb38-9"><a href="#cb38-9"></a>        tmp_sam &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_get))</span>
-<span id="cb38-10"><a href="#cb38-10"></a>        tmp_sam[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb38-11"><a href="#cb38-11"></a>        tmp_sam &lt;-<span class="st"> </span>tmp_sam <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;sample_id&quot;</span>)</span>
-<span id="cb38-12"><a href="#cb38-12"></a>        tmp_asv_tax &lt;-<span class="st"> </span><span class="kw">merge</span>(tmp_asv, tmp_tax, <span class="dt">by=</span><span class="st">&quot;otu_id&quot;</span>)</span>
-<span id="cb38-13"><a href="#cb38-13"></a>        tmp_asv_tax<span class="op">$</span>ASV_SEQ &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb38-14"><a href="#cb38-14"></a>        tmp_asv_tax<span class="op">$</span>ASV_ID &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb38-15"><a href="#cb38-15"></a>        tmp_obj &lt;-<span class="st"> </span><span class="kw">parse_tax_data</span>(tmp_asv_tax,</span>
-<span id="cb38-16"><a href="#cb38-16"></a>                                  <span class="dt">class_cols =</span> <span class="kw">c</span>(<span class="st">&quot;Kingdom&quot;</span>, <span class="st">&quot;Phylum&quot;</span>,<span class="st">&quot;Class&quot;</span>,</span>
-<span id="cb38-17"><a href="#cb38-17"></a>                                                 <span class="st">&quot;Order&quot;</span>,<span class="st">&quot;Family&quot;</span>, <span class="st">&quot;Genus&quot;</span></span>
-<span id="cb38-18"><a href="#cb38-18"></a>                                                 ))</span>
-<span id="cb38-19"><a href="#cb38-19"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_group_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(tmp_obj, <span class="st">&quot;tax_data&quot;</span>,</span>
-<span id="cb38-20"><a href="#cb38-20"></a>                                       <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id,</span>
-<span id="cb38-21"><a href="#cb38-21"></a>                                       <span class="dt">groups =</span> tmp_sam<span class="op">$</span>TEMP)</span>
-<span id="cb38-22"><a href="#cb38-22"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_total_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(tmp_obj, <span class="st">&quot;tax_data&quot;</span>,</span>
-<span id="cb38-23"><a href="#cb38-23"></a>                                       <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id,</span>
-<span id="cb38-24"><a href="#cb38-24"></a>                                       <span class="dt">groups =</span> tmp_sam<span class="op">$</span>DEPTH,</span>
-<span id="cb38-25"><a href="#cb38-25"></a>                                       <span class="dt">out_names =</span> <span class="st">&quot;n_reads&quot;</span>)</span>
-<span id="cb38-26"><a href="#cb38-26"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_samp_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(tmp_obj, <span class="st">&quot;tax_data&quot;</span>,</span>
-<span id="cb38-27"><a href="#cb38-27"></a>                                       <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id)</span>
-<span id="cb38-28"><a href="#cb38-28"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_samp_occ &lt;-<span class="st"> </span><span class="kw">calc_n_samples</span>(tmp_obj, <span class="st">&quot;tax_samp_abund&quot;</span>,</span>
-<span id="cb38-29"><a href="#cb38-29"></a>                                   <span class="dt">groups =</span> tmp_sam<span class="op">$</span>TEMP,</span>
-<span id="cb38-30"><a href="#cb38-30"></a>                                   <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id)</span>
-<span id="cb38-31"><a href="#cb38-31"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>diff_table &lt;-<span class="st"> </span><span class="kw">compare_groups</span>(tmp_obj,</span>
-<span id="cb38-32"><a href="#cb38-32"></a>                                      <span class="dt">data =</span> <span class="st">&quot;tax_samp_abund&quot;</span>,</span>
-<span id="cb38-33"><a href="#cb38-33"></a>                                      <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id,</span>
-<span id="cb38-34"><a href="#cb38-34"></a>                                      <span class="dt">groups =</span> tmp_sam<span class="op">$</span>TEMP)</span>
-<span id="cb38-35"><a href="#cb38-35"></a>        tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_mc_obj&quot;</span>))</span>
-<span id="cb38-36"><a href="#cb38-36"></a>        <span class="kw">assign</span>(tmp_name, tmp_obj)</span>
-<span id="cb38-37"><a href="#cb38-37"></a>        tmp_name2 &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_mc_samp_data&quot;</span>))</span>
-<span id="cb38-38"><a href="#cb38-38"></a>        <span class="kw">assign</span>(tmp_name2, tmp_sam)</span>
-<span id="cb38-39"><a href="#cb38-39"></a>        <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb38-40"><a href="#cb38-40"></a>}</span>
-<span id="cb38-41"><a href="#cb38-41"></a><span class="kw">objects</span>()</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>ps_obj_mc_obj<span class="op">$</span>data<span class="op">$</span>tax_sam</span>
-<span id="cb39-2"><a href="#cb39-2"></a><span class="co">#ps_obj_mc_obj$data$diff_table</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="co">#write.table(ps_obj_mc_obj$data$diff_table, &quot;test.txt&quot;, quote = FALSE, sep = &quot;\t&quot;)</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="co">#ps_obj_mc_obj$data$diff_table</span></span>
-<span id="cb39-5"><a href="#cb39-5"></a><span class="co">#set.seed(1999)</span></span>
-<span id="cb39-6"><a href="#cb39-6"></a>ps_obj_mc_obj <span class="op">%&gt;%</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacteria&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb39-8"><a href="#cb39-8"></a><span class="co">#  filter_taxa(taxon_ranks == &quot;o&quot;, supertaxa = TRUE) %&gt;% # subset to the order rank</span></span>
-<span id="cb39-9"><a href="#cb39-9"></a><span class="co">#  filter_taxa(taxon_names %in% c(&quot;Alphaproteobacteria&quot;, &quot;Firmicutes&quot;, &quot;Gammaproteobacteria&quot;), subtaxa = TRUE, invert = FALSE) %&gt;% #</span></span>
-<span id="cb39-10"><a href="#cb39-10"></a></span>
-<span id="cb39-11"><a href="#cb39-11"></a><span class="st">  </span><span class="kw">heat_tree</span>(<span class="dt">node_label =</span> taxon_names,</span>
-<span id="cb39-12"><a href="#cb39-12"></a>            <span class="dt">node_size =</span> n_obs,</span>
-<span id="cb39-13"><a href="#cb39-13"></a>            <span class="dt">node_size_range =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>),</span>
-<span id="cb39-14"><a href="#cb39-14"></a>            <span class="dt">edge_size_range =</span> <span class="kw">c</span>(<span class="fl">0.005</span>, <span class="fl">0.005</span>),</span>
-<span id="cb39-15"><a href="#cb39-15"></a>            <span class="dt">node_color =</span> W0,</span>
-<span id="cb39-16"><a href="#cb39-16"></a>            <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>, <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
-<span id="cb39-17"><a href="#cb39-17"></a>            <span class="dt">title =</span> <span class="st">&quot;Root sample read depth&quot;</span>,</span>
-<span id="cb39-18"><a href="#cb39-18"></a>            <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Sum of root reads&quot;</span>,</span>
-<span id="cb39-19"><a href="#cb39-19"></a>            <span class="dt">node_size_axis_label =</span> <span class="st">&quot;Number of OTUs&quot;</span>,</span>
-<span id="cb39-20"><a href="#cb39-20"></a>            <span class="dt">output_file =</span> <span class="st">&quot;plot_example0.pdf&quot;</span>)</span>
-<span id="cb39-21"><a href="#cb39-21"></a></span>
-<span id="cb39-22"><a href="#cb39-22"></a>  <span class="kw">heat_tree</span>(</span>
-<span id="cb39-23"><a href="#cb39-23"></a>          <span class="dt">node_size =</span> W8,</span>
-<span id="cb39-24"><a href="#cb39-24"></a>          <span class="dt">node_label =</span> <span class="kw">paste0</span>(taxon_names, <span class="st">&quot; (&quot;</span>, n_obs, <span class="st">&quot;)&quot;</span> ) ,</span>
-<span id="cb39-25"><a href="#cb39-25"></a>          <span class="dt">node_size_range =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.04</span>),</span>
-<span id="cb39-26"><a href="#cb39-26"></a>          <span class="co">#node_label_size_range = c(0.008, 0.04),</span></span>
-<span id="cb39-27"><a href="#cb39-27"></a>          <span class="dt">node_color =</span> W8,</span>
-<span id="cb39-28"><a href="#cb39-28"></a>          <span class="co">#node_color_interval = c(0, 0.05),</span></span>
-<span id="cb39-29"><a href="#cb39-29"></a>          <span class="co">#edge_color_interval = c(0, 0.05),</span></span>
-<span id="cb39-30"><a href="#cb39-30"></a>          <span class="co">#node_color_trans = &quot;area&quot;,</span></span>
-<span id="cb39-31"><a href="#cb39-31"></a>          <span class="co">#node_color_range = c(&quot;#D55E00&quot;, &quot;gray&quot;, &quot;#0072B2&quot;),</span></span>
-<span id="cb39-32"><a href="#cb39-32"></a>          <span class="dt">node_size_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
-<span id="cb39-33"><a href="#cb39-33"></a>          <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log 2 median ratio&quot;</span>,</span>
-<span id="cb39-34"><a href="#cb39-34"></a>          <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
-<span id="cb39-35"><a href="#cb39-35"></a>          <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>,</span>
-<span id="cb39-36"><a href="#cb39-36"></a>          <span class="dt">overlap_avoidance =</span> <span class="dv">2</span>,</span>
-<span id="cb39-37"><a href="#cb39-37"></a>          <span class="dt">output_file =</span> <span class="st">&quot;differential_heat_tree.pdf&quot;</span>)</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>swel_col &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#ff6db6&quot;</span>, <span class="st">&quot;#24ff24&quot;</span>, <span class="st">&quot;#db6d00&quot;</span>)</span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">write.table</span>(ps_obj_mc_obj<span class="op">$</span>data<span class="op">$</span>diff_table, <span class="st">&quot;test.txt&quot;</span>, <span class="dt">quote =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
-<span id="cb40-3"><a href="#cb40-3"></a>ps_obj_mc_obj<span class="op">$</span><span class="kw">n_obs</span>()</span>
-<span id="cb40-4"><a href="#cb40-4"></a>ps_obj_mc_obj <span class="op">%&gt;%</span></span>
-<span id="cb40-5"><a href="#cb40-5"></a><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacteria&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a><span class="kw">heat_tree_matrix</span>(</span>
-<span id="cb40-7"><a href="#cb40-7"></a>                 <span class="dt">data =</span> <span class="st">&quot;diff_table&quot;</span>,</span>
-<span id="cb40-8"><a href="#cb40-8"></a>                 <span class="dt">node_label =</span> taxon_names,</span>
-<span id="cb40-9"><a href="#cb40-9"></a>                 <span class="dt">node_size =</span> n_obs_<span class="dv">1</span>, <span class="co"># n_obs is a function that calculates the number of OTUs per taxon</span></span>
-<span id="cb40-10"><a href="#cb40-10"></a>                 <span class="co">#node_label_size_range = c(0.008, 0.04),</span></span>
-<span id="cb40-11"><a href="#cb40-11"></a>                 <span class="dt">node_color =</span> roots, <span class="co"># A column from `obj$data$diff_table`</span></span>
-<span id="cb40-12"><a href="#cb40-12"></a>                 <span class="co">#node_color_range = swel_col, # The built-in palette for diverging data</span></span>
-<span id="cb40-13"><a href="#cb40-13"></a>                 <span class="co">#node_color_trans = &quot;linear&quot;, # The default is scaled by circle area</span></span>
-<span id="cb40-14"><a href="#cb40-14"></a>                 <span class="co">#node_color_interval = c(0, 0.05),  # The range of `log2_median_ratio` to display</span></span>
-<span id="cb40-15"><a href="#cb40-15"></a>                 <span class="co">#edge_color_interval = c(0, 0.05), # The range of `log2_median_ratio` to display</span></span>
-<span id="cb40-16"><a href="#cb40-16"></a>                 <span class="dt">node_size_axis_label =</span> <span class="st">&quot;Number of OTUs&quot;</span>,</span>
-<span id="cb40-17"><a href="#cb40-17"></a>                 <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log2 ratio median proportions&quot;</span>,</span>
-<span id="cb40-18"><a href="#cb40-18"></a>                 <span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>, <span class="co"># The primary layout algorithm</span></span>
-<span id="cb40-19"><a href="#cb40-19"></a>                 <span class="dt">initial_layout =</span> <span class="st">&quot;reingold-tilford&quot;</span>, <span class="co"># The layout algorithm that initializes node locations</span></span>
-<span id="cb40-20"><a href="#cb40-20"></a>                 <span class="dt">output_file =</span> <span class="st">&quot;differential_heat_tree2.pdf&quot;</span>) <span class="co"># Saves the plot as a png file</span></span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_data_sets){</span>
-<span id="cb41-2"><a href="#cb41-2"></a>    tmp_clean &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_proteo_clean&quot;</span>))</span>
-<span id="cb41-3"><a href="#cb41-3"></a>    tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_clean)</span>
-<span id="cb41-4"><a href="#cb41-4"></a>    tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
-<span id="cb41-5"><a href="#cb41-5"></a>    tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb41-6"><a href="#cb41-6"></a>    tmp_prune &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
-<span id="cb41-7"><a href="#cb41-7"></a>    tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_prune), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_prune))</span>
-<span id="cb41-8"><a href="#cb41-8"></a>    tmp_ps_merge &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_prune,</span>
-<span id="cb41-9"><a href="#cb41-9"></a>                               sample_data,</span>
-<span id="cb41-10"><a href="#cb41-10"></a>                               tmp_tree)</span>
-<span id="cb41-11"><a href="#cb41-11"></a>    tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_proteo_clean_trans&quot;</span>))</span>
-<span id="cb41-12"><a href="#cb41-12"></a>    <span class="kw">assign</span>(tmp_name, tmp_ps_merge)</span>
-<span id="cb41-13"><a href="#cb41-13"></a>    <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb41-14"><a href="#cb41-14"></a>}</span>
-<span id="cb41-15"><a href="#cb41-15"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_agg&quot;</span>) ssu_ps_pime_clean_Phylum_agg</span></code></pre></div>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>carbom_chloro &lt;-<span class="st"> </span><span class="kw">subset_taxa</span>(ssu_ps_pime_proteo_clean_trans, Phylum <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Firmicutes&quot;</span>))</span>
-<span id="cb42-2"><a href="#cb42-2"></a>testplot &lt;-<span class="st"> </span><span class="kw">plot_bar</span>(carbom_chloro, <span class="dt">x=</span><span class="st">&quot;Class&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;Class&quot;</span>, <span class="dt">facet_grid =</span> <span class="op">~</span>TEMP) <span class="op">+</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a><span class="st">            </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Class, <span class="dt">fill=</span>Class), <span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;stack&quot;</span>)</span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw">load</span>(<span class="st">&quot;files/trepo/data-prep/rdata/ssu_merge_taxmap.rdata&quot;</span>)</span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">objects</span>()</span>
+<span id="cb42-3"><a href="#cb42-3"></a></span>
 <span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a>carbom_chloro &lt;-<span class="st"> </span><span class="kw">subset_taxa</span>(ssu_ps_pime_proteo_clean_trans, Phylum <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Alphaproteobacteria&quot;</span>, <span class="st">&quot;Gammaproteobacteria&quot;</span>, <span class="st">&quot;Firmicutes&quot;</span>))</span>
-<span id="cb42-6"><a href="#cb42-6"></a>carbom.ord &lt;-<span class="st"> </span><span class="kw">ordinate</span>(carbom_chloro, <span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;bray&quot;</span>)</span>
-<span id="cb42-7"><a href="#cb42-7"></a>testplot &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(ssu_ps_work_proteo_clean_trans, carbom.ord, <span class="dt">type=</span><span class="st">&quot;taxa&quot;</span>, <span class="dt">color=</span><span class="st">&quot;Family&quot;</span>,</span>
-<span id="cb42-8"><a href="#cb42-8"></a>                  <span class="dt">title=</span><span class="st">&quot;OTUs&quot;</span>, <span class="dt">label=</span><span class="st">&quot;Family&quot;</span>) <span class="op">+</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a><span class="st">                  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Phylum)</span>
-<span id="cb42-10"><a href="#cb42-10"></a></span>
-<span id="cb42-11"><a href="#cb42-11"></a></span>
-<span id="cb42-12"><a href="#cb42-12"></a>testplot</span>
-<span id="cb42-13"><a href="#cb42-13"></a><span class="kw">dev.off</span>()</span>
-<span id="cb42-14"><a href="#cb42-14"></a><span class="kw">png</span>(<span class="st">&quot;figures/trepo-taxa/ssu/testplot.png&quot;</span>, <span class="dt">height =</span> <span class="dv">20</span>, <span class="dt">width =</span> <span class="dv">70</span>,</span>
-<span id="cb42-15"><a href="#cb42-15"></a>    <span class="dt">units =</span> <span class="st">&#39;cm&#39;</span>, <span class="dt">res =</span> <span class="dv">600</span>, <span class="dt">bg =</span> <span class="st">&quot;white&quot;</span>)</span>
-<span id="cb42-16"><a href="#cb42-16"></a>testplot</span>
-<span id="cb42-17"><a href="#cb42-17"></a><span class="kw">dev.off</span>()</span>
-<span id="cb42-18"><a href="#cb42-18"></a><span class="kw">pdf</span>(<span class="st">&quot;figures/trepo-taxa/ssu/testplot.pdf&quot;</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">width =</span> <span class="dv">12</span>)</span>
-<span id="cb42-19"><a href="#cb42-19"></a>testplot</span>
-<span id="cb42-20"><a href="#cb42-20"></a><span class="kw">dev.off</span>()</span></code></pre></div>
+<span id="cb42-5"><a href="#cb42-5"></a>obj_merge <span class="op">%&gt;%</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="st">  </span><span class="kw">filter_taxa</span>(<span class="kw">grepl</span>(<span class="dt">pattern =</span> <span class="st">&quot;^[a-zA-Z]+$&quot;</span>, taxon_names)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># remove &quot;odd&quot; taxa</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_ranks <span class="op">==</span><span class="st"> &quot;o&quot;</span>, <span class="dt">supertaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># subset to the order rank</span></span>
+<span id="cb42-8"><a href="#cb42-8"></a><span class="st">  </span><span class="kw">heat_tree</span>(<span class="dt">node_label =</span> <span class="kw">gsub</span>(<span class="dt">pattern =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">[|</span><span class="ch">\\</span><span class="st">]&quot;</span>, <span class="dt">replacement =</span> <span class="st">&quot;&quot;</span>, taxon_names),</span>
+<span id="cb42-9"><a href="#cb42-9"></a>            <span class="dt">node_size =</span> n_obs,</span>
+<span id="cb42-10"><a href="#cb42-10"></a>            <span class="dt">node_color =</span> n_obs,</span>
+<span id="cb42-11"><a href="#cb42-11"></a>            <span class="dt">node_color_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
+<span id="cb42-12"><a href="#cb42-12"></a>            <span class="dt">layout =</span> <span class="st">&quot;davidson-harel&quot;</span>, <span class="dt">initial_layout =</span> <span class="st">&quot;reingold-tilford&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>subset_level &lt;-<span class="st"> &quot;Phylum&quot;</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a>subset_name &lt;-<span class="st"> &quot;Alphaproteobacteria&quot;</span></span>
-<span id="cb43-3"><a href="#cb43-3"></a><span class="cf">for</span> ( i <span class="cf">in</span> ssu_data_sets){</span>
-<span id="cb43-4"><a href="#cb43-4"></a>  tmp_get_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_proteo_clean&quot;</span>))</span>
-<span id="cb43-5"><a href="#cb43-5"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_get_name)</span>
-<span id="cb43-6"><a href="#cb43-6"></a>  tmp_ps &lt;-<span class="st"> </span><span class="kw">subset_taxa</span>(tmp_get, <span class="kw">get</span>(subset_level) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(subset_name))</span>
-<span id="cb43-7"><a href="#cb43-7"></a>  tmp_sub_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name))</span>
-<span id="cb43-8"><a href="#cb43-8"></a>  <span class="kw">assign</span>(tmp_sub_name, tmp_ps)</span>
-<span id="cb43-9"><a href="#cb43-9"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb43-10"><a href="#cb43-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="kw">heat_tree</span>(obj_merge)</span>
+<span id="cb43-2"><a href="#cb43-2"></a>obj<span class="op">$</span><span class="kw">taxon_names</span>()</span>
+<span id="cb43-3"><a href="#cb43-3"></a>ps_obj_mc_obj<span class="op">$</span><span class="kw">n_obs_1</span>()</span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="kw">heat_tree</span>(obj,</span>
+<span id="cb43-5"><a href="#cb43-5"></a>          <span class="dt">node_label =</span> taxon_names,</span>
+<span id="cb43-6"><a href="#cb43-6"></a>          <span class="dt">node_size =</span> n_obs,</span>
+<span id="cb43-7"><a href="#cb43-7"></a>          <span class="dt">node_color =</span> roots)</span>
+<span id="cb43-8"><a href="#cb43-8"></a></span>
+<span id="cb43-9"><a href="#cb43-9"></a>obj<span class="op">$</span>data<span class="op">$</span>tax_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(obj, <span class="st">&quot;otu_counts&quot;</span>,</span>
+<span id="cb43-10"><a href="#cb43-10"></a>                                       <span class="dt">cols =</span> sample_data<span class="op">$</span>SampleID,</span>
+<span id="cb43-11"><a href="#cb43-11"></a>                                       <span class="dt">groups =</span> sample_data<span class="op">$</span>Type)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>top_hits &lt;-<span class="st"> </span><span class="dv">12</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>top_level &lt;-<span class="st"> &quot;Family&quot;</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_data_sets){</span>
-<span id="cb44-4"><a href="#cb44-4"></a>  tmp_get_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name))</span>
-<span id="cb44-5"><a href="#cb44-5"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_get_name)</span>
-<span id="cb44-6"><a href="#cb44-6"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get)))</span>
-<span id="cb44-7"><a href="#cb44-7"></a>  tmp_otu[] &lt;-<span class="st"> </span><span class="kw">lapply</span>(tmp_otu, as.numeric)</span>
-<span id="cb44-8"><a href="#cb44-8"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_otu)</span>
-<span id="cb44-9"><a href="#cb44-9"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">data.frame</span>(<span class="kw">tax_table</span>(tmp_get)))</span>
-<span id="cb44-10"><a href="#cb44-10"></a>  tmp_samples &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_get))</span>
-<span id="cb44-11"><a href="#cb44-11"></a>  tmp_clean_df &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(<span class="kw">otu_table</span>(tmp_otu, <span class="dt">taxa_are_rows =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb44-12"><a href="#cb44-12"></a>                          <span class="kw">tax_table</span>(tmp_tax, tmp_tax),</span>
-<span id="cb44-13"><a href="#cb44-13"></a>                          <span class="kw">sample_data</span>(tmp_samples))</span>
-<span id="cb44-14"><a href="#cb44-14"></a>  tmp_agg_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name, <span class="st">&quot;_agg&quot;</span>))</span>
-<span id="cb44-15"><a href="#cb44-15"></a>  tmp_agg_df &lt;-<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">aggregate_top_taxa</span>(tmp_clean_df,</span>
-<span id="cb44-16"><a href="#cb44-16"></a>                                                    <span class="dt">top =</span> top_hits,</span>
-<span id="cb44-17"><a href="#cb44-17"></a>                                                    <span class="dt">level =</span> top_level)</span>
-<span id="cb44-18"><a href="#cb44-18"></a>  <span class="kw">assign</span>(tmp_agg_name, tmp_agg_df)</span>
-<span id="cb44-19"><a href="#cb44-19"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb44-20"><a href="#cb44-20"></a>}</span>
-<span id="cb44-21"><a href="#cb44-21"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub&quot;</span>)</span>
-<span id="cb44-22"><a href="#cb44-22"></a><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>ssu_make_metac &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ps_obj&quot;</span>)</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_make_metac){</span>
+<span id="cb44-4"><a href="#cb44-4"></a>        tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb44-5"><a href="#cb44-5"></a>        tmp_tax &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">tax_table</span>(tmp_get))</span>
+<span id="cb44-6"><a href="#cb44-6"></a>        tmp_tax &lt;-<span class="st"> </span>tmp_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;otu_id&quot;</span>)</span>
+<span id="cb44-7"><a href="#cb44-7"></a>        tmp_asv &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get)))</span>
+<span id="cb44-8"><a href="#cb44-8"></a>        tmp_asv &lt;-<span class="st"> </span>tmp_asv <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;otu_id&quot;</span>)</span>
+<span id="cb44-9"><a href="#cb44-9"></a>        tmp_sam &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_get))</span>
+<span id="cb44-10"><a href="#cb44-10"></a>        tmp_sam[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb44-11"><a href="#cb44-11"></a>        tmp_sam &lt;-<span class="st"> </span>tmp_sam <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;sample_id&quot;</span>)</span>
+<span id="cb44-12"><a href="#cb44-12"></a>        tmp_asv_tax &lt;-<span class="st"> </span><span class="kw">merge</span>(tmp_asv, tmp_tax, <span class="dt">by=</span><span class="st">&quot;otu_id&quot;</span>)</span>
+<span id="cb44-13"><a href="#cb44-13"></a>        tmp_asv_tax<span class="op">$</span>ASV_SEQ &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a>        tmp_asv_tax<span class="op">$</span>ASV_ID &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb44-15"><a href="#cb44-15"></a>        tmp_obj &lt;-<span class="st"> </span><span class="kw">parse_tax_data</span>(tmp_asv_tax,</span>
+<span id="cb44-16"><a href="#cb44-16"></a>                                  <span class="dt">class_cols =</span> <span class="kw">c</span>(<span class="st">&quot;Kingdom&quot;</span>, <span class="st">&quot;Phylum&quot;</span>,<span class="st">&quot;Class&quot;</span>,</span>
+<span id="cb44-17"><a href="#cb44-17"></a>                                                 <span class="st">&quot;Order&quot;</span>,<span class="st">&quot;Family&quot;</span>, <span class="st">&quot;Genus&quot;</span></span>
+<span id="cb44-18"><a href="#cb44-18"></a>                                                 ))</span>
+<span id="cb44-19"><a href="#cb44-19"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_group_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(tmp_obj, <span class="st">&quot;tax_data&quot;</span>,</span>
+<span id="cb44-20"><a href="#cb44-20"></a>                                       <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id,</span>
+<span id="cb44-21"><a href="#cb44-21"></a>                                       <span class="dt">groups =</span> tmp_sam<span class="op">$</span>TEMP)</span>
+<span id="cb44-22"><a href="#cb44-22"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_total_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(tmp_obj, <span class="st">&quot;tax_data&quot;</span>,</span>
+<span id="cb44-23"><a href="#cb44-23"></a>                                       <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id,</span>
+<span id="cb44-24"><a href="#cb44-24"></a>                                       <span class="dt">groups =</span> tmp_sam<span class="op">$</span>DEPTH,</span>
+<span id="cb44-25"><a href="#cb44-25"></a>                                       <span class="dt">out_names =</span> <span class="st">&quot;n_reads&quot;</span>)</span>
+<span id="cb44-26"><a href="#cb44-26"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_samp_abund &lt;-<span class="st"> </span><span class="kw">calc_taxon_abund</span>(tmp_obj, <span class="st">&quot;tax_data&quot;</span>,</span>
+<span id="cb44-27"><a href="#cb44-27"></a>                                       <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id)</span>
+<span id="cb44-28"><a href="#cb44-28"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>tax_samp_occ &lt;-<span class="st"> </span><span class="kw">calc_n_samples</span>(tmp_obj, <span class="st">&quot;tax_samp_abund&quot;</span>,</span>
+<span id="cb44-29"><a href="#cb44-29"></a>                                   <span class="dt">groups =</span> tmp_sam<span class="op">$</span>TEMP,</span>
+<span id="cb44-30"><a href="#cb44-30"></a>                                   <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id)</span>
+<span id="cb44-31"><a href="#cb44-31"></a>        tmp_obj<span class="op">$</span>data<span class="op">$</span>diff_table &lt;-<span class="st"> </span><span class="kw">compare_groups</span>(tmp_obj,</span>
+<span id="cb44-32"><a href="#cb44-32"></a>                                      <span class="dt">data =</span> <span class="st">&quot;tax_samp_abund&quot;</span>,</span>
+<span id="cb44-33"><a href="#cb44-33"></a>                                      <span class="dt">cols =</span> tmp_sam<span class="op">$</span>sample_id,</span>
+<span id="cb44-34"><a href="#cb44-34"></a>                                      <span class="dt">groups =</span> tmp_sam<span class="op">$</span>TEMP)</span>
+<span id="cb44-35"><a href="#cb44-35"></a>        tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_mc_obj&quot;</span>))</span>
+<span id="cb44-36"><a href="#cb44-36"></a>        <span class="kw">assign</span>(tmp_name, tmp_obj)</span>
+<span id="cb44-37"><a href="#cb44-37"></a>        tmp_name2 &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_mc_samp_data&quot;</span>))</span>
+<span id="cb44-38"><a href="#cb44-38"></a>        <span class="kw">assign</span>(tmp_name2, tmp_sam)</span>
+<span id="cb44-39"><a href="#cb44-39"></a>        <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb44-40"><a href="#cb44-40"></a>}</span>
+<span id="cb44-41"><a href="#cb44-41"></a><span class="kw">objects</span>()</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub.*_agg$&quot;</span>)) {</span>
-<span id="cb45-2"><a href="#cb45-2"></a>  tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_order&quot;</span>))</span>
-<span id="cb45-3"><a href="#cb45-3"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb45-4"><a href="#cb45-4"></a>  tmp_list &lt;-<span class="st"> </span><span class="kw">get_taxa_unique</span>(tmp_get, <span class="dt">taxonomic.rank =</span> <span class="kw">rank_names</span>(tmp_get)[<span class="dv">1</span>],</span>
-<span id="cb45-5"><a href="#cb45-5"></a>                        <span class="dt">errorIfNULL =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb45-6"><a href="#cb45-6"></a>  <span class="kw">assign</span>(tmp_name, tmp_list)</span>
-<span id="cb45-7"><a href="#cb45-7"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb45-8"><a href="#cb45-8"></a>}</span>
-<span id="cb45-9"><a href="#cb45-9"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>ps_obj_mc_obj<span class="op">$</span>data<span class="op">$</span>tax_sam</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#ps_obj_mc_obj$data$diff_table</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="co">#write.table(ps_obj_mc_obj$data$diff_table, &quot;test.txt&quot;, quote = FALSE, sep = &quot;\t&quot;)</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="co">#ps_obj_mc_obj$data$diff_table</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="co">#set.seed(1999)</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>ps_obj_mc_obj <span class="op">%&gt;%</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a><span class="st">  </span><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacteria&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="co">#  filter_taxa(taxon_ranks == &quot;o&quot;, supertaxa = TRUE) %&gt;% # subset to the order rank</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a><span class="co">#  filter_taxa(taxon_names %in% c(&quot;Alphaproteobacteria&quot;, &quot;Firmicutes&quot;, &quot;Gammaproteobacteria&quot;), subtaxa = TRUE, invert = FALSE) %&gt;% #</span></span>
+<span id="cb45-10"><a href="#cb45-10"></a></span>
+<span id="cb45-11"><a href="#cb45-11"></a><span class="st">  </span><span class="kw">heat_tree</span>(<span class="dt">node_label =</span> taxon_names,</span>
+<span id="cb45-12"><a href="#cb45-12"></a>            <span class="dt">node_size =</span> n_obs,</span>
+<span id="cb45-13"><a href="#cb45-13"></a>            <span class="dt">node_size_range =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>),</span>
+<span id="cb45-14"><a href="#cb45-14"></a>            <span class="dt">edge_size_range =</span> <span class="kw">c</span>(<span class="fl">0.005</span>, <span class="fl">0.005</span>),</span>
+<span id="cb45-15"><a href="#cb45-15"></a>            <span class="dt">node_color =</span> W0,</span>
+<span id="cb45-16"><a href="#cb45-16"></a>            <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>, <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
+<span id="cb45-17"><a href="#cb45-17"></a>            <span class="dt">title =</span> <span class="st">&quot;Root sample read depth&quot;</span>,</span>
+<span id="cb45-18"><a href="#cb45-18"></a>            <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Sum of root reads&quot;</span>,</span>
+<span id="cb45-19"><a href="#cb45-19"></a>            <span class="dt">node_size_axis_label =</span> <span class="st">&quot;Number of OTUs&quot;</span>,</span>
+<span id="cb45-20"><a href="#cb45-20"></a>            <span class="dt">output_file =</span> <span class="st">&quot;plot_example0.pdf&quot;</span>)</span>
+<span id="cb45-21"><a href="#cb45-21"></a></span>
+<span id="cb45-22"><a href="#cb45-22"></a>  <span class="kw">heat_tree</span>(</span>
+<span id="cb45-23"><a href="#cb45-23"></a>          <span class="dt">node_size =</span> W8,</span>
+<span id="cb45-24"><a href="#cb45-24"></a>          <span class="dt">node_label =</span> <span class="kw">paste0</span>(taxon_names, <span class="st">&quot; (&quot;</span>, n_obs, <span class="st">&quot;)&quot;</span> ) ,</span>
+<span id="cb45-25"><a href="#cb45-25"></a>          <span class="dt">node_size_range =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.04</span>),</span>
+<span id="cb45-26"><a href="#cb45-26"></a>          <span class="co">#node_label_size_range = c(0.008, 0.04),</span></span>
+<span id="cb45-27"><a href="#cb45-27"></a>          <span class="dt">node_color =</span> W8,</span>
+<span id="cb45-28"><a href="#cb45-28"></a>          <span class="co">#node_color_interval = c(0, 0.05),</span></span>
+<span id="cb45-29"><a href="#cb45-29"></a>          <span class="co">#edge_color_interval = c(0, 0.05),</span></span>
+<span id="cb45-30"><a href="#cb45-30"></a>          <span class="co">#node_color_trans = &quot;area&quot;,</span></span>
+<span id="cb45-31"><a href="#cb45-31"></a>          <span class="co">#node_color_range = c(&quot;#D55E00&quot;, &quot;gray&quot;, &quot;#0072B2&quot;),</span></span>
+<span id="cb45-32"><a href="#cb45-32"></a>          <span class="dt">node_size_axis_label =</span> <span class="st">&quot;OTU count&quot;</span>,</span>
+<span id="cb45-33"><a href="#cb45-33"></a>          <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log 2 median ratio&quot;</span>,</span>
+<span id="cb45-34"><a href="#cb45-34"></a>          <span class="dt">layout =</span> <span class="st">&quot;da&quot;</span>,</span>
+<span id="cb45-35"><a href="#cb45-35"></a>          <span class="dt">initial_layout =</span> <span class="st">&quot;re&quot;</span>,</span>
+<span id="cb45-36"><a href="#cb45-36"></a>          <span class="dt">overlap_avoidance =</span> <span class="dv">2</span>,</span>
+<span id="cb45-37"><a href="#cb45-37"></a>          <span class="dt">output_file =</span> <span class="st">&quot;differential_heat_tree.pdf&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub.*_agg$&quot;</span>)) {</span>
-<span id="cb46-2"><a href="#cb46-2"></a>  tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_tax&quot;</span>))</span>
-<span id="cb46-3"><a href="#cb46-3"></a>  tmp_agg &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_order&quot;</span>))</span>
-<span id="cb46-4"><a href="#cb46-4"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb46-5"><a href="#cb46-5"></a>  tmp_get_agg &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_agg)</span>
-<span id="cb46-6"><a href="#cb46-6"></a>  tmp_df &lt;-<span class="st"> </span>tmp_get <span class="op">%&gt;%</span></span>
-<span id="cb46-7"><a href="#cb46-7"></a><span class="st">            </span><span class="kw">transform_sample_counts</span>(<span class="cf">function</span>(x) {x<span class="op">/</span><span class="kw">sum</span>(x)} ) <span class="op">%&gt;%</span></span>
-<span id="cb46-8"><a href="#cb46-8"></a><span class="st">            </span><span class="kw">psmelt</span>()</span>
-<span id="cb46-9"><a href="#cb46-9"></a>  tmp_df[[top_level]] &lt;-<span class="st"> </span>gdata<span class="op">::</span><span class="kw">reorder.factor</span>(tmp_df[[top_level]],</span>
-<span id="cb46-10"><a href="#cb46-10"></a>                                                  <span class="dt">new.order =</span> <span class="kw">rev</span>(tmp_get_agg))</span>
-<span id="cb46-11"><a href="#cb46-11"></a>  tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">get</span>(top_level))</span>
-<span id="cb46-12"><a href="#cb46-12"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
-<span id="cb46-13"><a href="#cb46-13"></a>  <span class="kw">print</span>(<span class="kw">c</span>(i,tmp_name, tmp_agg))</span>
-<span id="cb46-14"><a href="#cb46-14"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb46-15"><a href="#cb46-15"></a>}</span>
-<span id="cb46-16"><a href="#cb46-16"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_tax&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>swel_col &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;#ff6db6&quot;</span>, <span class="st">&quot;#24ff24&quot;</span>, <span class="st">&quot;#db6d00&quot;</span>)</span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="kw">write.table</span>(ps_obj_mc_obj<span class="op">$</span>data<span class="op">$</span>diff_table, <span class="st">&quot;test.txt&quot;</span>, <span class="dt">quote =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb46-3"><a href="#cb46-3"></a>ps_obj_mc_obj<span class="op">$</span><span class="kw">n_obs</span>()</span>
+<span id="cb46-4"><a href="#cb46-4"></a>ps_obj_mc_obj <span class="op">%&gt;%</span></span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="kw">filter_taxa</span>(taxon_names <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacteria&quot;</span>), <span class="dt">subtaxa =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a><span class="kw">heat_tree_matrix</span>(</span>
+<span id="cb46-7"><a href="#cb46-7"></a>                 <span class="dt">data =</span> <span class="st">&quot;diff_table&quot;</span>,</span>
+<span id="cb46-8"><a href="#cb46-8"></a>                 <span class="dt">node_label =</span> taxon_names,</span>
+<span id="cb46-9"><a href="#cb46-9"></a>                 <span class="dt">node_size =</span> n_obs_<span class="dv">1</span>, <span class="co"># n_obs is a function that calculates the number of OTUs per taxon</span></span>
+<span id="cb46-10"><a href="#cb46-10"></a>                 <span class="co">#node_label_size_range = c(0.008, 0.04),</span></span>
+<span id="cb46-11"><a href="#cb46-11"></a>                 <span class="dt">node_color =</span> roots, <span class="co"># A column from `obj$data$diff_table`</span></span>
+<span id="cb46-12"><a href="#cb46-12"></a>                 <span class="co">#node_color_range = swel_col, # The built-in palette for diverging data</span></span>
+<span id="cb46-13"><a href="#cb46-13"></a>                 <span class="co">#node_color_trans = &quot;linear&quot;, # The default is scaled by circle area</span></span>
+<span id="cb46-14"><a href="#cb46-14"></a>                 <span class="co">#node_color_interval = c(0, 0.05),  # The range of `log2_median_ratio` to display</span></span>
+<span id="cb46-15"><a href="#cb46-15"></a>                 <span class="co">#edge_color_interval = c(0, 0.05), # The range of `log2_median_ratio` to display</span></span>
+<span id="cb46-16"><a href="#cb46-16"></a>                 <span class="dt">node_size_axis_label =</span> <span class="st">&quot;Number of OTUs&quot;</span>,</span>
+<span id="cb46-17"><a href="#cb46-17"></a>                 <span class="dt">node_color_axis_label =</span> <span class="st">&quot;Log2 ratio median proportions&quot;</span>,</span>
+<span id="cb46-18"><a href="#cb46-18"></a>                 <span class="dt">layout =</span> <span class="st">&quot;fr&quot;</span>, <span class="co"># The primary layout algorithm</span></span>
+<span id="cb46-19"><a href="#cb46-19"></a>                 <span class="dt">initial_layout =</span> <span class="st">&quot;reingold-tilford&quot;</span>, <span class="co"># The layout algorithm that initializes node locations</span></span>
+<span id="cb46-20"><a href="#cb46-20"></a>                 <span class="dt">output_file =</span> <span class="st">&quot;differential_heat_tree2.pdf&quot;</span>) <span class="co"># Saves the plot as a png file</span></span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub.*_tax&quot;</span>)) {</span>
-<span id="cb47-2"><a href="#cb47-2"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb47-3"><a href="#cb47-3"></a>  tmp_levels &lt;-<span class="st"> </span><span class="kw">levels</span>(tmp_get[[top_level]])</span>
-<span id="cb47-4"><a href="#cb47-4"></a>  <span class="kw">print</span>(<span class="kw">c</span>(i, tmp_levels))</span>
-<span id="cb47-5"><a href="#cb47-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_data_sets){</span>
+<span id="cb47-2"><a href="#cb47-2"></a>    tmp_clean &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_proteo_clean&quot;</span>))</span>
+<span id="cb47-3"><a href="#cb47-3"></a>    tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_clean)</span>
+<span id="cb47-4"><a href="#cb47-4"></a>    tmp_ps &lt;-<span class="st"> </span><span class="kw">transform_sample_counts</span>(tmp_get, <span class="cf">function</span>(otu) otu<span class="op">/</span><span class="kw">sum</span>(otu))</span>
+<span id="cb47-5"><a href="#cb47-5"></a>    tmp_ps<span class="op">@</span>phy_tree &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb47-6"><a href="#cb47-6"></a>    tmp_prune &lt;-<span class="st"> </span><span class="kw">prune_samples</span>(<span class="kw">sample_sums</span>(tmp_ps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, tmp_ps)</span>
+<span id="cb47-7"><a href="#cb47-7"></a>    tmp_tree &lt;-<span class="st"> </span><span class="kw">rtree</span>(<span class="kw">ntaxa</span>(tmp_prune), <span class="dt">rooted =</span> <span class="ot">TRUE</span>, <span class="dt">tip.label =</span> <span class="kw">taxa_names</span>(tmp_prune))</span>
+<span id="cb47-8"><a href="#cb47-8"></a>    tmp_ps_merge &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(tmp_prune,</span>
+<span id="cb47-9"><a href="#cb47-9"></a>                               sample_data,</span>
+<span id="cb47-10"><a href="#cb47-10"></a>                               tmp_tree)</span>
+<span id="cb47-11"><a href="#cb47-11"></a>    tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_proteo_clean_trans&quot;</span>))</span>
+<span id="cb47-12"><a href="#cb47-12"></a>    <span class="kw">assign</span>(tmp_name, tmp_ps_merge)</span>
+<span id="cb47-13"><a href="#cb47-13"></a>    <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb47-14"><a href="#cb47-14"></a>}</span>
+<span id="cb47-15"><a href="#cb47-15"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_agg&quot;</span>) ssu_ps_pime_clean_Phylum_agg</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>ssu_ps_pime_<span class="dv">0</span>_clean_sub_Firmicutes_agg_order &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacillaceae&quot;</span> <span class="st">&quot;o_Bacillales&quot;</span>     <span class="st">&quot;Planococcaceae&quot;</span>   <span class="st">&quot;Paenibacillaceae&quot;</span>)</span>
-<span id="cb48-2"><a href="#cb48-2"></a>ssu_ps_pime_<span class="dv">4</span>_clean_sub_Firmicutes_agg_order</span>
-<span id="cb48-3"><a href="#cb48-3"></a>ssu_ps_pime_<span class="dv">8</span>_clean_sub_Firmicutes_agg_order</span>
-<span id="cb48-4"><a href="#cb48-4"></a>ssu_ps_pime_clean_sub_Firmicutes_agg_order</span>
-<span id="cb48-5"><a href="#cb48-5"></a>ssu_ps_work_<span class="dv">0</span>_clean_sub_Firmicutes_agg_order</span>
-<span id="cb48-6"><a href="#cb48-6"></a>ssu_ps_work_<span class="dv">4</span>_clean_sub_Firmicutes_agg_order</span>
-<span id="cb48-7"><a href="#cb48-7"></a>ssu_ps_work_<span class="dv">8</span>_clean_sub_Firmicutes_agg_order</span>
-<span id="cb48-8"><a href="#cb48-8"></a>ssu_ps_work_clean_sub_Firmicutes_agg_order</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>carbom_chloro &lt;-<span class="st"> </span><span class="kw">subset_taxa</span>(ssu_ps_pime_proteo_clean_trans, Phylum <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Firmicutes&quot;</span>))</span>
+<span id="cb48-2"><a href="#cb48-2"></a>testplot &lt;-<span class="st"> </span><span class="kw">plot_bar</span>(carbom_chloro, <span class="dt">x=</span><span class="st">&quot;Class&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;Class&quot;</span>, <span class="dt">facet_grid =</span> <span class="op">~</span>TEMP) <span class="op">+</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="st">            </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">color=</span>Class, <span class="dt">fill=</span>Class), <span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="st">&quot;stack&quot;</span>)</span>
+<span id="cb48-4"><a href="#cb48-4"></a></span>
+<span id="cb48-5"><a href="#cb48-5"></a>carbom_chloro &lt;-<span class="st"> </span><span class="kw">subset_taxa</span>(ssu_ps_pime_proteo_clean_trans, Phylum <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Alphaproteobacteria&quot;</span>, <span class="st">&quot;Gammaproteobacteria&quot;</span>, <span class="st">&quot;Firmicutes&quot;</span>))</span>
+<span id="cb48-6"><a href="#cb48-6"></a>carbom.ord &lt;-<span class="st"> </span><span class="kw">ordinate</span>(carbom_chloro, <span class="st">&quot;NMDS&quot;</span>, <span class="st">&quot;bray&quot;</span>)</span>
+<span id="cb48-7"><a href="#cb48-7"></a>testplot &lt;-<span class="st"> </span><span class="kw">plot_ordination</span>(ssu_ps_work_proteo_clean_trans, carbom.ord, <span class="dt">type=</span><span class="st">&quot;taxa&quot;</span>, <span class="dt">color=</span><span class="st">&quot;Family&quot;</span>,</span>
+<span id="cb48-8"><a href="#cb48-8"></a>                  <span class="dt">title=</span><span class="st">&quot;OTUs&quot;</span>, <span class="dt">label=</span><span class="st">&quot;Family&quot;</span>) <span class="op">+</span></span>
+<span id="cb48-9"><a href="#cb48-9"></a><span class="st">                  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Phylum)</span>
+<span id="cb48-10"><a href="#cb48-10"></a></span>
+<span id="cb48-11"><a href="#cb48-11"></a></span>
+<span id="cb48-12"><a href="#cb48-12"></a>testplot</span>
+<span id="cb48-13"><a href="#cb48-13"></a><span class="kw">dev.off</span>()</span>
+<span id="cb48-14"><a href="#cb48-14"></a><span class="kw">png</span>(<span class="st">&quot;figures/trepo-taxa/ssu/testplot.png&quot;</span>, <span class="dt">height =</span> <span class="dv">20</span>, <span class="dt">width =</span> <span class="dv">70</span>,</span>
+<span id="cb48-15"><a href="#cb48-15"></a>    <span class="dt">units =</span> <span class="st">&#39;cm&#39;</span>, <span class="dt">res =</span> <span class="dv">600</span>, <span class="dt">bg =</span> <span class="st">&quot;white&quot;</span>)</span>
+<span id="cb48-16"><a href="#cb48-16"></a>testplot</span>
+<span id="cb48-17"><a href="#cb48-17"></a><span class="kw">dev.off</span>()</span>
+<span id="cb48-18"><a href="#cb48-18"></a><span class="kw">pdf</span>(<span class="st">&quot;figures/trepo-taxa/ssu/testplot.pdf&quot;</span>, <span class="dt">height =</span> <span class="dv">10</span>, <span class="dt">width =</span> <span class="dv">12</span>)</span>
+<span id="cb48-19"><a href="#cb48-19"></a>testplot</span>
+<span id="cb48-20"><a href="#cb48-20"></a><span class="kw">dev.off</span>()</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>subset_level &lt;-<span class="st"> &quot;Phylum&quot;</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>subset_name &lt;-<span class="st"> &quot;Alphaproteobacteria&quot;</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="cf">for</span> ( i <span class="cf">in</span> ssu_data_sets){</span>
+<span id="cb49-4"><a href="#cb49-4"></a>  tmp_get_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_proteo_clean&quot;</span>))</span>
+<span id="cb49-5"><a href="#cb49-5"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_get_name)</span>
+<span id="cb49-6"><a href="#cb49-6"></a>  tmp_ps &lt;-<span class="st"> </span><span class="kw">subset_taxa</span>(tmp_get, <span class="kw">get</span>(subset_level) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(subset_name))</span>
+<span id="cb49-7"><a href="#cb49-7"></a>  tmp_sub_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name))</span>
+<span id="cb49-8"><a href="#cb49-8"></a>  <span class="kw">assign</span>(tmp_sub_name, tmp_ps)</span>
+<span id="cb49-9"><a href="#cb49-9"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb49-10"><a href="#cb49-10"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>top_hits &lt;-<span class="st"> </span><span class="dv">12</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a>top_level &lt;-<span class="st"> &quot;Family&quot;</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_data_sets){</span>
+<span id="cb50-4"><a href="#cb50-4"></a>  tmp_get_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name))</span>
+<span id="cb50-5"><a href="#cb50-5"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_get_name)</span>
+<span id="cb50-6"><a href="#cb50-6"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get)))</span>
+<span id="cb50-7"><a href="#cb50-7"></a>  tmp_otu[] &lt;-<span class="st"> </span><span class="kw">lapply</span>(tmp_otu, as.numeric)</span>
+<span id="cb50-8"><a href="#cb50-8"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_otu)</span>
+<span id="cb50-9"><a href="#cb50-9"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">data.frame</span>(<span class="kw">tax_table</span>(tmp_get)))</span>
+<span id="cb50-10"><a href="#cb50-10"></a>  tmp_samples &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_get))</span>
+<span id="cb50-11"><a href="#cb50-11"></a>  tmp_clean_df &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(<span class="kw">otu_table</span>(tmp_otu, <span class="dt">taxa_are_rows =</span> <span class="ot">TRUE</span>),</span>
+<span id="cb50-12"><a href="#cb50-12"></a>                          <span class="kw">tax_table</span>(tmp_tax, tmp_tax),</span>
+<span id="cb50-13"><a href="#cb50-13"></a>                          <span class="kw">sample_data</span>(tmp_samples))</span>
+<span id="cb50-14"><a href="#cb50-14"></a>  tmp_agg_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name, <span class="st">&quot;_agg&quot;</span>))</span>
+<span id="cb50-15"><a href="#cb50-15"></a>  tmp_agg_df &lt;-<span class="st"> </span>microbiome<span class="op">::</span><span class="kw">aggregate_top_taxa</span>(tmp_clean_df,</span>
+<span id="cb50-16"><a href="#cb50-16"></a>                                                    <span class="dt">top =</span> top_hits,</span>
+<span id="cb50-17"><a href="#cb50-17"></a>                                                    <span class="dt">level =</span> top_level)</span>
+<span id="cb50-18"><a href="#cb50-18"></a>  <span class="kw">assign</span>(tmp_agg_name, tmp_agg_df)</span>
+<span id="cb50-19"><a href="#cb50-19"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb50-20"><a href="#cb50-20"></a>}</span>
+<span id="cb50-21"><a href="#cb50-21"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub&quot;</span>)</span>
+<span id="cb50-22"><a href="#cb50-22"></a><span class="kw">objects</span>()</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub.*_agg$&quot;</span>)) {</span>
+<span id="cb51-2"><a href="#cb51-2"></a>  tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_order&quot;</span>))</span>
+<span id="cb51-3"><a href="#cb51-3"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb51-4"><a href="#cb51-4"></a>  tmp_list &lt;-<span class="st"> </span><span class="kw">get_taxa_unique</span>(tmp_get, <span class="dt">taxonomic.rank =</span> <span class="kw">rank_names</span>(tmp_get)[<span class="dv">1</span>],</span>
+<span id="cb51-5"><a href="#cb51-5"></a>                        <span class="dt">errorIfNULL =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb51-6"><a href="#cb51-6"></a>  <span class="kw">assign</span>(tmp_name, tmp_list)</span>
+<span id="cb51-7"><a href="#cb51-7"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb51-8"><a href="#cb51-8"></a>}</span>
+<span id="cb51-9"><a href="#cb51-9"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub&quot;</span>)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub.*_agg$&quot;</span>)) {</span>
+<span id="cb52-2"><a href="#cb52-2"></a>  tmp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_tax&quot;</span>))</span>
+<span id="cb52-3"><a href="#cb52-3"></a>  tmp_agg &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_order&quot;</span>))</span>
+<span id="cb52-4"><a href="#cb52-4"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb52-5"><a href="#cb52-5"></a>  tmp_get_agg &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_agg)</span>
+<span id="cb52-6"><a href="#cb52-6"></a>  tmp_df &lt;-<span class="st"> </span>tmp_get <span class="op">%&gt;%</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a><span class="st">            </span><span class="kw">transform_sample_counts</span>(<span class="cf">function</span>(x) {x<span class="op">/</span><span class="kw">sum</span>(x)} ) <span class="op">%&gt;%</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a><span class="st">            </span><span class="kw">psmelt</span>()</span>
+<span id="cb52-9"><a href="#cb52-9"></a>  tmp_df[[top_level]] &lt;-<span class="st"> </span>gdata<span class="op">::</span><span class="kw">reorder.factor</span>(tmp_df[[top_level]],</span>
+<span id="cb52-10"><a href="#cb52-10"></a>                                                  <span class="dt">new.order =</span> <span class="kw">rev</span>(tmp_get_agg))</span>
+<span id="cb52-11"><a href="#cb52-11"></a>  tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(<span class="kw">get</span>(top_level))</span>
+<span id="cb52-12"><a href="#cb52-12"></a>  <span class="kw">assign</span>(tmp_name, tmp_df)</span>
+<span id="cb52-13"><a href="#cb52-13"></a>  <span class="kw">print</span>(<span class="kw">c</span>(i,tmp_name, tmp_agg))</span>
+<span id="cb52-14"><a href="#cb52-14"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb52-15"><a href="#cb52-15"></a>}</span>
+<span id="cb52-16"><a href="#cb52-16"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_tax&quot;</span>)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_sub.*_tax&quot;</span>)) {</span>
+<span id="cb53-2"><a href="#cb53-2"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb53-3"><a href="#cb53-3"></a>  tmp_levels &lt;-<span class="st"> </span><span class="kw">levels</span>(tmp_get[[top_level]])</span>
+<span id="cb53-4"><a href="#cb53-4"></a>  <span class="kw">print</span>(<span class="kw">c</span>(i, tmp_levels))</span>
+<span id="cb53-5"><a href="#cb53-5"></a>}</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>ssu_ps_pime_<span class="dv">0</span>_clean_sub_Firmicutes_agg_order &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Bacillaceae&quot;</span> <span class="st">&quot;o_Bacillales&quot;</span>     <span class="st">&quot;Planococcaceae&quot;</span>   <span class="st">&quot;Paenibacillaceae&quot;</span>)</span>
+<span id="cb54-2"><a href="#cb54-2"></a>ssu_ps_pime_<span class="dv">4</span>_clean_sub_Firmicutes_agg_order</span>
+<span id="cb54-3"><a href="#cb54-3"></a>ssu_ps_pime_<span class="dv">8</span>_clean_sub_Firmicutes_agg_order</span>
+<span id="cb54-4"><a href="#cb54-4"></a>ssu_ps_pime_clean_sub_Firmicutes_agg_order</span>
+<span id="cb54-5"><a href="#cb54-5"></a>ssu_ps_work_<span class="dv">0</span>_clean_sub_Firmicutes_agg_order</span>
+<span id="cb54-6"><a href="#cb54-6"></a>ssu_ps_work_<span class="dv">4</span>_clean_sub_Firmicutes_agg_order</span>
+<span id="cb54-7"><a href="#cb54-7"></a>ssu_ps_work_<span class="dv">8</span>_clean_sub_Firmicutes_agg_order</span>
+<span id="cb54-8"><a href="#cb54-8"></a>ssu_ps_work_clean_sub_Firmicutes_agg_order</span></code></pre></div>
 </div>
 <ol start="5" type="1">
 <li>Plot the data for a single phyloseq object. Here you use an aggragated tax file.</li>
@@ -3438,84 +3454,84 @@ Don’t forget to hit the <strong>Show Code</strong> button above if you want to
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>ssu_ps_work_Alphaproteobacteria_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ssu_ps_work_clean_sub_Alphaproteobacteria_agg_tax,</span>
-<span id="cb49-2"><a href="#cb49-2"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(TEMP),</span>
-<span id="cb49-3"><a href="#cb49-3"></a>                    <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> <span class="kw">get</span>(top_level))) <span class="op">+</span></span>
-<span id="cb49-4"><a href="#cb49-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="op">+</span></span>
-<span id="cb49-5"><a href="#cb49-5"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> ssu_colvec.tax) <span class="op">+</span></span>
-<span id="cb49-6"><a href="#cb49-6"></a><span class="st">  </span><span class="co">#scale_x_discrete(&quot;Temperature&quot;, expand = waiver(), position = &quot;bottom&quot;, drop = FALSE) +</span></span>
-<span id="cb49-7"><a href="#cb49-7"></a><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
-<span id="cb49-8"><a href="#cb49-8"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> top_level)) <span class="op">+</span></span>
-<span id="cb49-9"><a href="#cb49-9"></a><span class="st">  </span><span class="co">#guides(fill = guide_legend(reverse = FALSE, keywidth = 1, keyheight = 1)) +</span></span>
-<span id="cb49-10"><a href="#cb49-10"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative Abundance (% total reads)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Temperature&quot;</span>) <span class="op">+</span></span>
-<span id="cb49-11"><a href="#cb49-11"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb49-12"><a href="#cb49-12"></a>        <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
-<span id="cb49-13"><a href="#cb49-13"></a>        <span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
-<span id="cb49-14"><a href="#cb49-14"></a>        <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>),</span>
-<span id="cb49-15"><a href="#cb49-15"></a>        <span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>,</span>
-<span id="cb49-16"><a href="#cb49-16"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>),</span>
-<span id="cb49-17"><a href="#cb49-17"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>))</span>
-<span id="cb49-18"><a href="#cb49-18"></a>ssu_ps_work_Alphaproteobacteria_plot</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>ssu_ps_work_Alphaproteobacteria_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(ssu_ps_work_clean_sub_Alphaproteobacteria_agg_tax,</span>
+<span id="cb55-2"><a href="#cb55-2"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">factor</span>(TEMP),</span>
+<span id="cb55-3"><a href="#cb55-3"></a>                    <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> <span class="kw">get</span>(top_level))) <span class="op">+</span></span>
+<span id="cb55-4"><a href="#cb55-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>) <span class="op">+</span></span>
+<span id="cb55-5"><a href="#cb55-5"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> ssu_colvec.tax) <span class="op">+</span></span>
+<span id="cb55-6"><a href="#cb55-6"></a><span class="st">  </span><span class="co">#scale_x_discrete(&quot;Temperature&quot;, expand = waiver(), position = &quot;bottom&quot;, drop = FALSE) +</span></span>
+<span id="cb55-7"><a href="#cb55-7"></a><span class="st">  </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
+<span id="cb55-8"><a href="#cb55-8"></a><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> top_level)) <span class="op">+</span></span>
+<span id="cb55-9"><a href="#cb55-9"></a><span class="st">  </span><span class="co">#guides(fill = guide_legend(reverse = FALSE, keywidth = 1, keyheight = 1)) +</span></span>
+<span id="cb55-10"><a href="#cb55-10"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Relative Abundance (% total reads)&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Temperature&quot;</span>) <span class="op">+</span></span>
+<span id="cb55-11"><a href="#cb55-11"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb55-12"><a href="#cb55-12"></a>        <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
+<span id="cb55-13"><a href="#cb55-13"></a>        <span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
+<span id="cb55-14"><a href="#cb55-14"></a>        <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb55-15"><a href="#cb55-15"></a>        <span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>,</span>
+<span id="cb55-16"><a href="#cb55-16"></a>        <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>),</span>
+<span id="cb55-17"><a href="#cb55-17"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>))</span>
+<span id="cb55-18"><a href="#cb55-18"></a>ssu_ps_work_Alphaproteobacteria_plot</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>ssu_split_df &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work&quot;</span>, <span class="st">&quot;ssu_ps_pime_0&quot;</span>, <span class="st">&quot;ssu_ps_pime_4&quot;</span>, <span class="st">&quot;ssu_ps_pime_8&quot;</span>)</span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_split_df) {</span>
-<span id="cb50-3"><a href="#cb50-3"></a>  tmp_level_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb50-4"><a href="#cb50-4"></a>  tmp_level &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_level_get))</span>
-<span id="cb50-5"><a href="#cb50-5"></a>  tmp_level &lt;-<span class="st"> </span>tmp_level[<span class="kw">order</span>(tmp_level<span class="op">$</span>TEMP), ]</span>
-<span id="cb50-6"><a href="#cb50-6"></a>  tmp_level &lt;-<span class="st"> </span><span class="kw">as.vector</span>(tmp_level<span class="op">$</span>SamName)</span>
-<span id="cb50-7"><a href="#cb50-7"></a></span>
-<span id="cb50-8"><a href="#cb50-8"></a>  tmp_agg_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name, <span class="st">&quot;_agg_tax&quot;</span>))</span>
-<span id="cb50-9"><a href="#cb50-9"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_agg_name)</span>
-<span id="cb50-10"><a href="#cb50-10"></a>  tmp_df &lt;-<span class="st"> </span>reshape<span class="op">::</span><span class="kw">melt</span>(tmp_get, <span class="dt">id.vars =</span> <span class="kw">c</span>(<span class="st">&quot;Sample&quot;</span>, <span class="st">&quot;TEMP&quot;</span>, <span class="st">&quot;Abundance&quot;</span>, top_level))</span>
-<span id="cb50-11"><a href="#cb50-11"></a>  tmp_plot_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_&quot;</span>, subset_name, <span class="st">&quot;_melt_plot&quot;</span>))</span>
-<span id="cb50-12"><a href="#cb50-12"></a></span>
-<span id="cb50-13"><a href="#cb50-13"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df,</span>
-<span id="cb50-14"><a href="#cb50-14"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> Sample,</span>
-<span id="cb50-15"><a href="#cb50-15"></a>                    <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> <span class="kw">get</span>(top_level))) <span class="op">+</span></span>
-<span id="cb50-16"><a href="#cb50-16"></a><span class="st">    </span><span class="kw">facet_grid</span>(. <span class="op">~</span>TEMP, <span class="dt">scale =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">space =</span> <span class="st">&quot;free_x&quot;</span>)<span class="op">+</span></span>
-<span id="cb50-17"><a href="#cb50-17"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)  <span class="op">+</span></span>
-<span id="cb50-18"><a href="#cb50-18"></a><span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> ssu_colvec.tax) <span class="op">+</span></span>
-<span id="cb50-19"><a href="#cb50-19"></a><span class="st">    </span><span class="co">#scale_x_discrete(&quot;Treatment&quot;, expand = waiver(),</span></span>
-<span id="cb50-20"><a href="#cb50-20"></a><span class="st">    </span><span class="co">#                 position = &quot;bottom&quot;, drop = FALSE, limits = tmp_level) +</span></span>
-<span id="cb50-21"><a href="#cb50-21"></a><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
-<span id="cb50-22"><a href="#cb50-22"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> top_level, <span class="dt">reverse =</span> <span class="ot">FALSE</span>,</span>
-<span id="cb50-23"><a href="#cb50-23"></a>                               <span class="dt">keywidth =</span> <span class="fl">0.7</span>, <span class="dt">keyheight =</span> <span class="fl">0.7</span>)) <span class="op">+</span></span>
-<span id="cb50-24"><a href="#cb50-24"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="ot">NULL</span>) <span class="op">+</span></span>
-<span id="cb50-25"><a href="#cb50-25"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb50-26"><a href="#cb50-26"></a>        <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
-<span id="cb50-27"><a href="#cb50-27"></a>        <span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
-<span id="cb50-28"><a href="#cb50-28"></a>        <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>),</span>
-<span id="cb50-29"><a href="#cb50-29"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
-<span id="cb50-30"><a href="#cb50-30"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>),</span>
-<span id="cb50-31"><a href="#cb50-31"></a>        <span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>,</span>
-<span id="cb50-32"><a href="#cb50-32"></a>        <span class="co">#legend.key.size = unit(1.5, &quot;cm&quot;),</span></span>
-<span id="cb50-33"><a href="#cb50-33"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>),</span>
-<span id="cb50-34"><a href="#cb50-34"></a>        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
-<span id="cb50-35"><a href="#cb50-35"></a>        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">0</span>),</span>
-<span id="cb50-36"><a href="#cb50-36"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="ot">NULL</span>)</span>
-<span id="cb50-37"><a href="#cb50-37"></a>  <span class="kw">assign</span>(tmp_plot_name, tmp_plot)</span>
-<span id="cb50-38"><a href="#cb50-38"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb50-39"><a href="#cb50-39"></a>}</span>
-<span id="cb50-40"><a href="#cb50-40"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plot&quot;</span>)</span>
-<span id="cb50-41"><a href="#cb50-41"></a>ssu_ps_work_Alphaproteobacteria_melt_plot</span>
-<span id="cb50-42"><a href="#cb50-42"></a>ssu_ps_pime_<span class="dv">0</span>_Alphaproteobacteria_melt_plot</span>
-<span id="cb50-43"><a href="#cb50-43"></a>ssu_ps_pime_<span class="dv">4</span>_Alphaproteobacteria_melt_plot</span>
-<span id="cb50-44"><a href="#cb50-44"></a>ssu_ps_pime_<span class="dv">8</span>_Alphaproteobacteria_melt_plot</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>ssu_split_df &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work&quot;</span>, <span class="st">&quot;ssu_ps_pime_0&quot;</span>, <span class="st">&quot;ssu_ps_pime_4&quot;</span>, <span class="st">&quot;ssu_ps_pime_8&quot;</span>)</span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="cf">for</span> (i <span class="cf">in</span> ssu_split_df) {</span>
+<span id="cb56-3"><a href="#cb56-3"></a>  tmp_level_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
+<span id="cb56-4"><a href="#cb56-4"></a>  tmp_level &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_level_get))</span>
+<span id="cb56-5"><a href="#cb56-5"></a>  tmp_level &lt;-<span class="st"> </span>tmp_level[<span class="kw">order</span>(tmp_level<span class="op">$</span>TEMP), ]</span>
+<span id="cb56-6"><a href="#cb56-6"></a>  tmp_level &lt;-<span class="st"> </span><span class="kw">as.vector</span>(tmp_level<span class="op">$</span>SamName)</span>
+<span id="cb56-7"><a href="#cb56-7"></a></span>
+<span id="cb56-8"><a href="#cb56-8"></a>  tmp_agg_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_clean_sub_&quot;</span>, subset_name, <span class="st">&quot;_agg_tax&quot;</span>))</span>
+<span id="cb56-9"><a href="#cb56-9"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(tmp_agg_name)</span>
+<span id="cb56-10"><a href="#cb56-10"></a>  tmp_df &lt;-<span class="st"> </span>reshape<span class="op">::</span><span class="kw">melt</span>(tmp_get, <span class="dt">id.vars =</span> <span class="kw">c</span>(<span class="st">&quot;Sample&quot;</span>, <span class="st">&quot;TEMP&quot;</span>, <span class="st">&quot;Abundance&quot;</span>, top_level))</span>
+<span id="cb56-11"><a href="#cb56-11"></a>  tmp_plot_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_&quot;</span>, subset_name, <span class="st">&quot;_melt_plot&quot;</span>))</span>
+<span id="cb56-12"><a href="#cb56-12"></a></span>
+<span id="cb56-13"><a href="#cb56-13"></a>  tmp_plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_df,</span>
+<span id="cb56-14"><a href="#cb56-14"></a>                <span class="kw">aes</span>(<span class="dt">x =</span> Sample,</span>
+<span id="cb56-15"><a href="#cb56-15"></a>                    <span class="dt">y =</span> Abundance, <span class="dt">fill =</span> <span class="kw">get</span>(top_level))) <span class="op">+</span></span>
+<span id="cb56-16"><a href="#cb56-16"></a><span class="st">    </span><span class="kw">facet_grid</span>(. <span class="op">~</span>TEMP, <span class="dt">scale =</span> <span class="st">&quot;free_x&quot;</span>, <span class="dt">space =</span> <span class="st">&quot;free_x&quot;</span>)<span class="op">+</span></span>
+<span id="cb56-17"><a href="#cb56-17"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)  <span class="op">+</span></span>
+<span id="cb56-18"><a href="#cb56-18"></a><span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> ssu_colvec.tax) <span class="op">+</span></span>
+<span id="cb56-19"><a href="#cb56-19"></a><span class="st">    </span><span class="co">#scale_x_discrete(&quot;Treatment&quot;, expand = waiver(),</span></span>
+<span id="cb56-20"><a href="#cb56-20"></a><span class="st">    </span><span class="co">#                 position = &quot;bottom&quot;, drop = FALSE, limits = tmp_level) +</span></span>
+<span id="cb56-21"><a href="#cb56-21"></a><span class="st">    </span><span class="kw">theme_cowplot</span>() <span class="op">+</span></span>
+<span id="cb56-22"><a href="#cb56-22"></a><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> top_level, <span class="dt">reverse =</span> <span class="ot">FALSE</span>,</span>
+<span id="cb56-23"><a href="#cb56-23"></a>                               <span class="dt">keywidth =</span> <span class="fl">0.7</span>, <span class="dt">keyheight =</span> <span class="fl">0.7</span>)) <span class="op">+</span></span>
+<span id="cb56-24"><a href="#cb56-24"></a><span class="st">    </span><span class="kw">ylab</span>(<span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb56-25"><a href="#cb56-25"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">panel.grid.major =</span> <span class="kw">element_blank</span>(), <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb56-26"><a href="#cb56-26"></a>        <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
+<span id="cb56-27"><a href="#cb56-27"></a>        <span class="dt">plot.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;transparent&quot;</span>, <span class="dt">colour =</span> <span class="ot">NA</span>),</span>
+<span id="cb56-28"><a href="#cb56-28"></a>        <span class="dt">panel.border =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="ot">NA</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb56-29"><a href="#cb56-29"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">7</span>),</span>
+<span id="cb56-30"><a href="#cb56-30"></a>        <span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>),</span>
+<span id="cb56-31"><a href="#cb56-31"></a>        <span class="dt">legend.position =</span> <span class="st">&quot;right&quot;</span>,</span>
+<span id="cb56-32"><a href="#cb56-32"></a>        <span class="co">#legend.key.size = unit(1.5, &quot;cm&quot;),</span></span>
+<span id="cb56-33"><a href="#cb56-33"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>),</span>
+<span id="cb56-34"><a href="#cb56-34"></a>        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">6</span>, <span class="dt">angle =</span> <span class="dv">90</span>),</span>
+<span id="cb56-35"><a href="#cb56-35"></a>        <span class="dt">strip.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>, <span class="dt">angle =</span> <span class="dv">0</span>),</span>
+<span id="cb56-36"><a href="#cb56-36"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="ot">NULL</span>)</span>
+<span id="cb56-37"><a href="#cb56-37"></a>  <span class="kw">assign</span>(tmp_plot_name, tmp_plot)</span>
+<span id="cb56-38"><a href="#cb56-38"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb56-39"><a href="#cb56-39"></a>}</span>
+<span id="cb56-40"><a href="#cb56-40"></a><span class="kw">objects</span>(<span class="dt">pattern=</span><span class="st">&quot;_plot&quot;</span>)</span>
+<span id="cb56-41"><a href="#cb56-41"></a>ssu_ps_work_Alphaproteobacteria_melt_plot</span>
+<span id="cb56-42"><a href="#cb56-42"></a>ssu_ps_pime_<span class="dv">0</span>_Alphaproteobacteria_melt_plot</span>
+<span id="cb56-43"><a href="#cb56-43"></a>ssu_ps_pime_<span class="dv">4</span>_Alphaproteobacteria_melt_plot</span>
+<span id="cb56-44"><a href="#cb56-44"></a>ssu_ps_pime_<span class="dv">8</span>_Alphaproteobacteria_melt_plot</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>ssu_ps_work_</span>
-<span id="cb51-2"><a href="#cb51-2"></a>carbom_chloro_trans &lt;-<span class="st"> </span>carbom_chloro <span class="op">%&gt;%</span></span>
-<span id="cb51-3"><a href="#cb51-3"></a><span class="st">        </span><span class="kw">transform_sample_counts</span>(<span class="cf">function</span>(x) {x<span class="op">/</span><span class="kw">sum</span>(x)} ) <span class="op">%&gt;%</span></span>
-<span id="cb51-4"><a href="#cb51-4"></a><span class="st">        </span><span class="kw">psmelt</span>()</span>
-<span id="cb51-5"><a href="#cb51-5"></a>ssu_Fractions_tax<span class="op">$</span>Phylum &lt;-<span class="st"> </span>gdata<span class="op">::</span><span class="kw">reorder.factor</span>(ssu_Fractions_tax<span class="op">$</span>Phylum,</span>
-<span id="cb51-6"><a href="#cb51-6"></a>                                                  <span class="dt">new.order =</span> ssu_tax_order)</span>
-<span id="cb51-7"><a href="#cb51-7"></a>ssu_Fractions_tax &lt;-<span class="st"> </span>ssu_Fractions_tax <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(Phylum)</span>
-<span id="cb51-8"><a href="#cb51-8"></a></span>
-<span id="cb51-9"><a href="#cb51-9"></a></span>
-<span id="cb51-10"><a href="#cb51-10"></a></span>
-<span id="cb51-11"><a href="#cb51-11"></a><span class="kw">plot_bar</span>(carbom_chloro_trans, <span class="dt">x =</span> <span class="st">&quot;Family&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;Family&quot;</span>, <span class="dt">facet_grid =</span> DEPTH<span class="op">~</span>TEMP) <span class="op">+</span></span>
-<span id="cb51-12"><a href="#cb51-12"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Family, <span class="dt">fill =</span> Family), <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>ssu_ps_work_</span>
+<span id="cb57-2"><a href="#cb57-2"></a>carbom_chloro_trans &lt;-<span class="st"> </span>carbom_chloro <span class="op">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3"></a><span class="st">        </span><span class="kw">transform_sample_counts</span>(<span class="cf">function</span>(x) {x<span class="op">/</span><span class="kw">sum</span>(x)} ) <span class="op">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4"></a><span class="st">        </span><span class="kw">psmelt</span>()</span>
+<span id="cb57-5"><a href="#cb57-5"></a>ssu_Fractions_tax<span class="op">$</span>Phylum &lt;-<span class="st"> </span>gdata<span class="op">::</span><span class="kw">reorder.factor</span>(ssu_Fractions_tax<span class="op">$</span>Phylum,</span>
+<span id="cb57-6"><a href="#cb57-6"></a>                                                  <span class="dt">new.order =</span> ssu_tax_order)</span>
+<span id="cb57-7"><a href="#cb57-7"></a>ssu_Fractions_tax &lt;-<span class="st"> </span>ssu_Fractions_tax <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">arrange</span>(Phylum)</span>
+<span id="cb57-8"><a href="#cb57-8"></a></span>
+<span id="cb57-9"><a href="#cb57-9"></a></span>
+<span id="cb57-10"><a href="#cb57-10"></a></span>
+<span id="cb57-11"><a href="#cb57-11"></a><span class="kw">plot_bar</span>(carbom_chloro_trans, <span class="dt">x =</span> <span class="st">&quot;Family&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;Family&quot;</span>, <span class="dt">facet_grid =</span> DEPTH<span class="op">~</span>TEMP) <span class="op">+</span></span>
+<span id="cb57-12"><a href="#cb57-12"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Family, <span class="dt">fill =</span> Family), <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;stack&quot;</span>)</span></code></pre></div>
 </div>
 <p>tax_tab &lt;- as.data.frame(tax_table(ps_work)) tax_tab &lt;- tibble::rownames_to_column(tax_tab, “asv_id”) tax_tab$ASV_SEQ &lt;- NULL colnames(tax_tab)[colnames(tax_tab) == “ASV_ID”] &lt;- “ASV” write.table(tax_tab, “tables/trepo-data-prep/ssu/tax_tab_mc_ssu18.txt”, quote = FALSE, sep = ", row.names = FALSE)</p>
 <div class="layout-chunk" data-layout="l-body">
