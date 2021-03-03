@@ -14,15 +14,15 @@
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-alpha.html</loc>
-    <lastmod>2021-01-22T12:27:24-05:00</lastmod>
+    <lastmod>2021-03-02T17:55:07-05:00</lastmod>
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-beta.html</loc>
-    <lastmod>2021-01-30T10:19:42-05:00</lastmod>
+    <lastmod>2021-03-02T19:58:38-05:00</lastmod>
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-da.html</loc>
-    <lastmod>2021-01-31T13:04:39-05:00</lastmod>
+    <lastmod>2021-03-02T20:28:59-05:00</lastmod>
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-dada2.html</loc>
@@ -30,7 +30,19 @@
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-data-prep.html</loc>
-    <lastmod>2021-01-22T07:13:57-05:00</lastmod>
+    <lastmod>2021-03-02T20:51:56-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://tropical-repo.github.io/trepo-macroalpha.html</loc>
+    <lastmod>2021-03-02T21:06:03-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://tropical-repo.github.io/trepo-macrobeta.html</loc>
+    <lastmod>2021-03-02T20:57:54-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://tropical-repo.github.io/trepo-macrotaxa.html</loc>
+    <lastmod>2021-03-02T18:52:38-05:00</lastmod>
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-otu.html</loc>
@@ -43,6 +55,10 @@
   <url>
     <loc>https://tropical-repo.github.io/trepo-pime.html</loc>
     <lastmod>2021-01-22T07:13:26-05:00</lastmod>
+  </url>
+  <url>
+    <loc>https://tropical-repo.github.io/trepo-summary.html</loc>
+    <lastmod>2021-03-02T18:52:25-05:00</lastmod>
   </url>
   <url>
     <loc>https://tropical-repo.github.io/trepo-taxa.html</loc>

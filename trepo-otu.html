@@ -20,19 +20,18 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -52,7 +51,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; } /* Alert */
 code span.an { color: #008000; } /* Annotation */
@@ -82,42 +81,42 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
   <!--radix_placeholder_meta_tags-->
   <title>TropicalRepo: 3 OTU Clustering</title>
-  
+
   <meta property="description" itemprop="description" content="Reproducible workflow for ... In this workflow, ...."/>
-  
+
   <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
   <link rel="icon" type="image/vnd.microsoft.icon" href="assets/favicon.ico"/>
-  
-  
+
+
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="TropicalRepo: 3 OTU Clustering"/>
   <meta property="og:type" content="article"/>
   <meta property="og:description" content="Reproducible workflow for ... In this workflow, ...."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="TropicalRepo"/>
-  
+
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="TropicalRepo: 3 OTU Clustering"/>
   <meta property="twitter:description" content="Reproducible workflow for ... In this workflow, ...."/>
-  
+
   <!--/radix_placeholder_meta_tags-->
   
   <!--radix_placeholder_rmarkdown_metadata-->
-  
+
   <script type="text/json" id="radix-rmarkdown-metadata">
   {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","bibliography","output"]}},"value":[{"type":"character","attributes":{},"value":["3 OTU Clustering"]},{"type":"character","attributes":{},"value":["Reproducible workflow for ... In this workflow, ....\n"]},{"type":"character","attributes":{},"value":["assets/cite.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["css","toc","toc_depth"]}},"value":[{"type":"character","attributes":{},"value":["assets/styles.css"]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
   <meta name="distill:offset" content=""/>
-  
+
   <script type="application/javascript">
-  
+
     window.headroom_prevent_pin = false;
-  
+
     window.document.addEventListener("DOMContentLoaded", function (event) {
-  
+
       // initialize headroom for banner
       var header = $('header').get(0);
       var headerHeight = header.offsetHeight;
@@ -134,13 +133,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       if(window.location.hash)
         headroom.unpin();
       $(header).addClass('headroom--transition');
-  
+
       // offset scroll location for banner on hash change
       // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
       window.addEventListener("hashchange", function(event) {
         window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
       });
-  
+
       // responsive menu
       $('.distill-site-header').each(function(i, val) {
         var topnav = $(this);
@@ -149,7 +148,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           topnav.toggleClass('responsive');
         });
       });
-  
+
       // nav dropdowns
       $('.nav-dropbtn').click(function(e) {
         $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
@@ -164,99 +163,99 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       });
     });
   </script>
-  
+
   <style type="text/css">
-  
+
   /* Theme (user-documented overrideables for nav appearance) */
-  
+
   .distill-site-nav {
     color: rgba(255, 255, 255, 0.8);
     background-color: #0F2E3D;
     font-size: 15px;
     font-weight: 300;
   }
-  
+
   .distill-site-nav a {
     color: inherit;
     text-decoration: none;
   }
-  
+
   .distill-site-nav a:hover {
     color: white;
   }
-  
+
   @media print {
     .distill-site-nav {
       display: none;
     }
   }
-  
+
   .distill-site-header {
-  
+
   }
-  
+
   .distill-site-footer {
-  
+
   }
-  
-  
+
+
   /* Site Header */
-  
+
   .distill-site-header {
     width: 100%;
     box-sizing: border-box;
     z-index: 3;
   }
-  
+
   .distill-site-header .nav-left {
     display: inline-block;
     margin-left: 8px;
   }
-  
+
   @media screen and (max-width: 768px) {
     .distill-site-header .nav-left {
       margin-left: 0;
     }
   }
-  
-  
+
+
   .distill-site-header .nav-right {
     float: right;
     margin-right: 8px;
   }
-  
+
   .distill-site-header a,
   .distill-site-header .title {
     display: inline-block;
     text-align: center;
     padding: 14px 10px 14px 10px;
   }
-  
+
   .distill-site-header .title {
     font-size: 18px;
     min-width: 150px;
   }
-  
+
   .distill-site-header .logo {
     padding: 0;
   }
-  
+
   .distill-site-header .logo img {
     display: none;
     max-height: 20px;
     width: auto;
     margin-bottom: -4px;
   }
-  
+
   .distill-site-header .nav-image img {
     max-height: 18px;
     width: auto;
     display: inline-block;
     margin-bottom: -3px;
   }
-  
-  
-  
+
+
+
   @media screen and (min-width: 1000px) {
     .distill-site-header .logo img {
       display: inline-block;
@@ -271,17 +270,17 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       padding-left: 12px;
     }
   }
-  
-  
+
+
   .distill-site-header .nav-toggle {
     display: none;
   }
-  
+
   .nav-dropdown {
     display: inline-block;
     position: relative;
   }
-  
+
   .nav-dropdown .nav-dropbtn {
     border: none;
     outline: none;
@@ -295,7 +294,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     margin-top: 1px;
     z-index: 2;
   }
-  
+
   .nav-dropdown-content {
     display: none;
     position: absolute;
@@ -310,18 +309,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-top: 4px;
     padding-bottom: 4px;
   }
-  
+
   .nav-dropdown-content hr {
     margin-top: 4px;
     margin-bottom: 4px;
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
+
   .nav-dropdown-active {
     display: block;
   }
-  
+
   .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
     color: black;
     padding: 6px 24px;
@@ -329,7 +328,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     display: block;
     text-align: left;
   }
-  
+
   .nav-dropdown-content .nav-dropdown-header {
     display: block;
     padding: 5px 24px;
@@ -339,21 +338,21 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     color: #999999;
     white-space: nowrap;
   }
-  
+
   .nav-dropdown:hover .nav-dropbtn {
     color: white;
   }
-  
+
   .nav-dropdown-content a:hover {
     background-color: #ddd;
     color: black;
   }
-  
+
   .nav-right .nav-dropdown-content {
     margin-left: -45%;
     right: 0;
   }
-  
+
   @media screen and (max-width: 768px) {
     .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
     .distill-site-header a.nav-toggle {
@@ -373,8 +372,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       margin-left: 0;
     }
   }
-  
-  
+
+
   @media screen and (max-width: 768px) {
     .distill-site-header.responsive {position: relative; min-height: 500px; }
     .distill-site-header.responsive a.nav-toggle {
@@ -399,9 +398,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       text-align: left;
     }
   }
-  
+
   /* Site Footer */
-  
+
   .distill-site-footer {
     width: 100%;
     overflow: hidden;
@@ -412,19 +411,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-bottom: 30px;
     text-align: center;
   }
-  
+
   /* Headroom */
-  
+
   d-title {
     padding-top: 6rem;
   }
-  
+
   @media print {
     d-title {
       padding-top: 4rem;
     }
   }
-  
+
   .headroom {
     z-index: 1000;
     position: fixed;
@@ -432,36 +431,36 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     left: 0;
     right: 0;
   }
-  
+
   .headroom--transition {
     transition: all .4s ease-in-out;
   }
-  
+
   .headroom--unpinned {
     top: -100px;
   }
-  
+
   .headroom--pinned {
     top: 0;
   }
-  
+
   /* adjust viewport for navbar height */
   /* helps vertically center bootstrap (non-distill) content */
   .min-vh-100 {
     min-height: calc(100vh - 100px) !important;
   }
-  
+
   </style>
-  
+
   <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
   <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
   <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
   <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
   <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
   <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-  
+
   <script type="application/javascript">
-  
+
   function getMeta(metaName) {
     var metas = document.getElementsByTagName('meta');
     for (let i = 0; i < metas.length; i++) {
@@ -471,14 +470,14 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     }
     return '';
   }
-  
+
   function offsetURL(url) {
     var offset = getMeta('distill:offset');
     return offset ? offset + '/' + url : url;
   }
-  
+
   function createFuseIndex() {
-  
+
     // create fuse index
     var options = {
       keys: [
@@ -491,7 +490,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       threshold: 0
     };
     var fuse = new window.Fuse([], options);
-  
+
     // fetch the main search.json
     return fetch(offsetURL('search.json'))
       .then(function(response) {
@@ -521,7 +520,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
               return fuse;
             });
           });
-  
+
         } else {
           return Promise.reject(
             new Error('Unexpected status from search index request: ' +
@@ -530,20 +529,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         }
       });
   }
-  
+
   window.document.addEventListener("DOMContentLoaded", function (event) {
-  
+
     // get search element (bail if we don't have one)
     var searchEl = window.document.getElementById('distill-search');
     if (!searchEl)
       return;
-  
+
     createFuseIndex()
       .then(function(fuse) {
-  
+
         // make search box visible
         searchEl.classList.remove('hidden');
-  
+
         // initialize autocomplete
         var options = {
           autoselect: true,
@@ -592,19 +591,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       .catch(function(error) {
         console.log(error);
       });
-  
+
   });
-  
+
   </script>
-  
+
   <style type="text/css">
-  
+
   .nav-search {
     font-size: x-small;
   }
-  
+
   /* Algolioa Autocomplete */
-  
+
   .algolia-autocomplete {
     display: inline-block;
     margin-left: 10px;
@@ -618,8 +617,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     border: 1px #0F2E3D solid;
     width: 180px;
   }
-  
-  
+
+
   @media screen and (max-width: 768px) {
     .distill-site-nav .algolia-autocomplete {
       display: none;
@@ -635,13 +634,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       max-height: 400px;
     }
   }
-  
+
   .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
     width: 90%;
     outline: none;
     border: none;
   }
-  
+
   .algolia-autocomplete .aa-hint {
     color: #999;
   }
@@ -658,30 +657,30 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     border: 1px solid #999;
     border-top: none;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
     cursor: pointer;
     padding: 5px 4px;
     border-bottom: 1px solid #eee;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
     border-bottom: none;
     margin-bottom: 2px;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
     overflow: hidden;
     font-size: 0.8em;
     line-height: 1.4em;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
     font-size: 1rem;
     margin-block-start: 0;
     margin-block-end: 5px;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
     display: inline-block;
     overflow: hidden;
@@ -689,22 +688,22 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     width: 80%;
     margin-right: 4%;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
     display: inline-block;
     width: 15%;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
     height: 3em;
     width: auto;
     display: none;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
     display: initial;
   }
-  
+
   .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
     background-color: #eee;
   }
@@ -712,47 +711,47 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     font-weight: bold;
     font-style: normal;
   }
-  
+
   </style>
-  
-  
+
+
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
-  
+
   <style type="text/css">
-  
+
   body {
     background-color: white;
   }
-  
+
   .pandoc-table {
     width: 100%;
   }
-  
+
   .pandoc-table>caption {
     margin-bottom: 10px;
   }
-  
+
   .pandoc-table th:not([align]) {
     text-align: left;
   }
-  
+
   .pagedtable-footer {
     font-size: 15px;
   }
-  
+
   d-byline .byline {
     grid-template-columns: 2fr 2fr;
   }
-  
+
   d-byline .byline h3 {
     margin-block-start: 1.5em;
   }
-  
+
   d-byline .byline .authors-affiliations h3 {
     margin-block-start: 0.5em;
   }
-  
+
   .authors-affiliations .orcid-id {
     width: 16px;
     height:16px;
@@ -761,12 +760,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     vertical-align: middle;
     padding-bottom: 2px;
   }
-  
+
   d-title .dt-tags {
     margin-top: 1em;
     grid-column: text;
   }
-  
+
   .dt-tags .dt-tag {
     text-decoration: none;
     display: inline-block;
@@ -780,24 +779,24 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-transform: uppercase;
     font-weight: 500;
   }
-  
+
   d-article table.gt_table td,
   d-article table.gt_table th {
     border-bottom: none;
   }
-  
+
   .html-widget {
     margin-bottom: 2.0em;
   }
-  
+
   .l-screen-inset {
     padding-right: 16px;
   }
-  
+
   .l-screen .caption {
     margin-left: 10px;
   }
-  
+
   .shaded {
     background: rgb(247, 247, 247);
     padding-top: 20px;
@@ -805,75 +804,75 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
+
   .shaded .html-widget {
     margin-bottom: 0;
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
+
   .shaded .shaded-content {
     background: white;
   }
-  
+
   .text-output {
     margin-top: 0;
     line-height: 1.5em;
   }
-  
+
   .hidden {
     display: none !important;
   }
-  
+
   d-article {
     padding-top: 2.5rem;
     padding-bottom: 30px;
   }
-  
+
   d-appendix {
     padding-top: 30px;
   }
-  
+
   d-article>p>img {
     width: 100%;
   }
-  
+
   d-article h2 {
     margin: 1rem 0 1.5rem 0;
   }
-  
+
   d-article h3 {
     margin-top: 1.5rem;
   }
-  
+
   d-article iframe {
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin-bottom: 2.0em;
     width: 100%;
   }
-  
+
   /* Tweak code blocks */
-  
+
   d-article div.sourceCode code,
   d-article pre code {
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   }
-  
+
   d-article pre,
   d-article div.sourceCode,
   d-article div.sourceCode pre {
     overflow: auto;
   }
-  
+
   d-article div.sourceCode {
     background-color: white;
   }
-  
+
   d-article div.sourceCode pre {
     padding-left: 10px;
     font-size: 12px;
     border-left: 2px solid rgba(0,0,0,0.1);
   }
-  
+
   d-article pre {
     font-size: 12px;
     color: black;
@@ -885,50 +884,50 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     word-break: normal;
     word-wrap: normal;
     line-height: 1.5;
-  
+
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
-  
+
     -webkit-hyphens: none;
     -moz-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
   }
-  
+
   d-article pre a {
     border-bottom: none;
   }
-  
+
   d-article pre a:hover {
     border-bottom: none;
     text-decoration: underline;
   }
-  
+
   d-article details {
     grid-column: text;
     margin-bottom: 0.8em;
   }
-  
+
   @media(min-width: 768px) {
-  
+
   d-article pre,
   d-article div.sourceCode,
   d-article div.sourceCode pre {
     overflow: visible !important;
   }
-  
+
   d-article div.sourceCode pre {
     padding-left: 18px;
     font-size: 14px;
   }
-  
+
   d-article pre {
     font-size: 14px;
   }
-  
+
   }
-  
+
   figure img.external {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -936,9 +935,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding: 18px;
     box-sizing: border-box;
   }
-  
+
   /* CSS for d-contents */
-  
+
   .d-contents {
     grid-column: text;
     color: rgba(0,0,0,0.8);
@@ -950,7 +949,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-left: 0.25em;
     justify-self: start;
   }
-  
+
   @media(min-width: 1000px) {
     .d-contents.d-contents-float {
       height: 0;
@@ -961,82 +960,82 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       padding-left: 2em;
     }
   }
-  
+
   .d-contents nav h3 {
     font-size: 18px;
     margin-top: 0;
     margin-bottom: 1em;
   }
-  
+
   .d-contents li {
     list-style-type: none
   }
-  
+
   .d-contents nav > ul {
     padding-left: 0;
   }
-  
+
   .d-contents ul {
     padding-left: 1em
   }
-  
+
   .d-contents nav ul li {
     margin-top: 0.6em;
     margin-bottom: 0.2em;
   }
-  
+
   .d-contents nav a {
     font-size: 13px;
     border-bottom: none;
     text-decoration: none
     color: rgba(0, 0, 0, 0.8);
   }
-  
+
   .d-contents nav a:hover {
     text-decoration: underline solid rgba(0, 0, 0, 0.6)
   }
-  
+
   .d-contents nav > ul > li > a {
     font-weight: 600;
   }
-  
+
   .d-contents nav > ul > li > ul {
     font-weight: inherit;
   }
-  
+
   .d-contents nav > ul > li > ul > li {
     margin-top: 0.2em;
   }
-  
-  
+
+
   .d-contents nav ul {
     margin-top: 0;
     margin-bottom: 0.25em;
   }
-  
+
   .d-article-with-toc h2:nth-child(2) {
     margin-top: 0;
   }
-  
-  
+
+
   /* Figure */
-  
+
   .figure {
     position: relative;
     margin-bottom: 2.5em;
     margin-top: 1.5em;
   }
-  
+
   .figure img {
     width: 100%;
   }
-  
+
   .figure .caption {
     color: rgba(0, 0, 0, 0.6);
     font-size: 12px;
     line-height: 1.5em;
   }
-  
+
   .figure img.external {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1044,42 +1043,42 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding: 18px;
     box-sizing: border-box;
   }
-  
+
   .figure .caption a {
     color: rgba(0, 0, 0, 0.6);
   }
-  
+
   .figure .caption b,
   .figure .caption strong, {
     font-weight: 600;
     color: rgba(0, 0, 0, 1.0);
   }
-  
+
   /* Citations */
-  
+
   d-article .citation {
     color: inherit;
     cursor: inherit;
   }
-  
+
   div.hanging-indent{
     margin-left: 1em; text-indent: -1em;
   }
-  
+
   /* Citation hover box */
-  
+
   .tippy-box[data-theme~=light-border] {
     background-color: rgba(250, 250, 250, 0.95);
   }
-  
+
   .tippy-content > p {
     margin-bottom: 0;
     padding: 2px;
   }
-  
-  
+
+
   /* Tweak 1000px media break to show more text */
-  
+
   @media(min-width: 1000px) {
     .base-grid,
     distill-header,
@@ -1095,11 +1094,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
       grid-column-gap: 16px;
     }
-  
+
     .grid {
       grid-column-gap: 16px;
     }
-  
+
     d-article {
       font-size: 1.06rem;
       line-height: 1.7em;
@@ -1108,7 +1107,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       font-size: 13px;
     }
   }
-  
+
   @media(min-width: 1180px) {
     .base-grid,
     distill-header,
@@ -1124,16 +1123,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
       grid-column-gap: 32px;
     }
-  
+
     .grid {
       grid-column-gap: 32px;
     }
   }
-  
-  
+
+
   /* Get the citation styles for the appendix (not auto-injected on render since
      we do our own rendering of the citation appendix) */
-  
+
   d-appendix .citation-appendix,
   .d-appendix .citation-appendix {
     font-size: 11px;
@@ -1150,9 +1149,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-  
+
   /* Include appendix styles here so they can be overridden */
-  
+
   d-appendix {
     contain: layout style;
     font-size: 0.8em;
@@ -1164,7 +1163,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-top: 60px;
     padding-bottom: 48px;
   }
-  
+
   d-appendix h3 {
     grid-column: page-start / text-start;
     font-size: 15px;
@@ -1173,59 +1172,59 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     margin-bottom: 0;
     color: rgba(0,0,0,0.65);
   }
-  
+
   d-appendix h3 + * {
     margin-top: 1em;
   }
-  
+
   d-appendix ol {
     padding: 0 0 0 15px;
   }
-  
+
   @media (min-width: 768px) {
     d-appendix ol {
       padding: 0 0 0 30px;
       margin-left: -30px;
     }
   }
-  
+
   d-appendix li {
     margin-bottom: 1em;
   }
-  
+
   d-appendix a {
     color: rgba(0, 0, 0, 0.6);
   }
-  
+
   d-appendix > * {
     grid-column: text;
   }
-  
+
   d-appendix > d-footnote-list,
   d-appendix > d-citation-list,
   d-appendix > distill-appendix {
     grid-column: screen;
   }
-  
+
   /* Include footnote styles here so they can be overridden */
-  
+
   d-footnote-list {
     contain: layout style;
   }
-  
+
   d-footnote-list > * {
     grid-column: text;
   }
-  
+
   d-footnote-list a.footnote-backlink {
     color: rgba(0,0,0,0.3);
     padding-left: 0.5em;
   }
-  
-  
-  
+
+
+
   /* Anchor.js */
-  
+
   .anchorjs-link {
     /*transition: all .25s linear; */
     text-decoration: none;
@@ -1236,86 +1235,86 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-decoration: none;
     border-bottom: none;
   }
-  
+
   /* Social footer */
-  
+
   .social_footer {
     margin-top: 30px;
     margin-bottom: 0;
     color: rgba(0,0,0,0.67);
   }
-  
+
   .disqus-comments {
     margin-right: 30px;
   }
-  
+
   .disqus-comment-count {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
     cursor: pointer;
   }
-  
+
   #disqus_thread {
     margin-top: 30px;
   }
-  
+
   .article-sharing a {
     border-bottom: none;
     margin-right: 8px;
   }
-  
+
   .article-sharing a:hover {
     border-bottom: none;
   }
-  
+
   .sidebar-section.subscribe {
     font-size: 12px;
     line-height: 1.6em;
   }
-  
+
   .subscribe p {
     margin-bottom: 0.5em;
   }
-  
-  
+
+
   .article-footer .subscribe {
     font-size: 15px;
     margin-top: 45px;
   }
-  
-  
+
+
   .sidebar-section.custom {
     font-size: 12px;
     line-height: 1.6em;
   }
-  
+
   .custom p {
     margin-bottom: 0.5em;
   }
-  
+
   /* Styles for listing layout (hide title) */
   .layout-listing d-title, .layout-listing .d-title {
     display: none;
   }
-  
+
   /* Styles for posts lists (not auto-injected) */
-  
-  
+
+
   .posts-with-sidebar {
     padding-left: 45px;
     padding-right: 45px;
   }
-  
+
   .posts-list .description h2,
   .posts-list .description p {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
   }
-  
+
   .posts-list .description h2 {
     font-weight: 700;
     border-bottom: none;
     padding-bottom: 0;
   }
-  
+
   .posts-list h2.post-tag {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding-bottom: 12px;
@@ -1324,7 +1323,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     margin-top: 60px;
     margin-bottom: 24px;
   }
-  
+
   .posts-list .post-preview {
     text-decoration: none;
     overflow: hidden;
@@ -1332,29 +1331,29 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding: 24px 0;
   }
-  
+
   .post-preview-last {
     border-bottom: none !important;
   }
-  
+
   .posts-list .posts-list-caption {
     grid-column: screen;
     font-weight: 400;
   }
-  
+
   .posts-list .post-preview h2 {
     margin: 0 0 6px 0;
     line-height: 1.2em;
     font-style: normal;
     font-size: 24px;
   }
-  
+
   .posts-list .post-preview p {
     margin: 0 0 12px 0;
     line-height: 1.4em;
     font-size: 16px;
   }
-  
+
   .posts-list .post-preview .thumbnail {
     box-sizing: border-box;
     margin-bottom: 24px;
@@ -1365,32 +1364,32 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     width: 100%;
     display: block;
   }
-  
+
   .posts-list .metadata {
     font-size: 12px;
     line-height: 1.4em;
     margin-bottom: 18px;
   }
-  
+
   .posts-list .metadata > * {
     display: inline-block;
   }
-  
+
   .posts-list .metadata .publishedDate {
     margin-right: 2em;
   }
-  
+
   .posts-list .metadata .dt-authors {
     display: block;
     margin-top: 0.3em;
     margin-right: 2em;
   }
-  
+
   .posts-list .dt-tags {
     display: block;
     line-height: 1em;
   }
-  
+
   .posts-list .dt-tags .dt-tag {
     display: inline-block;
     color: rgba(0,0,0,0.6);
@@ -1403,24 +1402,24 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-transform: uppercase;
     font-weight: 500;
   }
-  
+
   .posts-list img {
     opacity: 1;
   }
-  
+
   .posts-list img[data-src] {
     opacity: 0;
   }
-  
+
   .posts-more {
     clear: both;
   }
-  
-  
+
+
   .posts-sidebar {
     font-size: 16px;
   }
-  
+
   .posts-sidebar h3 {
     font-size: 16px;
     margin-top: 0;
@@ -1428,39 +1427,39 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     font-weight: 400;
     text-transform: uppercase;
   }
-  
+
   .sidebar-section {
     margin-bottom: 30px;
   }
-  
+
   .categories ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
   }
-  
+
   .categories li {
     color: rgba(0, 0, 0, 0.8);
     margin-bottom: 0;
   }
-  
+
   .categories li>a {
     border-bottom: none;
   }
-  
+
   .categories li>a:hover {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   }
-  
+
   .categories .active {
     font-weight: 600;
   }
-  
+
   .categories .category-count {
     color: rgba(0, 0, 0, 0.4);
   }
-  
-  
+
+
   @media(min-width: 768px) {
     .posts-list .post-preview h2 {
       font-size: 26px;
@@ -1496,55 +1495,55 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       padding-bottom: 24px;
     }
   }
-  
-  
+
+
   /* Improve display for browsers without grid (IE/Edge <= 15) */
-  
+
   .downlevel {
     line-height: 1.6em;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
     margin: 0;
   }
-  
+
   .downlevel .d-title {
     padding-top: 6rem;
     padding-bottom: 1.5rem;
   }
-  
+
   .downlevel .d-title h1 {
     font-size: 50px;
     font-weight: 700;
     line-height: 1.1em;
     margin: 0 0 0.5rem;
   }
-  
+
   .downlevel .d-title p {
     font-weight: 300;
     font-size: 1.2rem;
     line-height: 1.55em;
     margin-top: 0;
   }
-  
+
   .downlevel .d-byline {
     padding-top: 0.8em;
     padding-bottom: 0.8em;
     font-size: 0.8rem;
     line-height: 1.8em;
   }
-  
+
   .downlevel .section-separator {
     border: none;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
-  
+
   .downlevel .d-article {
     font-size: 1.06rem;
     line-height: 1.7em;
     padding-top: 1rem;
     padding-bottom: 2rem;
   }
-  
-  
+
+
   .downlevel .d-appendix {
     padding-left: 0;
     padding-right: 0;
@@ -1556,11 +1555,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-top: 40px;
     padding-bottom: 48px;
   }
-  
+
   .downlevel .footnotes ol {
     padding-left: 13px;
   }
-  
+
   .downlevel .base-grid,
   .downlevel .distill-header,
   .downlevel .d-title,
@@ -1577,7 +1576,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     padding-left: 40px;
     padding-right: 40px;
   }
-  
+
   @media(min-width: 768px) {
     .downlevel .base-grid,
     .downlevel .distill-header,
@@ -1597,14 +1596,14 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     max-width: 900px;
   }
   }
-  
+
   .downlevel pre code {
     display: block;
     border-left: 2px solid rgba(0, 0, 0, .1);
     padding: 0 0 0 20px;
     font-size: 14px;
   }
-  
+
   .downlevel code, .downlevel pre {
     color: black;
     background: none;
@@ -1615,27 +1614,27 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     word-break: normal;
     word-wrap: normal;
     line-height: 1.5;
-  
+
     -moz-tab-size: 4;
     -o-tab-size: 4;
     tab-size: 4;
-  
+
     -webkit-hyphens: none;
     -moz-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
   }
-  
+
   .downlevel .posts-list .post-preview {
     color: inherit;
   }
-  
-  
-  
+
+
+
   </style>
-  
+
   <script type="application/javascript">
-  
+
   function is_downlevel_browser() {
     if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
                                    window.navigator.userAgent)) {
@@ -1644,20 +1643,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       return window.load_distill_framework === undefined;
     }
   }
-  
+
   // show body when load is complete
   function on_load_complete() {
-  
+
     // add anchors
     if (window.anchors) {
       window.anchors.options.placement = 'left';
       window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
     }
-  
-  
+
+
     // set body to visible
     document.body.style.visibility = 'visible';
-  
+
     // force redraw for leaflet widgets
     if (window.HTMLWidgets) {
       var maps = window.HTMLWidgets.findAll(".leaflet");
@@ -1670,39 +1669,39 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         });
       });
     }
-  
+
     // trigger 'shown' so htmlwidgets resize
     $('d-article').trigger('shown');
   }
-  
+
   function init_distill() {
-  
+
     init_common();
-  
+
     // create front matter
     var front_matter = $('<d-front-matter></d-front-matter>');
     $('#distill-front-matter').wrap(front_matter);
-  
+
     // create d-title
     $('.d-title').changeElementType('d-title');
-  
+
     // create d-byline
     var byline = $('<d-byline></d-byline>');
     $('.d-byline').replaceWith(byline);
-  
+
     // create d-article
     var article = $('<d-article></d-article>');
     $('.d-article').wrap(article).children().unwrap();
-  
+
     // move posts container into article
     $('.posts-container').appendTo($('d-article'));
-  
+
     // create d-appendix
     $('.d-appendix').changeElementType('d-appendix');
-  
+
     // flag indicating that we have appendix items
     var appendix = $('.appendix-bottom').children('h3').length > 0;
-  
+
     // replace footnotes with <d-footnote>
     $('.footnote-ref').each(function(i, val) {
       appendix = true;
@@ -1718,10 +1717,10 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     });
     // remove footnotes
     $('.footnotes').remove();
-  
+
     // move refs into #references-listing
     $('#references-listing').replaceWith($('#refs'));
-  
+
     $('h1.appendix, h2.appendix').each(function(i, val) {
       $(this).changeElementType('h3');
     });
@@ -1731,16 +1730,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       appendix = true;
       $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
     });
-  
+
     // show d-appendix if we have appendix content
     $("d-appendix").css('display', appendix ? 'grid' : 'none');
-  
+
     // localize layout chunks to just output
     $('.layout-chunk').each(function(i, val) {
-  
+
       // capture layout
       var layout = $(this).attr('data-layout');
-  
+
       // apply layout to markdown level block elements
       var elements = $(this).children().not('details, div.sourceCode, pre, script');
       elements.each(function(i, el) {
@@ -1753,40 +1752,40 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           $(this).wrap(layout_div);
         }
       });
-  
-  
+
+
       // unwrap the layout-chunk div
       $(this).children().unwrap();
     });
-  
+
     // remove code block used to force  highlighting css
     $('.distill-force-highlighting-css').parent().remove();
-  
+
     // remove empty line numbers inserted by pandoc when using a
     // custom syntax highlighting theme
     $('code.sourceCode a:empty').remove();
-  
+
     // load distill framework
     load_distill_framework();
-  
+
     // wait for window.distillRunlevel == 4 to do post processing
     function distill_post_process() {
-  
+
       if (!window.distillRunlevel || window.distillRunlevel < 4)
         return;
-  
+
       // hide author/affiliations entirely if we have no authors
       var front_matter = JSON.parse($("#distill-front-matter").html());
       var have_authors = front_matter.authors && front_matter.authors.length > 0;
       if (!have_authors)
         $('d-byline').addClass('hidden');
-  
+
       // article with toc class
       $('.d-contents').parent().addClass('d-article-with-toc');
-  
+
       // strip links that point to #
       $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
-  
+
       // add orcid ids
       $('.authors-affiliations').find('.author').each(function(i, el) {
         var orcid_id = front_matter.authors[i].orcidID;
@@ -1801,12 +1800,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           $(this).append(a);
         }
       });
-  
+
       // hide elements of author/affiliations grid that have no value
       function hide_byline_column(caption) {
         $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
       }
-  
+
       // affiliations
       var have_affiliations = false;
       for (var i = 0; i<front_matter.authors.length; ++i) {
@@ -1818,11 +1817,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       }
       if (!have_affiliations)
         $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
-  
+
       // published date
       if (!front_matter.publishedDate)
         hide_byline_column("Published");
-  
+
       // document object identifier
       var doi = $('d-byline').find('h3:contains("DOI")');
       var doi_p = doi.next().empty();
@@ -1842,22 +1841,22 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
            .html(front_matter.doi)
            .appendTo(doi_p);
       }
-  
+
        // change plural form of authors/affiliations
       if (front_matter.authors.length === 1) {
         var grid = $('.authors-affiliations');
         grid.children('h3:contains("Authors")').text('Author');
         grid.children('h3:contains("Affiliations")').text('Affiliation');
       }
-  
+
       // remove d-appendix and d-footnote-list local styles
       $('d-appendix > style:first-child').remove();
       $('d-footnote-list > style:first-child').remove();
-  
+
       // move appendix-bottom entries to the bottom
       $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
       $('.appendix-bottom').remove();
-  
+
       // hoverable references
       $('span.citation[data-cites]').each(function() {
         var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
@@ -1871,39 +1870,39 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           placement: 'bottom-start'
         });
       });
-  
+
       // clear polling timer
       clearInterval(tid);
-  
+
       // show body now that everything is ready
       on_load_complete();
     }
-  
+
     var tid = setInterval(distill_post_process, 50);
     distill_post_process();
-  
+
   }
-  
+
   function init_downlevel() {
-  
+
     init_common();
-  
+
      // insert hr after d-title
     $('.d-title').after($('<hr class="section-separator"/>'));
-  
+
     // check if we have authors
     var front_matter = JSON.parse($("#distill-front-matter").html());
     var have_authors = front_matter.authors && front_matter.authors.length > 0;
-  
+
     // manage byline/border
     if (!have_authors)
       $('.d-byline').remove();
     $('.d-byline').after($('<hr class="section-separator"/>'));
     $('.d-byline a').remove();
-  
+
     // remove toc
     $('.d-contents').remove();
-  
+
     // move appendix elements
     $('h1.appendix, h2.appendix').each(function(i, val) {
       $(this).changeElementType('h3');
@@ -1911,62 +1910,62 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     $('h3.appendix').each(function(i, val) {
       $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
     });
-  
-  
+
+
     // inject headers into references and footnotes
     var refs_header = $('<h3></h3>');
     refs_header.text('References');
     $('#refs').prepend(refs_header);
-  
+
     var footnotes_header = $('<h3></h3');
     footnotes_header.text('Footnotes');
     $('.footnotes').children('hr').first().replaceWith(footnotes_header);
-  
+
     // move appendix-bottom entries to the bottom
     $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
     $('.appendix-bottom').remove();
-  
+
     // remove appendix if it's empty
     if ($('.d-appendix').children().length === 0)
       $('.d-appendix').remove();
-  
+
     // prepend separator above appendix
     $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
-  
+
     // trim code
     $('pre>code').each(function(i, val) {
       $(this).html($.trim($(this).html()));
     });
-  
+
     // move posts-container right before article
     $('.posts-container').insertBefore($('.d-article'));
-  
+
     $('body').addClass('downlevel');
-  
+
     on_load_complete();
   }
-  
-  
+
+
   function init_common() {
-  
+
     // jquery plugin to change element types
     (function($) {
       $.fn.changeElementType = function(newType) {
         var attrs = {};
-  
+
         $.each(this[0].attributes, function(idx, attr) {
           attrs[attr.nodeName] = attr.nodeValue;
         });
-  
+
         this.replaceWith(function() {
           return $("<" + newType + "/>", attrs).append($(this).contents());
         });
       };
     })(jQuery);
-  
+
     // prevent underline for linked images
     $('a > img').parent().css({'border-bottom' : 'none'});
-  
+
     // mark non-body figures created by knitr chunks as 100% width
     $('.layout-chunk').each(function(i, val) {
       var figures = $(this).find('img, .html-widget');
@@ -1978,35 +1977,35 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
           var fig = $(this);
           fig.css('width', fig.attr('width') + 'px');
         });
-  
+
       }
     });
-  
+
     // auto-append index.html to post-preview links in file: protocol
     // and in rstudio ide preview
     $('.post-preview').each(function(i, val) {
       if (window.location.protocol === "file:")
         $(this).attr('href', $(this).attr('href') + "index.html");
     });
-  
+
     // get rid of index.html references in header
     if (window.location.protocol !== "file:") {
       $('.distill-site-header a[href]').each(function(i,val) {
         $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
       });
     }
-  
+
     // add class to pandoc style tables
     $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
     $('.kable-table').children('table').addClass('pandoc-table');
-  
+
     // add figcaption style to table captions
     $('caption').parent('table').addClass("figcaption");
-  
+
     // initialize posts list
     if (window.init_posts_list)
       window.init_posts_list();
-  
+
     // implmement disqus comment link
     $('.disqus-comment-count').click(function() {
       window.headroom_prevent_pin = true;
@@ -2020,17 +2019,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       }
     });
   }
-  
+
   document.addEventListener('DOMContentLoaded', function() {
     if (is_downlevel_browser())
       init_downlevel();
     else
       window.addEventListener('WebComponentsReady', init_distill);
   });
-  
+
   </script>
-  
+
   <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2046,74 +2046,74 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
   /********************************/
   /* controls general properties of site*/
   /********************************/
-  
+
   body {
     color: #414141;
   /*  line-height: 1.7;
     font-size: 17px; */
     background-color: #FEFEFE;
   }
-  
+
   d-title h1{
   font-size: 2.1em;
   font-family: 'Work Sans';
   font-weight: 300;
   }
-  
+
   d-article h1 {
     font-size: 1.8em;
     font-family: 'Work Sans', 'Source Sans Pro', 'PT Sans';
     font-weight: 300;
   }
-  
+
   d-article h2 {
     font-size: 1.65em;
     font-family: 'Work Sans', 'Source Sans Pro', 'PT Sans';
     font-weight: 500;
   }
-  
+
   d-article h3 {
     margin-top: 1em;
   }
-  
+
   d-byline .authors-affiliations {
     grid-column-end: span 3;
     grid-column-gap: 8px;
   }
-  
+
   img.orcid-id {
     margin: 0;
   }
-  
+
   a.name:-webkit-any-link {
     text-decoration: underline;
     text-decoration-style: dotted;
   }
-  
+
   a.affiliation:-webkit-any-link {
     text-decoration: underline;
     text-decoration-style: dotted;
   }
-  
+
   blockquote p {
   	font-size: 1.3em;
   	font-family: 'Lato';
     font-style: normal;
     margin: 0.5em 0 0.5em;
   }
-  
+
   d-article li {
     margin: 0px 0px 4px;
   }
-  
+
   /********************************/
   /* controls CODE*/
   /********************************/
-  
+
   /** pre.sourceCode controls code block without lang **/
-  
+
   /** Controls r code  **/
-  
+
   pre.sourceCode.r {
     margin-top: 0px;
      color: #333333;
@@ -2128,7 +2128,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
      border-bottom: 1px solid #B7B7B7;
      padding: 18px 0px 18px 20px;
    }
-  
+
    pre.sourceCode.bash {
      margin-top: 0px;
       color: #333333;
@@ -2144,7 +2144,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       padding: 18px 0px 18px 20px;
     }
   /** Controls code output **/
-  
+
   d-article pre {
      margin-top: 0px;
       color: #333333;
@@ -2154,11 +2154,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       overflow-x: scroll !important;
       padding:  10px 10px 10px 18px;
       border-radius: 5px;
-  
+
     }
-  
+
   /** Controls inline code  **/
-  
+
   p code {
     background-color: #E8E8E8;
     border-radius: 3px;
@@ -2168,32 +2168,32 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     margin-bottom: 20px;
     color: #BF2727;
   }
-  
+
   d-article aside code {
     background-color: #E8E8E8;
     border-radius: 3px;
     font-family: 'Monaco', 'PT Mono', monospace;
     color: #BF2727;
   }
-  
+
   /********************************/
   /* controls NAV BAR and HEADERS*/
   /********************************/
-  
+
   .nav-dropdown-content .nav-dropdown-header {
     text-transform: none;
   }
-  
+
   .distill-site-header .logo {
     padding: 0;
   }
-  
+
   .distill-site-header  {
     width: 100%;
     box-sizing: border-box;
     z-index: 3;
   }
-  
+
   .headroom {
       z-index: 1000;
       position: fixed;
@@ -2206,19 +2206,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
       font-size: 15px;
       font-weight: 300;
   }
-  
+
   img {
     margin: 5px;
   }
-  
+
   /** LIGHTBOX MARKUP **/
   .thumbnail {
     max-width: 100%;
     position: relative;
   }
-  
+
   /** DETAILS fold down**/
-  
+
   details {
     background-color: hsla(206, 95%, 20%, 0.2);
     cursor: pointer;
@@ -2229,15 +2229,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     text-align: left;
     outline: none;
   }
-  
+
   .active, details:hover {
     transition: max-height 0.2s ease-out;
     outline: none;
-  
+
     /* background-color: #acc2c2; */
   }
-  
-  
+
+
   details {
     display: flex;
     justify-content: space-between;
@@ -2245,39 +2245,39 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     border-radius: 4px;
     outline: none;
   }
-  
+
   details.active {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     outline: none;
   }
-  
+
   summary::-webkit-details-marker {
     display: none;
     outline: none;
   }
-  
+
   summary:focus {
     outline: none;
   }
-  
+
   summary::after {
     float: right;
     font-family: "Font Awesome 5 Free";
     content: "\f0fe";
   }
-  
+
   details[open] summary::after {
     float: right;
     font-family: "Font Awesome 5 Free";
     content: "\f146";
   }
-  
-  
+
+
   /********************************/
   /* dygraph*/
   /********************************/
-  
+
   </style>
   <!--/radix_placeholder_site_in_header-->
 
@@ -2305,9 +2305,22 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="trepo-intro.html">Introduction</a>
+<a href="trepo-summary.html">Summary</a>
 <a href="trepo-physical.html">Physical</a>
-<a href="trepo-inverts.html">Inverts</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Macrofauna
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<hr/>
+<a href="trepo-macrotaxa.html">4. Macrofauna Taxa</a>
+<a href="trepo-temporal.html">3. Temporal Diversity</a>
+<a href="trepo-macrobeta.html">2. Beta Diversity</a>
+<a href="trepo-macroalpha.html">1. Alpha Diversity</a>
+</div>
+</div>
 <div class="nav-dropdown">
 <button class="nav-dropbtn">
 Microbial
@@ -2411,215 +2424,215 @@ Microbial
 </ol>
 <p>Here we perform OTU clustering for the 16S rRNA FULL data set and the merged set but the code will work for any number of phyloseq objects.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># LOAD ONLY REMOVE WHEN WORKFLOW FINISHED</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">remove</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">load</span>(<span class="st">&quot;page_build/trepo/otu_wf.rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LOAD ONLY REMOVE WHEN WORKFLOW FINISHED</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;page_build/trepo/otu_wf.rdata&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
 <h2 id="generate-fasta-file">1. Generate FASTA File</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>ps_list &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ssu_ps_work_merge&quot;</span>, <span class="st">&quot;ssu_ps_work&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="co">## Get ASV data</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>  tmp_get &lt;-<span class="st"> </span><span class="kw">get</span>(i)</span>
-<span id="cb2-5"><a href="#cb2-5"></a>  tmp_asv &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_get)))</span>
-<span id="cb2-6"><a href="#cb2-6"></a>  tmp_asv<span class="op">$</span>total &lt;-<span class="st"> </span><span class="kw">rowSums</span>(tmp_asv)</span>
-<span id="cb2-7"><a href="#cb2-7"></a>  tmp_asv &lt;-<span class="st"> </span>tmp_asv[<span class="kw">order</span>(tmp_asv<span class="op">$</span>total, <span class="dt">decreasing =</span> <span class="ot">TRUE</span>),]</span>
-<span id="cb2-8"><a href="#cb2-8"></a>  tmp_asv<span class="op">$</span>total &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>  tmp_asv &lt;-<span class="st"> </span>tmp_asv <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;ASV_ID&quot;</span>)</span>
-<span id="cb2-10"><a href="#cb2-10"></a>  tmp_asv &lt;-<span class="st"> </span>tmp_asv <span class="op">%&gt;%</span><span class="st"> </span>tidyr<span class="op">::</span><span class="kw">separate</span>(ASV_ID, <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;tmp_value&quot;</span>),</span>
-<span id="cb2-11"><a href="#cb2-11"></a>                                         <span class="dt">sep =</span> <span class="st">&quot;ASV&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-12"><a href="#cb2-12"></a>  tmp_asv<span class="op">$</span>tmp_value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(tmp_asv<span class="op">$</span>tmp_value))</span>
-<span id="cb2-13"><a href="#cb2-13"></a>  tmp_asv &lt;-<span class="st"> </span>tmp_asv[<span class="kw">order</span>(tmp_asv<span class="op">$</span>tmp_value, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>), ]</span>
-<span id="cb2-14"><a href="#cb2-14"></a>  tmp_asv<span class="op">$</span>tmp_value &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a></span>
-<span id="cb2-16"><a href="#cb2-16"></a>  <span class="co">## Get TAX data</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">tax_table</span>(tmp_get))</span>
-<span id="cb2-18"><a href="#cb2-18"></a>  tmp_tax<span class="op">$</span>ASV_ID &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a>  tmp_tax &lt;-<span class="st"> </span>tmp_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;ASV_ID&quot;</span>)</span>
-<span id="cb2-20"><a href="#cb2-20"></a>  tmp_tax &lt;-<span class="st"> </span>tmp_tax[base<span class="op">::</span><span class="kw">match</span>(tmp_asv<span class="op">$</span>ASV_ID, tmp_tax<span class="op">$</span>ASV_ID), ]</span>
-<span id="cb2-21"><a href="#cb2-21"></a>  <span class="co">## Fasta file</span></span>
-<span id="cb2-22"><a href="#cb2-22"></a>  tmp_fasta_df &lt;-<span class="st"> </span>tmp_tax[, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">8</span>)] <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
-<span id="cb2-23"><a href="#cb2-23"></a>  tmp_fasta &lt;-<span class="st"> </span><span class="kw">dataframe2fas</span>(tmp_fasta_df)</span>
-<span id="cb2-24"><a href="#cb2-24"></a></span>
-<span id="cb2-25"><a href="#cb2-25"></a>  <span class="co">## NAMING</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a>  tmp_asv_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_asv&quot;</span>))</span>
-<span id="cb2-27"><a href="#cb2-27"></a>  <span class="kw">assign</span>(tmp_asv_name, tmp_asv)</span>
-<span id="cb2-28"><a href="#cb2-28"></a>  tmp_tax_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tax&quot;</span>))</span>
-<span id="cb2-29"><a href="#cb2-29"></a>  <span class="kw">assign</span>(tmp_tax_name, tmp_tax)</span>
-<span id="cb2-30"><a href="#cb2-30"></a>  tmp_fasta_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;.fasta&quot;</span>))</span>
-<span id="cb2-31"><a href="#cb2-31"></a>  <span class="kw">assign</span>(tmp_fasta_name, tmp_fasta)</span>
-<span id="cb2-32"><a href="#cb2-32"></a>  tmp_path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
-<span id="cb2-33"><a href="#cb2-33"></a></span>
-<span id="cb2-34"><a href="#cb2-34"></a>  <span class="kw">write.fasta</span>(tmp_fasta, <span class="kw">paste</span>(tmp_path, tmp_fasta_name, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb2-35"><a href="#cb2-35"></a>  <span class="kw">write.table</span>(tmp_asv, <span class="kw">paste</span>(tmp_path, tmp_asv_name, <span class="st">&quot;.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb2-36"><a href="#cb2-36"></a>            <span class="dt">quote =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-37"><a href="#cb2-37"></a>  <span class="kw">write.table</span>(tmp_tax, <span class="kw">paste</span>(tmp_path, tmp_tax_name, <span class="st">&quot;.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb2-38"><a href="#cb2-38"></a>            <span class="dt">quote =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb2-39"><a href="#cb2-39"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb2-40"><a href="#cb2-40"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;.fasta&quot;</span>))</span>
-<span id="cb2-41"><a href="#cb2-41"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ps_list <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ssu_ps_work_merge&quot;</span>, <span class="st">&quot;ssu_ps_work&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Get ASV data</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  tmp_get <span class="ot">&lt;-</span> <span class="fu">get</span>(i)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  tmp_asv <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(<span class="fu">otu_table</span>(tmp_get)))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  tmp_asv<span class="sc">$</span>total <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(tmp_asv)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  tmp_asv <span class="ot">&lt;-</span> tmp_asv[<span class="fu">order</span>(tmp_asv<span class="sc">$</span>total, <span class="at">decreasing =</span> <span class="cn">TRUE</span>),]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  tmp_asv<span class="sc">$</span>total <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  tmp_asv <span class="ot">&lt;-</span> tmp_asv <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;ASV_ID&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  tmp_asv <span class="ot">&lt;-</span> tmp_asv <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(ASV_ID, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;tmp_value&quot;</span>),</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sep =</span> <span class="st">&quot;ASV&quot;</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  tmp_asv<span class="sc">$</span>tmp_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(tmp_asv<span class="sc">$</span>tmp_value))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  tmp_asv <span class="ot">&lt;-</span> tmp_asv[<span class="fu">order</span>(tmp_asv<span class="sc">$</span>tmp_value, <span class="at">decreasing =</span> <span class="cn">FALSE</span>), ]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  tmp_asv<span class="sc">$</span>tmp_value <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Get TAX data</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">tax_table</span>(tmp_get))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  tmp_tax<span class="sc">$</span>ASV_ID <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> tmp_tax <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;ASV_ID&quot;</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> tmp_tax[base<span class="sc">::</span><span class="fu">match</span>(tmp_asv<span class="sc">$</span>ASV_ID, tmp_tax<span class="sc">$</span>ASV_ID), ]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Fasta file</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  tmp_fasta_df <span class="ot">&lt;-</span> tmp_tax[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">8</span>)] <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">remove_rownames</span>()</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  tmp_fasta <span class="ot">&lt;-</span> <span class="fu">dataframe2fas</span>(tmp_fasta_df)</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="do">## NAMING</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  tmp_asv_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_asv&quot;</span>))</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_asv_name, tmp_asv)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  tmp_tax_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_tax&quot;</span>))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_tax_name, tmp_tax)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  tmp_fasta_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;.fasta&quot;</span>))</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_fasta_name, tmp_fasta)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  tmp_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.fasta</span>(tmp_fasta, <span class="fu">paste</span>(tmp_path, tmp_fasta_name, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.table</span>(tmp_asv, <span class="fu">paste</span>(tmp_path, tmp_asv_name, <span class="st">&quot;.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.table</span>(tmp_tax, <span class="fu">paste</span>(tmp_path, tmp_tax_name, <span class="st">&quot;.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;.fasta&quot;</span>))</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <h2 id="cluster-otus">2. Cluster OTUs</h2>
 <p>Code for clustering OTUs is based on the <a href="https://shaunpwilkinson.github.io/post/kmer-vignette/">kmer-vignette</a>.Important paramets are <code>threshold</code> (value between 0 and 1 giving the OTU identity cutoff) and <code>method</code> (<code>central</code>, <code>centroid</code>, <code>farthest</code>)</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># THIS GIVES WEIRD RESULTS WHEN RUN IN LOOP</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
-<span id="cb3-3"><a href="#cb3-3"></a>  tmp_fasta_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;.fasta&quot;</span>))</span>
-<span id="cb3-4"><a href="#cb3-4"></a>  tmp_path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  tmp_asvs &lt;-<span class="st"> </span><span class="kw">read.dna</span>(<span class="kw">paste</span>(tmp_path, tmp_fasta_name, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb3-6"><a href="#cb3-6"></a>                       <span class="dt">format =</span> <span class="st">&quot;fasta&quot;</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="co"># CANT use if different lengths</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>  <span class="co">#tmp_dna &lt;- tmp_dna[, apply(tmp_dna, 2, function(v) !any(v == 0xf0))]</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>  tmp_otus &lt;-<span class="st"> </span>kmer<span class="op">::</span><span class="kw">otu</span>(tmp_asvs, <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">threshold =</span> <span class="fl">0.97</span>,</span>
-<span id="cb3-10"><a href="#cb3-10"></a>                        <span class="dt">method =</span> <span class="st">&quot;centroid&quot;</span>, <span class="dt">nstart =</span> <span class="dv">20</span>)</span>
-<span id="cb3-11"><a href="#cb3-11"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(tmp_otus)</span>
-<span id="cb3-12"><a href="#cb3-12"></a>  tmp_otu_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_cluster_results&quot;</span>))</span>
-<span id="cb3-13"><a href="#cb3-13"></a>  <span class="kw">assign</span>(tmp_otu_name, tmp_df)</span>
-<span id="cb3-14"><a href="#cb3-14"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb3-15"><a href="#cb3-15"></a>}</span>
-<span id="cb3-16"><a href="#cb3-16"></a>ssu_ps_work_cluster_results</span>
-<span id="cb3-17"><a href="#cb3-17"></a>ssu_ps_work_merge_cluster_results</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># THIS GIVES WEIRD RESULTS WHEN RUN IN LOOP</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  tmp_fasta_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span><span class="fu">paste0</span>(., <span class="st">&quot;.fasta&quot;</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  tmp_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  tmp_asvs <span class="ot">&lt;-</span> <span class="fu">read.dna</span>(<span class="fu">paste</span>(tmp_path, tmp_fasta_name, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">format =</span> <span class="st">&quot;fasta&quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># CANT use if different lengths</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tmp_dna &lt;- tmp_dna[, apply(tmp_dna, 2, function(v) !any(v == 0xf0))]</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  tmp_otus <span class="ot">&lt;-</span> kmer<span class="sc">::</span><span class="fu">otu</span>(tmp_asvs, <span class="at">k =</span> <span class="dv">5</span>, <span class="at">threshold =</span> <span class="fl">0.97</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">method =</span> <span class="st">&quot;centroid&quot;</span>, <span class="at">nstart =</span> <span class="dv">20</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  tmp_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(tmp_otus)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  tmp_otu_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span><span class="fu">paste0</span>(., <span class="st">&quot;_cluster_results&quot;</span>))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_otu_name, tmp_df)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>ssu_ps_work_cluster_results</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>ssu_ps_work_merge_cluster_results</span></code></pre></div>
 </div>
 <h2 id="create-lookup-table">3. Create Lookup Table</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
-<span id="cb4-2"><a href="#cb4-2"></a>  tmp_df &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="kw">paste0</span>(., <span class="st">&quot;_cluster_results&quot;</span>)))</span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="co">## Make lookup table from results</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>  tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;ASV_ID&quot;</span>)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  tmp_df[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;OTU&quot;</span>, tmp_df[[<span class="dv">2</span>]])</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;OTU_ID&quot;</span> =<span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb4-7"><a href="#cb4-7"></a>  tmp_df<span class="op">$</span>temp_rep &lt;-<span class="st"> </span>tmp_df<span class="op">$</span>ASV_ID</span>
-<span id="cb4-8"><a href="#cb4-8"></a>  tmp_df<span class="op">$</span>ASV_ID &lt;-<span class="st"> </span>tmp_df<span class="op">$</span>ASV_ID <span class="op">%&gt;%</span><span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, <span class="st">&quot;&quot;</span>)</span>
-<span id="cb4-9"><a href="#cb4-9"></a>  tmp_df<span class="op">$</span>temp_rep &lt;-<span class="st"> </span>tmp_df<span class="op">$</span>temp_rep <span class="op">%&gt;%</span><span class="st"> </span>stringr<span class="op">::</span><span class="kw">str_replace</span>(<span class="st">&quot;</span><span class="ch">\\</span><span class="st">*&quot;</span>, <span class="st">&quot;_rep&quot;</span>)</span>
-<span id="cb4-10"><a href="#cb4-10"></a></span>
-<span id="cb4-11"><a href="#cb4-11"></a>  tmp_df &lt;-<span class="st"> </span>tmp_df <span class="op">%&gt;%</span><span class="st"> </span>tidyr<span class="op">::</span><span class="kw">separate</span>(temp_rep, <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;is_asv_rep&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;left&quot;</span>)</span>
-<span id="cb4-12"><a href="#cb4-12"></a>  tmp_df[[<span class="dv">3</span>]][tmp_df[[<span class="dv">3</span>]] <span class="op">!=</span><span class="st"> &quot;rep&quot;</span>] &lt;-<span class="st"> &quot;FALSE&quot;</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a>  tmp_df[[<span class="dv">3</span>]][tmp_df[[<span class="dv">3</span>]] <span class="op">==</span><span class="st"> &quot;rep&quot;</span>] &lt;-<span class="st"> &quot;TRUE&quot;</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a></span>
-<span id="cb4-15"><a href="#cb4-15"></a>  tmp_path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
-<span id="cb4-16"><a href="#cb4-16"></a>  tmp_lookup_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_asv_to_otu_map&quot;</span>))</span>
-<span id="cb4-17"><a href="#cb4-17"></a>  <span class="kw">assign</span>(tmp_lookup_name, tmp_df)</span>
-<span id="cb4-18"><a href="#cb4-18"></a>  <span class="kw">write.table</span>(tmp_df, <span class="kw">paste</span>(tmp_path, tmp_lookup_name, <span class="st">&quot;.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>),</span>
-<span id="cb4-19"><a href="#cb4-19"></a>            <span class="dt">quote =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb4-20"><a href="#cb4-20"></a>  tmp_l_asv &lt;-<span class="st"> </span><span class="kw">length</span>(base<span class="op">::</span><span class="kw">unique</span>(tmp_df[[<span class="dv">1</span>]]))</span>
-<span id="cb4-21"><a href="#cb4-21"></a>  tmp_l_otu &lt;-<span class="st"> </span><span class="kw">length</span>(base<span class="op">::</span><span class="kw">unique</span>(tmp_df[[<span class="dv">2</span>]]))</span>
-<span id="cb4-22"><a href="#cb4-22"></a>  <span class="kw">print</span>(<span class="kw">c</span>(tmp_l_asv, tmp_l_otu))</span>
-<span id="cb4-23"><a href="#cb4-23"></a>  <span class="kw">print</span>(tmp_l_otu <span class="op">-</span><span class="st"> </span>tmp_l_asv)</span>
-<span id="cb4-24"><a href="#cb4-24"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb4-25"><a href="#cb4-25"></a>}</span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  tmp_df <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span><span class="fu">paste0</span>(., <span class="st">&quot;_cluster_results&quot;</span>)))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="do">## Make lookup table from results</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  tmp_df <span class="ot">&lt;-</span> tmp_df <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;ASV_ID&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  tmp_df[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;OTU&quot;</span>, tmp_df[[<span class="dv">2</span>]])</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  tmp_df <span class="ot">&lt;-</span> tmp_df <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">&quot;OTU_ID&quot;</span> <span class="ot">=</span> <span class="dv">2</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  tmp_df<span class="sc">$</span>temp_rep <span class="ot">&lt;-</span> tmp_df<span class="sc">$</span>ASV_ID</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  tmp_df<span class="sc">$</span>ASV_ID <span class="ot">&lt;-</span> tmp_df<span class="sc">$</span>ASV_ID <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  tmp_df<span class="sc">$</span>temp_rep <span class="ot">&lt;-</span> tmp_df<span class="sc">$</span>temp_rep <span class="sc">%&gt;%</span> stringr<span class="sc">::</span><span class="fu">str_replace</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">*&quot;</span>, <span class="st">&quot;_rep&quot;</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  tmp_df <span class="ot">&lt;-</span> tmp_df <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(temp_rep, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;is_asv_rep&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;left&quot;</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  tmp_df[[<span class="dv">3</span>]][tmp_df[[<span class="dv">3</span>]] <span class="sc">!=</span> <span class="st">&quot;rep&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;FALSE&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  tmp_df[[<span class="dv">3</span>]][tmp_df[[<span class="dv">3</span>]] <span class="sc">==</span> <span class="st">&quot;rep&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;TRUE&quot;</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  tmp_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  tmp_lookup_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_asv_to_otu_map&quot;</span>))</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_lookup_name, tmp_df)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.table</span>(tmp_df, <span class="fu">paste</span>(tmp_path, tmp_lookup_name, <span class="st">&quot;.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  tmp_l_asv <span class="ot">&lt;-</span> <span class="fu">length</span>(base<span class="sc">::</span><span class="fu">unique</span>(tmp_df[[<span class="dv">1</span>]]))</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  tmp_l_otu <span class="ot">&lt;-</span> <span class="fu">length</span>(base<span class="sc">::</span><span class="fu">unique</span>(tmp_df[[<span class="dv">2</span>]]))</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">c</span>(tmp_l_asv, tmp_l_otu))</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(tmp_l_otu <span class="sc">-</span> tmp_l_asv)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">objects</span>()</span></code></pre></div>
 </div>
 <h2 id="asv-to-otu-table">4. ASV to OTU Table</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#https://riptutorial.com/data-table/example/13084/using--sd-and--sdcols</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
-<span id="cb5-4"><a href="#cb5-4"></a>  tmp_asv &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_asv&quot;</span>)))</span>
-<span id="cb5-5"><a href="#cb5-5"></a>  tmp_asv_to_otu &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_asv_to_otu_map&quot;</span>)))</span>
-<span id="cb5-6"><a href="#cb5-6"></a>  tmp_asv_otu &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(tmp_asv_to_otu, tmp_asv)</span>
-<span id="cb5-7"><a href="#cb5-7"></a>  tmp_asv_otu &lt;-<span class="st"> </span><span class="kw">arrange</span>(tmp_asv_otu, OTU_ID, <span class="kw">desc</span>(is_asv_rep))</span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a>  tmp_asv_otu &lt;-<span class="st"> </span><span class="kw">data.table</span>(tmp_asv_otu)</span>
-<span id="cb5-10"><a href="#cb5-10"></a>  tmp_cols &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">sapply</span>(tmp_asv_otu, is.numeric))</span>
-<span id="cb5-11"><a href="#cb5-11"></a>  tmp_otu &lt;-<span class="st"> </span>tmp_asv_otu[<span class="kw">order</span>(OTU_ID), <span class="kw">lapply</span>(.SD, sum),</span>
-<span id="cb5-12"><a href="#cb5-12"></a>                             by =<span class="st"> </span>.(OTU_ID), .SDcols =<span class="st"> </span>tmp_cols]</span>
-<span id="cb5-13"><a href="#cb5-13"></a>  tmp_otu &lt;-<span class="st"> </span>tmp_otu <span class="op">%&gt;%</span><span class="st"> </span>tidyr<span class="op">::</span><span class="kw">separate</span>(OTU_ID, <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;tmp_value&quot;</span>),</span>
-<span id="cb5-14"><a href="#cb5-14"></a>                                         <span class="dt">sep =</span> <span class="st">&quot;OTU&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb5-15"><a href="#cb5-15"></a>  tmp_otu<span class="op">$</span>tmp_value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(tmp_otu<span class="op">$</span>tmp_value))</span>
-<span id="cb5-16"><a href="#cb5-16"></a>  tmp_otu &lt;-<span class="st"> </span>tmp_otu[<span class="kw">order</span>(tmp_otu<span class="op">$</span>tmp_value, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>), ]</span>
-<span id="cb5-17"><a href="#cb5-17"></a>  tmp_otu<span class="op">$</span>tmp_value &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a></span>
-<span id="cb5-19"><a href="#cb5-19"></a>  tmp_otu &lt;-<span class="st"> </span>tmp_otu <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">column_to_rownames</span>(<span class="st">&quot;OTU_ID&quot;</span>)</span>
-<span id="cb5-20"><a href="#cb5-20"></a>  tmp_otu_t &lt;-<span class="st"> </span><span class="kw">transpose</span>(tmp_otu)</span>
-<span id="cb5-21"><a href="#cb5-21"></a>  <span class="kw">colnames</span>(tmp_otu_t) &lt;-<span class="st"> </span><span class="kw">rownames</span>(tmp_otu)</span>
-<span id="cb5-22"><a href="#cb5-22"></a>  <span class="kw">rownames</span>(tmp_otu_t) &lt;-<span class="st"> </span><span class="kw">colnames</span>(tmp_otu)</span>
-<span id="cb5-23"><a href="#cb5-23"></a>  <span class="kw">print</span>(<span class="kw">identical</span>(<span class="kw">colnames</span>(tmp_otu), <span class="kw">rownames</span>(tmp_otu_t)))</span>
-<span id="cb5-24"><a href="#cb5-24"></a>  <span class="kw">print</span>(<span class="kw">identical</span>(<span class="kw">colnames</span>(tmp_otu_t), <span class="kw">rownames</span>(tmp_otu)))</span>
-<span id="cb5-25"><a href="#cb5-25"></a>  tmp_otu_t &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_otu_t)</span>
-<span id="cb5-26"><a href="#cb5-26"></a></span>
-<span id="cb5-27"><a href="#cb5-27"></a>  tmp_otu_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu_tab&quot;</span>))</span>
-<span id="cb5-28"><a href="#cb5-28"></a>  <span class="kw">assign</span>(tmp_otu_name, tmp_otu_t)</span>
-<span id="cb5-29"><a href="#cb5-29"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb5-30"><a href="#cb5-30"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://riptutorial.com/data-table/example/13084/using--sd-and--sdcols</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  tmp_asv <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_asv&quot;</span>)))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  tmp_asv_to_otu <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_asv_to_otu_map&quot;</span>)))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  tmp_asv_otu <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(tmp_asv_to_otu, tmp_asv)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  tmp_asv_otu <span class="ot">&lt;-</span> <span class="fu">arrange</span>(tmp_asv_otu, OTU_ID, <span class="fu">desc</span>(is_asv_rep))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  tmp_asv_otu <span class="ot">&lt;-</span> <span class="fu">data.table</span>(tmp_asv_otu)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  tmp_cols <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">sapply</span>(tmp_asv_otu, is.numeric))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> tmp_asv_otu[<span class="fu">order</span>(OTU_ID), <span class="fu">lapply</span>(.SD, sum),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                             by <span class="ot">=</span> .(OTU_ID), .SDcols <span class="ot">=</span> tmp_cols]</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> tmp_otu <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(OTU_ID, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;tmp_value&quot;</span>),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sep =</span> <span class="st">&quot;OTU&quot;</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  tmp_otu<span class="sc">$</span>tmp_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(tmp_otu<span class="sc">$</span>tmp_value))</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> tmp_otu[<span class="fu">order</span>(tmp_otu<span class="sc">$</span>tmp_value, <span class="at">decreasing =</span> <span class="cn">FALSE</span>), ]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  tmp_otu<span class="sc">$</span>tmp_value <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> tmp_otu <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="st">&quot;OTU_ID&quot;</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  tmp_otu_t <span class="ot">&lt;-</span> <span class="fu">transpose</span>(tmp_otu)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(tmp_otu_t) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(tmp_otu)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames</span>(tmp_otu_t) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(tmp_otu)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">identical</span>(<span class="fu">colnames</span>(tmp_otu), <span class="fu">rownames</span>(tmp_otu_t)))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">identical</span>(<span class="fu">colnames</span>(tmp_otu_t), <span class="fu">rownames</span>(tmp_otu)))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  tmp_otu_t <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(tmp_otu_t)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  tmp_otu_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu_tab&quot;</span>))</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_otu_name, tmp_otu_t)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <h2 id="make-taxonomy-files">5. Make Taxonomy Files</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;_otu_tax&quot;</span>))</span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  tmp_lookup &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_asv_to_otu_map&quot;</span>)))</span>
-<span id="cb6-5"><a href="#cb6-5"></a>  tmp_lookup &lt;-<span class="st"> </span>tmp_lookup <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(is_asv_rep <span class="op">==</span><span class="st"> &quot;TRUE&quot;</span>)</span>
-<span id="cb6-6"><a href="#cb6-6"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_tax&quot;</span>)))</span>
-<span id="cb6-7"><a href="#cb6-7"></a>  tmp_tax_merge &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(tmp_lookup, tmp_tax)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>  tmp_tax_merge[, <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="ot">NULL</span>)</span>
-<span id="cb6-9"><a href="#cb6-9"></a>  tmp_tax_merge &lt;-<span class="st"> </span>tmp_tax_merge <span class="op">%&gt;%</span><span class="st"> </span>tidyr<span class="op">::</span><span class="kw">separate</span>(OTU_ID, <span class="kw">c</span>(<span class="ot">NA</span>, <span class="st">&quot;tmp_value&quot;</span>),</span>
-<span id="cb6-10"><a href="#cb6-10"></a>                                         <span class="dt">sep =</span> <span class="st">&quot;OTU&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb6-11"><a href="#cb6-11"></a>  tmp_tax_merge<span class="op">$</span>tmp_value &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">as.character</span>(tmp_tax_merge<span class="op">$</span>tmp_value))</span>
-<span id="cb6-12"><a href="#cb6-12"></a>  tmp_tax_merge &lt;-<span class="st"> </span>tmp_tax_merge[<span class="kw">order</span>(tmp_tax_merge<span class="op">$</span>tmp_value, <span class="dt">decreasing =</span> <span class="ot">FALSE</span>), ]</span>
-<span id="cb6-13"><a href="#cb6-13"></a>  tmp_tax_merge<span class="op">$</span>tmp_value &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a></span>
-<span id="cb6-15"><a href="#cb6-15"></a>  tmp_tax_merge &lt;-<span class="st"> </span>tmp_tax_merge <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">remove_rownames</span>()</span>
-<span id="cb6-16"><a href="#cb6-16"></a>  tmp_tax_merge &lt;-<span class="st"> </span>tmp_tax_merge <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">column_to_rownames</span>(<span class="st">&quot;OTU_ID&quot;</span>)</span>
-<span id="cb6-17"><a href="#cb6-17"></a>  tmp_tax_merge &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_tax_merge)</span>
-<span id="cb6-18"><a href="#cb6-18"></a></span>
-<span id="cb6-19"><a href="#cb6-19"></a>  tmp_tax_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu_tax&quot;</span>))</span>
-<span id="cb6-20"><a href="#cb6-20"></a>  <span class="kw">assign</span>(tmp_tax_name, tmp_tax_merge)</span>
-<span id="cb6-21"><a href="#cb6-21"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb6-22"><a href="#cb6-22"></a>}</span>
-<span id="cb6-23"><a href="#cb6-23"></a>objects1 &lt;-<span class="st"> </span><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;_otu_tax&quot;</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  tmp_lookup <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_asv_to_otu_map&quot;</span>)))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  tmp_lookup <span class="ot">&lt;-</span> tmp_lookup <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(is_asv_rep <span class="sc">==</span> <span class="st">&quot;TRUE&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_tax&quot;</span>)))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(tmp_lookup, tmp_tax)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge[, <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="cn">NULL</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge <span class="ot">&lt;-</span> tmp_tax_merge <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">separate</span>(OTU_ID, <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">&quot;tmp_value&quot;</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">sep =</span> <span class="st">&quot;OTU&quot;</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge<span class="sc">$</span>tmp_value <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(tmp_tax_merge<span class="sc">$</span>tmp_value))</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge <span class="ot">&lt;-</span> tmp_tax_merge[<span class="fu">order</span>(tmp_tax_merge<span class="sc">$</span>tmp_value, <span class="at">decreasing =</span> <span class="cn">FALSE</span>), ]</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge<span class="sc">$</span>tmp_value <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge <span class="ot">&lt;-</span> tmp_tax_merge <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">remove_rownames</span>()</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge <span class="ot">&lt;-</span> tmp_tax_merge <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="st">&quot;OTU_ID&quot;</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  tmp_tax_merge <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(tmp_tax_merge)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  tmp_tax_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu_tax&quot;</span>))</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_tax_name, tmp_tax_merge)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>objects1 <span class="ot">&lt;-</span> <span class="fu">objects</span>()</span></code></pre></div>
 </div>
 <h2 id="create-phyloseq-objects">6. Create Phyloseq Objects</h2>
 <p>Now we can create phyloseq objects for the new OTU data. This is a little tricky because in the original <code>ps</code> objects, the ASVs are named in order of total abundance. However, the new OTU designations are not named in this fashion.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu_tab&quot;</span>)))</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu_tax&quot;</span>)))</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  tmp_samp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(<span class="kw">get</span>(i)))</span>
-<span id="cb7-5"><a href="#cb7-5"></a>  tmp_samp &lt;-<span class="st"> </span>tmp_samp <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)</span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># Reorder by OTU abundance</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">data.frame</span>(tmp_otu)</span>
-<span id="cb7-8"><a href="#cb7-8"></a>  tmp_otu &lt;-<span class="st"> </span>tmp_otu  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">order</span>(<span class="op">-</span><span class="kw">colSums</span>(tmp_otu)))</span>
-<span id="cb7-9"><a href="#cb7-9"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(tmp_tax)</span>
-<span id="cb7-10"><a href="#cb7-10"></a>  tmp_tax &lt;-<span class="st"> </span>tmp_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;TEMP&quot;</span>) </span>
-<span id="cb7-11"><a href="#cb7-11"></a>  tmp_tax<span class="op">$</span>NAME &lt;-<span class="st"> </span>tmp_tax<span class="op">$</span>TEMP</span>
-<span id="cb7-12"><a href="#cb7-12"></a>  tmp_tax &lt;-<span class="st"> </span>tmp_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">column_to_rownames</span>(<span class="st">&quot;TEMP&quot;</span>) </span>
-<span id="cb7-13"><a href="#cb7-13"></a>  tmp_tax &lt;-<span class="st"> </span>tmp_tax[<span class="kw">match</span>(<span class="kw">colnames</span>(tmp_otu), tmp_tax<span class="op">$</span>NAME),]</span>
-<span id="cb7-14"><a href="#cb7-14"></a>  <span class="kw">print</span>(<span class="kw">identical</span>(<span class="kw">colnames</span>(tmp_otu), <span class="kw">row.names</span>(tmp_tax)))</span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="co"># Save original name</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a>  tmp_org &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">colnames</span>(tmp_otu))</span>
-<span id="cb7-17"><a href="#cb7-17"></a>  tmp_org &lt;-<span class="st"> </span>tmp_org <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;OTU_ID&quot;</span> =<span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb7-18"><a href="#cb7-18"></a>  tmp_org_names &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_org_names&quot;</span>))</span>
-<span id="cb7-19"><a href="#cb7-19"></a>  <span class="kw">assign</span>(tmp_org_names, tmp_org)</span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="co"># Rename to sequential  </span></span>
-<span id="cb7-21"><a href="#cb7-21"></a>  <span class="kw">colnames</span>(tmp_otu) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">paste0</span>(<span class="st">&quot;OTU&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(tmp_otu)))</span>
-<span id="cb7-22"><a href="#cb7-22"></a>  <span class="kw">row.names</span>(tmp_tax) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">paste0</span>(<span class="st">&quot;OTU&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(tmp_tax)))</span>
-<span id="cb7-23"><a href="#cb7-23"></a>  tmp_tax<span class="op">$</span>NAME &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>  <span class="kw">print</span>(<span class="kw">identical</span>(<span class="kw">colnames</span>(tmp_otu), <span class="kw">row.names</span>(tmp_tax)))</span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="co"># MAke PS object &amp; save  </span></span>
-<span id="cb7-26"><a href="#cb7-26"></a>  tmp_tax &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_tax)</span>
-<span id="cb7-27"><a href="#cb7-27"></a>  tmp_otu &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_otu)</span>
-<span id="cb7-28"><a href="#cb7-28"></a></span>
-<span id="cb7-29"><a href="#cb7-29"></a>  tmp_ps &lt;-<span class="st"> </span><span class="kw">phyloseq</span>(<span class="kw">otu_table</span>(tmp_otu, <span class="dt">taxa_are_rows =</span> <span class="ot">FALSE</span>),</span>
-<span id="cb7-30"><a href="#cb7-30"></a>                   <span class="kw">sample_data</span>(tmp_samp), <span class="kw">tax_table</span>(tmp_tax))</span>
-<span id="cb7-31"><a href="#cb7-31"></a>  <span class="co"># Adding tree reorganizes OTU order</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a>  <span class="co">#tmp_tree &lt;- rtree(ntaxa(tmp_ps), rooted = TRUE,</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a>  <span class="co">#                         tip.label = taxa_names(tmp_ps))</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a>  <span class="co">#tmp_ps &lt;- merge_phyloseq(tmp_ps, sample_data, tmp_tree)</span></span>
-<span id="cb7-35"><a href="#cb7-35"></a>  tmp_ps_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu&quot;</span>))</span>
-<span id="cb7-36"><a href="#cb7-36"></a>  <span class="kw">assign</span>(tmp_ps_name, tmp_ps)</span>
-<span id="cb7-37"><a href="#cb7-37"></a>  <span class="kw">print</span>(<span class="kw">identical</span>(<span class="kw">readcount</span>(tmp_ps), <span class="kw">readcount</span>(<span class="kw">get</span>(i))))</span>
-<span id="cb7-38"><a href="#cb7-38"></a><span class="co"># SAVE stuff  </span></span>
-<span id="cb7-39"><a href="#cb7-39"></a>  tmp_path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;files/trepo/otu/rdata/&quot;</span>)</span>
-<span id="cb7-40"><a href="#cb7-40"></a>  <span class="kw">saveRDS</span>(tmp_ps, <span class="kw">paste</span>(tmp_path, tmp_ps_name, <span class="st">&quot;.rds&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb7-41"><a href="#cb7-41"></a>  tmp_path2 &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
-<span id="cb7-42"><a href="#cb7-42"></a>  <span class="kw">write.table</span>(tmp_org, <span class="kw">paste</span>(tmp_path2, tmp_org_names, <span class="st">&quot;.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>), </span>
-<span id="cb7-43"><a href="#cb7-43"></a>              <span class="dt">quote =</span> <span class="ot">FALSE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">row.names =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb7-44"><a href="#cb7-44"></a>  <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb7-45"><a href="#cb7-45"></a>}</span>
-<span id="cb7-46"><a href="#cb7-46"></a>objects2 &lt;-<span class="st"> </span><span class="kw">objects</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list) {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu_tab&quot;</span>)))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu_tax&quot;</span>)))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  tmp_samp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">sample_data</span>(<span class="fu">get</span>(i)))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  tmp_samp <span class="ot">&lt;-</span> tmp_samp <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Reorder by OTU abundance</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(tmp_otu)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> tmp_otu  <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">order</span>(<span class="sc">-</span><span class="fu">colSums</span>(tmp_otu)))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(tmp_tax)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> tmp_tax <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;TEMP&quot;</span>) </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  tmp_tax<span class="sc">$</span>NAME <span class="ot">&lt;-</span> tmp_tax<span class="sc">$</span>TEMP</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> tmp_tax <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">column_to_rownames</span>(<span class="st">&quot;TEMP&quot;</span>) </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> tmp_tax[<span class="fu">match</span>(<span class="fu">colnames</span>(tmp_otu), tmp_tax<span class="sc">$</span>NAME),]</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">identical</span>(<span class="fu">colnames</span>(tmp_otu), <span class="fu">row.names</span>(tmp_tax)))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Save original name</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  tmp_org <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">colnames</span>(tmp_otu))</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  tmp_org <span class="ot">&lt;-</span> tmp_org <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">&quot;OTU_ID&quot;</span> <span class="ot">=</span> <span class="dv">1</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  tmp_org_names <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_org_names&quot;</span>))</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_org_names, tmp_org)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename to sequential  </span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(tmp_otu) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;OTU&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(tmp_otu)))</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row.names</span>(tmp_tax) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">paste0</span>(<span class="st">&quot;OTU&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(tmp_tax)))</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  tmp_tax<span class="sc">$</span>NAME <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">identical</span>(<span class="fu">colnames</span>(tmp_otu), <span class="fu">row.names</span>(tmp_tax)))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># MAke PS object &amp; save  </span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  tmp_tax <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(tmp_tax)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  tmp_otu <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(tmp_otu)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  tmp_ps <span class="ot">&lt;-</span> <span class="fu">phyloseq</span>(<span class="fu">otu_table</span>(tmp_otu, <span class="at">taxa_are_rows =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">sample_data</span>(tmp_samp), <span class="fu">tax_table</span>(tmp_tax))</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adding tree reorganizes OTU order</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tmp_tree &lt;- rtree(ntaxa(tmp_ps), rooted = TRUE,</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="co">#                         tip.label = taxa_names(tmp_ps))</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">#tmp_ps &lt;- merge_phyloseq(tmp_ps, sample_data, tmp_tree)</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  tmp_ps_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu&quot;</span>))</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assign</span>(tmp_ps_name, tmp_ps)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">identical</span>(<span class="fu">readcount</span>(tmp_ps), <span class="fu">readcount</span>(<span class="fu">get</span>(i))))</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co"># SAVE stuff  </span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>  tmp_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;files/trepo/otu/rdata/&quot;</span>)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">saveRDS</span>(tmp_ps, <span class="fu">paste</span>(tmp_path, tmp_ps_name, <span class="st">&quot;.rds&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  tmp_path2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;files/trepo/otu/tables/&quot;</span>)</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.table</span>(tmp_org, <span class="fu">paste</span>(tmp_path2, tmp_org_names, <span class="st">&quot;.txt&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>), </span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>              <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>objects2 <span class="ot">&lt;-</span> <span class="fu">objects</span>()</span></code></pre></div>
 </div>
 <p>OK, now we need to make sure that all of this fiddling with OTU names didn’t mess anything up. So we need to compare the following to make sure they are all identical:</p>
 <ol type="1">
@@ -2631,36 +2644,36 @@ Microbial
 </ol>
 <p>Specifically, we will compare the lineage and the DNA sequence from all three data frames. If they are equal, we are good to go. First the full data set.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>tmp_rn &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">row.names</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(ssu_ps_work_otu))))  </span>
-<span id="cb8-2"><a href="#cb8-2"></a>tmp_bind &lt;-<span class="st"> </span><span class="kw">cbind</span>(ssu_ps_work_org_names, tmp_rn)    </span>
-<span id="cb8-3"><a href="#cb8-3"></a>tmp_bind &lt;-<span class="st"> </span>tmp_bind <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;NEW_ID&quot;</span> =<span class="st"> </span><span class="dv">2</span>)    </span>
-<span id="cb8-4"><a href="#cb8-4"></a>temp_map_true &lt;-<span class="st"> </span>ssu_ps_work_asv_to_otu_map[ssu_ps_work_asv_to_otu_map<span class="op">$</span>is_asv_rep <span class="op">==</span><span class="st"> &#39;TRUE&#39;</span>,]   </span>
-<span id="cb8-5"><a href="#cb8-5"></a>tmp_join &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(temp_map_true, tmp_bind, <span class="dt">keep =</span> <span class="ot">FALSE</span>) </span>
-<span id="cb8-6"><a href="#cb8-6"></a>ssu_ps_work_asv_to_otu_to_new_otu_map &lt;-<span class="st"> </span>tmp_join   </span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>)) </span>
-<span id="cb8-8"><a href="#cb8-8"></a>temp_map &lt;-<span class="st"> </span>ssu_ps_work_asv_to_otu_to_new_otu_map   </span>
-<span id="cb8-9"><a href="#cb8-9"></a>temp_map[,<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span>    </span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## ORIGINAL ASV </span></span>
-<span id="cb8-11"><a href="#cb8-11"></a>temp_org_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">tax_table</span>(ssu_ps_work))  </span>
-<span id="cb8-12"><a href="#cb8-12"></a>temp_org_tax &lt;-<span class="st"> </span>temp_org_tax[temp_org_tax<span class="op">$</span>ASV_ID <span class="op">%in%</span><span class="st"> </span>temp_map<span class="op">$</span>ASV_ID,]     </span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">## ORIGINAL OTU </span></span>
-<span id="cb8-14"><a href="#cb8-14"></a>temp_org_otu_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(ssu_ps_work_otu_tax) </span>
-<span id="cb8-15"><a href="#cb8-15"></a>temp_org_otu_tax &lt;-<span class="st"> </span>temp_org_otu_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">add_column</span>(<span class="kw">row.names</span>(temp_org_otu_tax)) <span class="op">%&gt;%</span><span class="st">    </span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="st">                   </span>dplyr<span class="op">::</span><span class="kw">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> =<span class="st"> </span><span class="dv">8</span>)   </span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#RENAMED OTU    </span></span>
-<span id="cb8-18"><a href="#cb8-18"></a>temp_rn_otu_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">tax_table</span>(ssu_ps_work_otu))   </span>
-<span id="cb8-19"><a href="#cb8-19"></a>temp_rn_otu_tax &lt;-<span class="st"> </span>temp_rn_otu_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">add_column</span>(<span class="kw">row.names</span>(temp_rn_otu_tax)) <span class="op">%&gt;%</span><span class="st">   </span></span>
-<span id="cb8-20"><a href="#cb8-20"></a><span class="st">                   </span>dplyr<span class="op">::</span><span class="kw">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> =<span class="st"> </span><span class="dv">8</span>)   </span>
-<span id="cb8-21"><a href="#cb8-21"></a>ssu_results &lt;-<span class="st"> </span><span class="kw">data.frame</span>() </span>
-<span id="cb8-22"><a href="#cb8-22"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">row.names</span>(temp_map)) {    </span>
-<span id="cb8-23"><a href="#cb8-23"></a>      tmp_x &lt;-<span class="st"> </span>temp_org_tax[temp_org_tax<span class="op">$</span>ASV_ID <span class="op">%in%</span><span class="st"> </span>temp_map[i,<span class="dv">1</span>],]    </span>
-<span id="cb8-24"><a href="#cb8-24"></a>      tmp_y &lt;-<span class="st"> </span>temp_org_otu_tax[temp_org_otu_tax<span class="op">$</span>OTU_ID <span class="op">%in%</span><span class="st"> </span>temp_map[i,<span class="dv">2</span>],]    </span>
-<span id="cb8-25"><a href="#cb8-25"></a>      tmp_z &lt;-<span class="st"> </span>temp_rn_otu_tax[temp_rn_otu_tax<span class="op">$</span>OTU_ID <span class="op">%in%</span><span class="st"> </span>temp_map[i,<span class="dv">3</span>],]  </span>
-<span id="cb8-26"><a href="#cb8-26"></a>      check_true &lt;-<span class="st"> </span><span class="kw">all_equal</span>(tmp_x[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], tmp_z[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], tmp_y[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]) </span>
-<span id="cb8-27"><a href="#cb8-27"></a>      ssu_results &lt;-<span class="st"> </span><span class="kw">rbind</span>(ssu_results, check_true) </span>
-<span id="cb8-28"><a href="#cb8-28"></a>      <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))   </span>
-<span id="cb8-29"><a href="#cb8-29"></a>}   </span>
-<span id="cb8-30"><a href="#cb8-30"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;temp_&quot;</span>))    </span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tmp_rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">row.names</span>(<span class="fu">t</span>(<span class="fu">otu_table</span>(ssu_ps_work_otu))))  </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>tmp_bind <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ssu_ps_work_org_names, tmp_rn)    </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>tmp_bind <span class="ot">&lt;-</span> tmp_bind <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">&quot;NEW_ID&quot;</span> <span class="ot">=</span> <span class="dv">2</span>)    </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>temp_map_true <span class="ot">&lt;-</span> ssu_ps_work_asv_to_otu_map[ssu_ps_work_asv_to_otu_map<span class="sc">$</span>is_asv_rep <span class="sc">==</span> <span class="st">&#39;TRUE&#39;</span>,]   </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>tmp_join <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(temp_map_true, tmp_bind, <span class="at">keep =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ssu_ps_work_asv_to_otu_to_new_otu_map <span class="ot">&lt;-</span> tmp_join   </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>)) </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>temp_map <span class="ot">&lt;-</span> ssu_ps_work_asv_to_otu_to_new_otu_map   </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>temp_map[,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span>    </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ORIGINAL ASV </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>temp_org_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">tax_table</span>(ssu_ps_work))  </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>temp_org_tax <span class="ot">&lt;-</span> temp_org_tax[temp_org_tax<span class="sc">$</span>ASV_ID <span class="sc">%in%</span> temp_map<span class="sc">$</span>ASV_ID,]     </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ORIGINAL OTU </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>temp_org_otu_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ssu_ps_work_otu_tax) </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>temp_org_otu_tax <span class="ot">&lt;-</span> temp_org_otu_tax <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="fu">row.names</span>(temp_org_otu_tax)) <span class="sc">%&gt;%</span>    </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> <span class="ot">=</span> <span class="dv">8</span>)   </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#RENAMED OTU    </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>temp_rn_otu_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">tax_table</span>(ssu_ps_work_otu))   </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>temp_rn_otu_tax <span class="ot">&lt;-</span> temp_rn_otu_tax <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="fu">row.names</span>(temp_rn_otu_tax)) <span class="sc">%&gt;%</span>   </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> <span class="ot">=</span> <span class="dv">8</span>)   </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>ssu_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>() </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">row.names</span>(temp_map)) {    </span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>      tmp_x <span class="ot">&lt;-</span> temp_org_tax[temp_org_tax<span class="sc">$</span>ASV_ID <span class="sc">%in%</span> temp_map[i,<span class="dv">1</span>],]    </span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>      tmp_y <span class="ot">&lt;-</span> temp_org_otu_tax[temp_org_otu_tax<span class="sc">$</span>OTU_ID <span class="sc">%in%</span> temp_map[i,<span class="dv">2</span>],]    </span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>      tmp_z <span class="ot">&lt;-</span> temp_rn_otu_tax[temp_rn_otu_tax<span class="sc">$</span>OTU_ID <span class="sc">%in%</span> temp_map[i,<span class="dv">3</span>],]  </span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>      check_true <span class="ot">&lt;-</span> <span class="fu">all_equal</span>(tmp_x[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], tmp_z[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], tmp_y[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]) </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>      ssu_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(ssu_results, check_true) </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))   </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>}   </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;temp_&quot;</span>))    </span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>[1] TRUE.
@@ -2668,38 +2681,38 @@ Microbial
 </div>
 <p>And then the merged data.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>tmp_rn &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">row.names</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(ssu_ps_work_merge_otu))))    </span>
-<span id="cb10-2"><a href="#cb10-2"></a>tmp_bind &lt;-<span class="st"> </span><span class="kw">cbind</span>(ssu_ps_work_merge_org_names, tmp_rn)  </span>
-<span id="cb10-3"><a href="#cb10-3"></a>tmp_bind &lt;-<span class="st"> </span>tmp_bind <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="st">&quot;NEW_ID&quot;</span> =<span class="st"> </span><span class="dv">2</span>)    </span>
-<span id="cb10-4"><a href="#cb10-4"></a>temp_map_true &lt;-<span class="st"> </span>ssu_ps_work_merge_asv_to_otu_map[ssu_ps_work_merge_asv_to_otu_map<span class="op">$</span>is_asv_rep <span class="op">==</span><span class="st"> &#39;TRUE&#39;</span>,]   </span>
-<span id="cb10-5"><a href="#cb10-5"></a>tmp_join &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">left_join</span>(temp_map_true, tmp_bind, <span class="dt">keep =</span> <span class="ot">FALSE</span>) </span>
-<span id="cb10-6"><a href="#cb10-6"></a>ssu_ps_work_merge_asv_to_otu_to_new_otu_map &lt;-<span class="st"> </span>tmp_join </span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>)) </span>
-<span id="cb10-8"><a href="#cb10-8"></a>temp_map &lt;-<span class="st"> </span>ssu_ps_work_merge_asv_to_otu_to_new_otu_map </span>
-<span id="cb10-9"><a href="#cb10-9"></a>temp_map[,<span class="dv">3</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span>    </span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">## ORIGINAL ASV </span></span>
-<span id="cb10-11"><a href="#cb10-11"></a>temp_org_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">tax_table</span>(ssu_ps_work_merge))    </span>
-<span id="cb10-12"><a href="#cb10-12"></a>temp_org_tax &lt;-<span class="st"> </span>temp_org_tax[temp_org_tax<span class="op">$</span>ASV_ID <span class="op">%in%</span><span class="st"> </span>temp_map<span class="op">$</span>ASV_ID,]     </span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co">## ORIGINAL OTU </span></span>
-<span id="cb10-14"><a href="#cb10-14"></a>temp_org_otu_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(ssu_ps_work_merge_otu_tax)   </span>
-<span id="cb10-15"><a href="#cb10-15"></a>temp_org_otu_tax &lt;-<span class="st"> </span>temp_org_otu_tax <span class="op">%&gt;%</span><span class="st">    </span></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="st">                    </span>tibble<span class="op">::</span><span class="kw">add_column</span>(<span class="kw">row.names</span>(temp_org_otu_tax)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="st">                    </span>dplyr<span class="op">::</span><span class="kw">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> =<span class="st"> </span><span class="dv">8</span>)  </span>
-<span id="cb10-18"><a href="#cb10-18"></a><span class="co">#RENAMED OTU    </span></span>
-<span id="cb10-19"><a href="#cb10-19"></a>temp_rn_otu_tax &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">tax_table</span>(ssu_ps_work_merge_otu)) </span>
-<span id="cb10-20"><a href="#cb10-20"></a>temp_rn_otu_tax &lt;-<span class="st"> </span>temp_rn_otu_tax <span class="op">%&gt;%</span><span class="st">  </span></span>
-<span id="cb10-21"><a href="#cb10-21"></a><span class="st">                   </span>tibble<span class="op">::</span><span class="kw">add_column</span>(<span class="kw">row.names</span>(temp_rn_otu_tax)) <span class="op">%&gt;%</span><span class="st">   </span></span>
-<span id="cb10-22"><a href="#cb10-22"></a><span class="st">                   </span>dplyr<span class="op">::</span><span class="kw">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> =<span class="st"> </span><span class="dv">8</span>)   </span>
-<span id="cb10-23"><a href="#cb10-23"></a>its_results &lt;-<span class="st"> </span><span class="kw">data.frame</span>() </span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="kw">row.names</span>(temp_map)) {    </span>
-<span id="cb10-25"><a href="#cb10-25"></a>      tmp_x &lt;-<span class="st"> </span>temp_org_tax[temp_org_tax<span class="op">$</span>ASV_ID <span class="op">%in%</span><span class="st"> </span>temp_map[i,<span class="dv">1</span>],]    </span>
-<span id="cb10-26"><a href="#cb10-26"></a>      tmp_y &lt;-<span class="st"> </span>temp_org_otu_tax[temp_org_otu_tax<span class="op">$</span>OTU_ID <span class="op">%in%</span><span class="st"> </span>temp_map[i,<span class="dv">2</span>],]    </span>
-<span id="cb10-27"><a href="#cb10-27"></a>      tmp_z &lt;-<span class="st"> </span>temp_rn_otu_tax[temp_rn_otu_tax<span class="op">$</span>OTU_ID <span class="op">%in%</span><span class="st"> </span>temp_map[i,<span class="dv">3</span>],]  </span>
-<span id="cb10-28"><a href="#cb10-28"></a>      check_true &lt;-<span class="st"> </span><span class="kw">all_equal</span>(tmp_x[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], tmp_z[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>], tmp_y[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]) </span>
-<span id="cb10-29"><a href="#cb10-29"></a>      its_results &lt;-<span class="st"> </span><span class="kw">rbind</span>(its_results, check_true) </span>
-<span id="cb10-30"><a href="#cb10-30"></a>      <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))   </span>
-<span id="cb10-31"><a href="#cb10-31"></a>}   </span>
-<span id="cb10-32"><a href="#cb10-32"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;temp_&quot;</span>))    </span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tmp_rn <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">row.names</span>(<span class="fu">t</span>(<span class="fu">otu_table</span>(ssu_ps_work_merge_otu))))    </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tmp_bind <span class="ot">&lt;-</span> <span class="fu">cbind</span>(ssu_ps_work_merge_org_names, tmp_rn)  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>tmp_bind <span class="ot">&lt;-</span> tmp_bind <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="st">&quot;NEW_ID&quot;</span> <span class="ot">=</span> <span class="dv">2</span>)    </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>temp_map_true <span class="ot">&lt;-</span> ssu_ps_work_merge_asv_to_otu_map[ssu_ps_work_merge_asv_to_otu_map<span class="sc">$</span>is_asv_rep <span class="sc">==</span> <span class="st">&#39;TRUE&#39;</span>,]   </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>tmp_join <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">left_join</span>(temp_map_true, tmp_bind, <span class="at">keep =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>ssu_ps_work_merge_asv_to_otu_to_new_otu_map <span class="ot">&lt;-</span> tmp_join </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>)) </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>temp_map <span class="ot">&lt;-</span> ssu_ps_work_merge_asv_to_otu_to_new_otu_map </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>temp_map[,<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="cn">NULL</span>    </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">## ORIGINAL ASV </span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>temp_org_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">tax_table</span>(ssu_ps_work_merge))    </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>temp_org_tax <span class="ot">&lt;-</span> temp_org_tax[temp_org_tax<span class="sc">$</span>ASV_ID <span class="sc">%in%</span> temp_map<span class="sc">$</span>ASV_ID,]     </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="do">## ORIGINAL OTU </span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>temp_org_otu_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(ssu_ps_work_merge_otu_tax)   </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>temp_org_otu_tax <span class="ot">&lt;-</span> temp_org_otu_tax <span class="sc">%&gt;%</span>    </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>                    tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="fu">row.names</span>(temp_org_otu_tax)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                    dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> <span class="ot">=</span> <span class="dv">8</span>)  </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#RENAMED OTU    </span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>temp_rn_otu_tax <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">tax_table</span>(ssu_ps_work_merge_otu)) </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>temp_rn_otu_tax <span class="ot">&lt;-</span> temp_rn_otu_tax <span class="sc">%&gt;%</span>  </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>                   tibble<span class="sc">::</span><span class="fu">add_column</span>(<span class="fu">row.names</span>(temp_rn_otu_tax)) <span class="sc">%&gt;%</span>   </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>                   dplyr<span class="sc">::</span><span class="fu">rename</span>(., <span class="st">&quot;OTU_ID&quot;</span> <span class="ot">=</span> <span class="dv">8</span>)   </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>its_results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>() </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">row.names</span>(temp_map)) {    </span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>      tmp_x <span class="ot">&lt;-</span> temp_org_tax[temp_org_tax<span class="sc">$</span>ASV_ID <span class="sc">%in%</span> temp_map[i,<span class="dv">1</span>],]    </span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>      tmp_y <span class="ot">&lt;-</span> temp_org_otu_tax[temp_org_otu_tax<span class="sc">$</span>OTU_ID <span class="sc">%in%</span> temp_map[i,<span class="dv">2</span>],]    </span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>      tmp_z <span class="ot">&lt;-</span> temp_rn_otu_tax[temp_rn_otu_tax<span class="sc">$</span>OTU_ID <span class="sc">%in%</span> temp_map[i,<span class="dv">3</span>],]  </span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>      check_true <span class="ot">&lt;-</span> <span class="fu">all_equal</span>(tmp_x[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], tmp_z[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], tmp_y[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>]) </span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>      its_results <span class="ot">&lt;-</span> <span class="fu">rbind</span>(its_results, check_true) </span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))   </span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>}   </span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;temp_&quot;</span>))    </span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 <pre><code>[1] TRUE.
@@ -2707,54 +2720,54 @@ Microbial
 </div>
 <p>The last step is to add an <code>OTU_ID</code> column to the new <code>ps</code> objects so they are the same as their ASV counterparts.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">tax_table</span>(ssu_ps_work_otu) &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">tax_table</span>(ssu_ps_work_otu), </span>
-<span id="cb12-2"><a href="#cb12-2"></a>                           <span class="kw">rownames</span>(<span class="kw">tax_table</span>(ssu_ps_work_otu)))    </span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="kw">colnames</span>(<span class="kw">tax_table</span>(ssu_ps_work_otu)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Kingdom&quot;</span>, <span class="st">&quot;Phylum&quot;</span>, <span class="st">&quot;Class&quot;</span>,     </span>
-<span id="cb12-4"><a href="#cb12-4"></a>                                          <span class="st">&quot;Order&quot;</span>, <span class="st">&quot;Family&quot;</span>, <span class="st">&quot;Genus&quot;</span>,   </span>
-<span id="cb12-5"><a href="#cb12-5"></a>                                          <span class="st">&quot;OTU_SEQ&quot;</span>, <span class="st">&quot;OTU_ID&quot;</span>)  </span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="kw">tax_table</span>(ssu_ps_work_merge_otu) &lt;-<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">tax_table</span>(ssu_ps_work_merge_otu), </span>
-<span id="cb12-7"><a href="#cb12-7"></a>                           <span class="kw">rownames</span>(<span class="kw">tax_table</span>(ssu_ps_work_merge_otu)))  </span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">colnames</span>(<span class="kw">tax_table</span>(ssu_ps_work_merge_otu)) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Kingdom&quot;</span>, <span class="st">&quot;Phylum&quot;</span>, <span class="st">&quot;Class&quot;</span>,   </span>
-<span id="cb12-9"><a href="#cb12-9"></a>                                          <span class="st">&quot;Order&quot;</span>, <span class="st">&quot;Family&quot;</span>, <span class="st">&quot;Genus&quot;</span>,   </span>
-<span id="cb12-10"><a href="#cb12-10"></a>                                          <span class="st">&quot;OTU_SEQ&quot;</span>, <span class="st">&quot;OTU_ID&quot;</span>)  </span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_table</span>(ssu_ps_work_otu) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">tax_table</span>(ssu_ps_work_otu), </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rownames</span>(<span class="fu">tax_table</span>(ssu_ps_work_otu)))    </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(<span class="fu">tax_table</span>(ssu_ps_work_otu)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Kingdom&quot;</span>, <span class="st">&quot;Phylum&quot;</span>, <span class="st">&quot;Class&quot;</span>,     </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">&quot;Order&quot;</span>, <span class="st">&quot;Family&quot;</span>, <span class="st">&quot;Genus&quot;</span>,   </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">&quot;OTU_SEQ&quot;</span>, <span class="st">&quot;OTU_ID&quot;</span>)  </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tax_table</span>(ssu_ps_work_merge_otu) <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">tax_table</span>(ssu_ps_work_merge_otu), </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">rownames</span>(<span class="fu">tax_table</span>(ssu_ps_work_merge_otu)))  </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(<span class="fu">tax_table</span>(ssu_ps_work_merge_otu)) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Kingdom&quot;</span>, <span class="st">&quot;Phylum&quot;</span>, <span class="st">&quot;Class&quot;</span>,   </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">&quot;Order&quot;</span>, <span class="st">&quot;Family&quot;</span>, <span class="st">&quot;Genus&quot;</span>,   </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">&quot;OTU_SEQ&quot;</span>, <span class="st">&quot;OTU_ID&quot;</span>)  </span></code></pre></div>
 </div>
 <h2 id="create-ampvis2-objects">7. Create Ampvis2 Objects</h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list){</span>
-<span id="cb13-2"><a href="#cb13-2"></a>    tmp_ps &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu&quot;</span>)))</span>
-<span id="cb13-3"><a href="#cb13-3"></a>    tmp_otu &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">t</span>(<span class="kw">otu_table</span>(tmp_ps)))</span>
-<span id="cb13-4"><a href="#cb13-4"></a>    tmp_otu[] &lt;-<span class="st"> </span><span class="kw">lapply</span>(tmp_otu, as.numeric)</span>
-<span id="cb13-5"><a href="#cb13-5"></a>    tmp_otu &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp_otu)</span>
-<span id="cb13-6"><a href="#cb13-6"></a>    tmp_tax &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">data.frame</span>(<span class="kw">tax_table</span>(tmp_ps)))</span>
-<span id="cb13-7"><a href="#cb13-7"></a>    tmp_samples &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_ps))</span>
-<span id="cb13-8"><a href="#cb13-8"></a>    tmp_amp &lt;-<span class="st"> </span><span class="kw">merge_phyloseq</span>(<span class="kw">otu_table</span>(tmp_otu, <span class="dt">taxa_are_rows =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb13-9"><a href="#cb13-9"></a>                          <span class="kw">tax_table</span>(tmp_tax),</span>
-<span id="cb13-10"><a href="#cb13-10"></a>                          <span class="kw">sample_data</span>(tmp_samples))</span>
-<span id="cb13-11"><a href="#cb13-11"></a>    tmp_amp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ps_otu_amp&quot;</span>))</span>
-<span id="cb13-12"><a href="#cb13-12"></a>    <span class="kw">assign</span>(tmp_amp_name, tmp_amp)</span>
-<span id="cb13-13"><a href="#cb13-13"></a>    <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb13-14"><a href="#cb13-14"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list){</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    tmp_ps <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu&quot;</span>)))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    tmp_otu <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(<span class="fu">otu_table</span>(tmp_ps)))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    tmp_otu[] <span class="ot">&lt;-</span> <span class="fu">lapply</span>(tmp_otu, as.numeric)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    tmp_otu <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(tmp_otu)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    tmp_tax <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">data.frame</span>(<span class="fu">tax_table</span>(tmp_ps)))</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    tmp_samples <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">sample_data</span>(tmp_ps))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    tmp_amp <span class="ot">&lt;-</span> <span class="fu">merge_phyloseq</span>(<span class="fu">otu_table</span>(tmp_otu, <span class="at">taxa_are_rows =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">tax_table</span>(tmp_tax),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                          <span class="fu">sample_data</span>(tmp_samples))</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    tmp_amp_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_ps_otu_amp&quot;</span>))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">assign</span>(tmp_amp_name, tmp_amp)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list){</span>
-<span id="cb14-2"><a href="#cb14-2"></a>    tmp_ps &lt;-<span class="st"> </span><span class="kw">get</span>(purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_ps_otu_amp&quot;</span>)))</span>
-<span id="cb14-3"><a href="#cb14-3"></a>    tmp_samp &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">sample_data</span>(tmp_ps))</span>
-<span id="cb14-4"><a href="#cb14-4"></a>    tmp_asv  &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">otu_table</span>(tmp_ps))</span>
-<span id="cb14-5"><a href="#cb14-5"></a>    tmp_asv &lt;-<span class="st"> </span>tmp_asv <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;OTU&quot;</span>)</span>
-<span id="cb14-6"><a href="#cb14-6"></a>    tmp_tax  &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">tax_table</span>(tmp_ps))</span>
-<span id="cb14-7"><a href="#cb14-7"></a>    tmp_tax &lt;-<span class="st"> </span>tmp_tax <span class="op">%&gt;%</span><span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(<span class="st">&quot;OTU&quot;</span>)</span>
-<span id="cb14-8"><a href="#cb14-8"></a>    tmp_tax<span class="op">$</span>OTU_SEQ &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a>    <span class="co">#tmp_tax$OTU_ID &lt;- tmp_tax$OTU</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a>    <span class="kw">colnames</span>(tmp_tax)[<span class="kw">colnames</span>(tmp_tax) <span class="op">==</span><span class="st"> &quot;OTU_ID&quot;</span>] &lt;-<span class="st"> &quot;Species&quot;</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>    tmp_asv_tax &lt;-<span class="st"> </span><span class="kw">left_join</span>(tmp_asv, tmp_tax, <span class="dt">by =</span> <span class="st">&quot;OTU&quot;</span>)</span>
-<span id="cb14-12"><a href="#cb14-12"></a>    tmp_amp &lt;-<span class="st"> </span><span class="kw">amp_load</span>(tmp_asv_tax, <span class="dt">metadata =</span> tmp_samp, <span class="dt">tree =</span> tmp_ps<span class="op">@</span>phy_tree)</span>
-<span id="cb14-13"><a href="#cb14-13"></a>    tmp_amp_name &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map_chr</span>(i, <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(., <span class="st">&quot;_otu_amp&quot;</span>))</span>
-<span id="cb14-14"><a href="#cb14-14"></a>    <span class="kw">assign</span>(tmp_amp_name, tmp_amp)</span>
-<span id="cb14-15"><a href="#cb14-15"></a>    tmp_path &lt;-<span class="st"> </span><span class="kw">file.path</span>(<span class="st">&quot;files/trepo/otu/rdata/&quot;</span>)</span>
-<span id="cb14-16"><a href="#cb14-16"></a>    <span class="kw">saveRDS</span>(tmp_amp, <span class="kw">paste</span>(tmp_path, tmp_amp_name, <span class="st">&quot;.rds&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb14-17"><a href="#cb14-17"></a>    <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
-<span id="cb14-18"><a href="#cb14-18"></a>}</span>
-<span id="cb14-19"><a href="#cb14-19"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>(<span class="dt">pattern =</span> <span class="st">&quot;_ps_otu_amp&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> ps_list){</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    tmp_ps <span class="ot">&lt;-</span> <span class="fu">get</span>(purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_ps_otu_amp&quot;</span>)))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    tmp_samp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">sample_data</span>(tmp_ps))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    tmp_asv  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">otu_table</span>(tmp_ps))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    tmp_asv <span class="ot">&lt;-</span> tmp_asv <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;OTU&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    tmp_tax  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">tax_table</span>(tmp_ps))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    tmp_tax <span class="ot">&lt;-</span> tmp_tax <span class="sc">%&gt;%</span> tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;OTU&quot;</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    tmp_tax<span class="sc">$</span>OTU_SEQ <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#tmp_tax$OTU_ID &lt;- tmp_tax$OTU</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(tmp_tax)[<span class="fu">colnames</span>(tmp_tax) <span class="sc">==</span> <span class="st">&quot;OTU_ID&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Species&quot;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    tmp_asv_tax <span class="ot">&lt;-</span> <span class="fu">left_join</span>(tmp_asv, tmp_tax, <span class="at">by =</span> <span class="st">&quot;OTU&quot;</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    tmp_amp <span class="ot">&lt;-</span> <span class="fu">amp_load</span>(tmp_asv_tax, <span class="at">metadata =</span> tmp_samp, <span class="at">tree =</span> tmp_ps<span class="sc">@</span>phy_tree)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    tmp_amp_name <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_chr</span>(i, <span class="sc">~</span> <span class="fu">paste0</span>(., <span class="st">&quot;_otu_amp&quot;</span>))</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">assign</span>(tmp_amp_name, tmp_amp)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    tmp_path <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;files/trepo/otu/rdata/&quot;</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(tmp_amp, <span class="fu">paste</span>(tmp_path, tmp_amp_name, <span class="st">&quot;.rds&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;tmp_&quot;</span>))</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">pattern =</span> <span class="st">&quot;_ps_otu_amp&quot;</span>))</span></code></pre></div>
 </div>
 <h2 id="summary">Summary</h2>
 <div class="layout-chunk" data-layout="l-body">
@@ -2767,12 +2780,12 @@ The ssu_ps_work_otu OTU phyloseq object has 6457054 reads and 21906 OTUs. </code
 
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">save.image</span>(<span class="st">&quot;page_build/trepo/otu_wf.rdata&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;page_build/trepo/otu_wf.rdata&quot;</span>)</span></code></pre></div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
 
 </div>
-<h2 id="source-code" class="appendix">Source Code</h2>
+<h2 class="appendix" id="source-code">Source Code</h2>
 <p>The source code for this page can be accessed on GitHub by <a href="https://github.com/tropical-repo/web/blob/master/trepo-otu.Rmd">clicking this link</a>.</p>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2796,10 +2809,11 @@ The ssu_ps_work_otu OTU phyloseq object has 6457054 reads and 21906 OTUs. </code
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <div class="distill-site-nav distill-site-footer">
-<p>© Copyright 2020 The TROPICAL-REPO Project.</p>
+<p>© Copyright 2021 The TROPICAL-REPO Project.</p>
 <p>Site constructed using <a href="https://rstudio.github.io/distill/">Distill for R Markdown</a>.</p>
 </div>
 <!--/radix_placeholder_navigation_after_body-->
+
 
 </body>
 

@@ -1,0 +1,3422 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>TropicalRepo: 2. Macrofauna Beta Diversity</title>
+
+  <meta property="description" itemprop="description" content="Reproducible workflow for assessing community composition of the macrofauna in Almirante Bay."/>
+
+  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="icon" type="image/vnd.microsoft.icon" href="assets/favicon.ico"/>
+
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="TropicalRepo: 2. Macrofauna Beta Diversity"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="Reproducible workflow for assessing community composition of the macrofauna in Almirante Bay."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="TropicalRepo"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="TropicalRepo: 2. Macrofauna Beta Diversity"/>
+  <meta property="twitter:description" content="Reproducible workflow for assessing community composition of the macrofauna in Almirante Bay."/>
+
+  <!--/radix_placeholder_meta_tags-->
+  
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","bibliography","output"]}},"value":[{"type":"character","attributes":{},"value":["2. Macrofauna Beta Diversity"]},{"type":"character","attributes":{},"value":["Reproducible workflow for assessing community composition of the macrofauna in Almirante Bay.\n"]},{"type":"character","attributes":{},"value":["assets/cite.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["css","toc","toc_depth"]}},"value":[{"type":"character","attributes":{},"value":["assets/styles.css"]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.6/header-attrs.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <style type="text/css">
+  /* Whole document: */
+  @import url('https://fonts.googleapis.com/css?family=PT+Sans|PT+Serif|Lato:300|Roboto:300|Nunito+Sans:300|Inconsolata|Source+Sans+Pro|Work+Sans:200,300,400,500');
+  /********************************/
+  /* controls general properties of site*/
+  /********************************/
+
+  body {
+    color: #414141;
+  /*  line-height: 1.7;
+    font-size: 17px; */
+    background-color: #FEFEFE;
+  }
+
+  d-title h1{
+  font-size: 2.1em;
+  font-family: 'Work Sans';
+  font-weight: 300;
+  }
+
+  d-article h1 {
+    font-size: 1.8em;
+    font-family: 'Work Sans', 'Source Sans Pro', 'PT Sans';
+    font-weight: 300;
+  }
+
+  d-article h2 {
+    font-size: 1.65em;
+    font-family: 'Work Sans', 'Source Sans Pro', 'PT Sans';
+    font-weight: 500;
+  }
+
+  d-article h3 {
+    margin-top: 1em;
+  }
+
+  d-byline .authors-affiliations {
+    grid-column-end: span 3;
+    grid-column-gap: 8px;
+  }
+
+  img.orcid-id {
+    margin: 0;
+  }
+
+  a.name:-webkit-any-link {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+
+  a.affiliation:-webkit-any-link {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+
+  blockquote p {
+  	font-size: 1.3em;
+  	font-family: 'Lato';
+    font-style: normal;
+    margin: 0.5em 0 0.5em;
+  }
+
+  d-article li {
+    margin: 0px 0px 4px;
+  }
+
+  /********************************/
+  /* controls CODE*/
+  /********************************/
+
+  /** pre.sourceCode controls code block without lang **/
+
+  /** Controls r code  **/
+
+  pre.sourceCode.r {
+    margin-top: 0px;
+     color: #333333;
+     background-color: #E8E8E8;
+     border-radius: 3px;
+     font-size: 0.80em;
+     font-family: 'Monaco', 'PT Mono', monospace;
+     overflow-x: scroll !important;
+     border-left: 6px solid #323232;
+     border-top: 1px solid #B7B7B7;
+     border-right: 1px solid #B7B7B7;
+     border-bottom: 1px solid #B7B7B7;
+     padding: 18px 0px 18px 20px;
+   }
+
+   pre.sourceCode.bash {
+     margin-top: 0px;
+      color: #333333;
+      background-color: #E8E8E8;
+      border-radius: 3px;
+      font-size: 0.80em;
+      font-family: 'Monaco', 'PT Mono', monospace;
+      overflow-x: scroll !important;
+      border-left: 6px solid #FC6464;
+      border-top: 1px solid #B7B7B7;
+      border-right: 1px solid #B7B7B7;
+      border-bottom: 1px solid #B7B7B7;
+      padding: 18px 0px 18px 20px;
+    }
+  /** Controls code output **/
+
+  d-article pre {
+     margin-top: 0px;
+      color: #333333;
+      background-color: #FAFAFA;
+      font-size: 0.8em;
+      border: 1px solid #ccc;
+      overflow-x: scroll !important;
+      padding:  10px 10px 10px 18px;
+      border-radius: 5px;
+
+    }
+
+  /** Controls inline code  **/
+
+  p code {
+    background-color: #E8E8E8;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-family: 'Monaco', 'PT Mono', monospace;
+    overflow-x: scroll !important;
+    margin-bottom: 20px;
+    color: #BF2727;
+  }
+
+  d-article aside code {
+    background-color: #E8E8E8;
+    border-radius: 3px;
+    font-family: 'Monaco', 'PT Mono', monospace;
+    color: #BF2727;
+  }
+
+  /********************************/
+  /* controls NAV BAR and HEADERS*/
+  /********************************/
+
+  .nav-dropdown-content .nav-dropdown-header {
+    text-transform: none;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header  {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .headroom {
+      z-index: 1000;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+  }
+  .distill-site-nav {
+      background-color: #00203F;
+      font-size: 15px;
+      font-weight: 300;
+  }
+
+  img {
+    margin: 5px;
+  }
+
+  /** LIGHTBOX MARKUP **/
+  .thumbnail {
+    max-width: 100%;
+    position: relative;
+  }
+
+  /** DETAILS fold down**/
+
+  details {
+    background-color: hsla(206, 95%, 20%, 0.2);
+    cursor: pointer;
+    color: #2d2d2d;
+    margin-bottom:1vh;
+    padding: 1em;
+    border: none;
+    text-align: left;
+    outline: none;
+  }
+
+  .active, details:hover {
+    transition: max-height 0.2s ease-out;
+    outline: none;
+
+    /* background-color: #acc2c2; */
+  }
+
+
+  details {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    border-radius: 4px;
+    outline: none;
+  }
+
+  details.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    outline: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+    outline: none;
+  }
+
+  summary:focus {
+    outline: none;
+  }
+
+  summary::after {
+    float: right;
+    font-family: "Font Awesome 5 Free";
+    content: "\f0fe";
+  }
+
+  details[open] summary::after {
+    float: right;
+    font-family: "Font Awesome 5 Free";
+    content: "\f146";
+  }
+
+
+  /********************************/
+  /* dygraph*/
+  /********************************/
+
+  </style>
+  <!--/radix_placeholder_site_in_header-->
+
+  <link rel="stylesheet" href="assets/styles.css" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"2. Macrofauna Beta Diversity","description":"Reproducible workflow for assessing community composition of the macrofauna in Almirante Bay.","authors":[]}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="index.html">
+<img src="assets/icon.png" alt="Logo"/>
+</a>
+<a href="index.html" class="title">TropicalRepo</a>
+<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
+</div>
+<div class="nav-right">
+<a href="trepo-summary.html">Summary</a>
+<a href="trepo-physical.html">Physical</a>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Macrofauna
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<hr/>
+<a href="trepo-macrotaxa.html">4. Macrofauna Taxa</a>
+<a href="trepo-temporal.html">3. Temporal Diversity</a>
+<a href="trepo-macrobeta.html">2. Beta Diversity</a>
+<a href="trepo-macroalpha.html">1. Alpha Diversity</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Microbial
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<span class="nav-dropdown-header">Diversity Workflows</span>
+<hr/>
+<a href="trepo-metadata.html">9. Metadata</a>
+<a href="trepo-da.html">8. DA ASVs &amp; OTUs</a>
+<a href="trepo-beta.html">7. Beta Diversity</a>
+<a href="trepo-alpha.html">6. Alpha Diversity</a>
+<a href="trepo-taxa.html">5. Taxonomic</a>
+<hr/>
+<span class="nav-dropdown-header">Processing Workflows</span>
+<a href="trepo-pime.html">4. PIME</a>
+<a href="trepo-otu.html">3. OTU Clustering</a>
+<a href="trepo-data-prep.html">2. Data Set Prep</a>
+<a href="trepo-dada2.html">1. DADA2</a>
+<hr/>
+</div>
+</div>
+<a href="trepo-data.html">Data</a>
+<a href="https://github.com/tropical-repo/web/" aria-label="Link to source">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>2. Macrofauna Beta Diversity</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>Reproducible workflow for assessing community composition of the macrofauna in Almirante Bay.</p></p>
+</div>
+
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#species-composition">Species Composition</a></li>
+<li><a href="#part-1-statistical-analysis">Part 1: Statistical Analysis</a>
+<ul>
+<li><a href="#site-x-season">Site x Season</a></li>
+<li><a href="#site-x-region">Site x Region</a></li>
+<li><a href="#site-x-time">Site x Time</a></li>
+</ul></li>
+<li><a href="#part-2-visualizing-results">Part 2: Visualizing Results</a>
+<ul>
+<li><a href="#taxa-temporal-trends">Taxa-temporal trends</a></li>
+<li><a href="#short-data-set">Short data-set</a>
+<ul>
+<li><a href="#similarity-matrices">Similarity matrices</a></li>
+<li><a href="#pcoa">PCoA</a></li>
+<li><a href="#permanova">Permanova</a></li>
+<li><a href="#dbrda">dbRDA</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#full-data-set">Full Data Set</a>
+<ul>
+<li><a href="#source-code">Source Code</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<blockquote>
+<p>Hit the <em>Hide Code</em> button to hide the R code.</p>
+</blockquote>
+<aside>
+<div class="layout-chunk" data-layout="l-body">
+<input onclick="codefolder(&#39;pre.sourceCode&#39;);" type="button" value="Hide Code" id="codefolder-button" style="position: absolute; right: 14%; z-index: 200"/>
+<script>
+  function codefolder(query) {
+
+    var x = document.querySelectorAll(query);
+    if (x.length === 0) return;
+
+    function toggle_vis(o) {
+      var d = o.style.display;
+      o.style.display = (d === 'block' || d === '') ? 'none':'block';
+    }
+
+    for (i = 0; i < x.length; i++) {
+      var y = x[i];
+      toggle_vis(y);
+    }
+
+    var elem = document.getElementById("codefolder-button");
+    if (elem.value === "Hide Code") elem.value = "Show Code";
+    else elem.value = "Hide Code";
+  }
+</script>
+</div>
+</aside>
+<h1 id="species-composition">Species Composition</h1>
+<p>In this section, we explore the differences in the macrofaunal assemblages between the four sites across Almirante Bay weekly throughout a one-year time frame.</p>
+<ol type="1">
+<li><p>First we determine if there differences in the species composition of the marine taxa sampled? Do some taxa prefer particular sites while others are more generalized?</p></li>
+<li><p>Then we look at seasonal influences. Does the hypoxic season impact their abundance? Which species are most impacted by seasonal changes? Which species are not?</p></li>
+<li><p>Finally we look at the assemblage composition differences based on environmental parameters. This is because seasonality may not be the best measure of actual environmental changes. With the physical parameters page (add link) we see extreme fluctuations, sometimes on a weekly basis, highlighting the stoicasticisty of the conditions. This is particularly true for dissolved oxygen.</p></li>
+</ol>
+<p>These questions are broken down in two parts. First, we statistically answer these questions (Part 1) then we visualize the relationships with different distance-based similarity matrices and ordination methods (Part 2).</p>
+<h1 id="part-1-statistical-analysis">Part 1: Statistical Analysis</h1>
+<p>Look at untransformed abundance data again:</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<p>It looks like some species are much more abundant and variable than others. It’s probably a good idea to check our mean-variance relationship!</p>
+<p>First we convert the species data to an mvabund object format used by the mvabund function. The function `mvabund`calculates the abundance in each sample based on counts of all of the lowest taxonomic groups identified. It is a part of mvabund package. Data is transformed (square-root) (`sqrt`) to better visualize the differences and is a very common transformation for abundance data (same as Hellinger in vegan package) .</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ds_spp <span class="ot">&lt;-</span> <span class="fu">mvabund</span>(ds[,<span class="dv">16</span><span class="sc">:</span><span class="dv">32</span>]) </span></code></pre></div>
+</div>
+<p>Then we look at the mean-variance relationship using the meanvar.plot function:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>meanvar.plot <span class="ot">&lt;-</span><span class="fu">meanvar.plot</span>(ds_spp)</span></code></pre></div>
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<p>You can clearly see that the species with high means (on the x axis) also have high variances (y axis). Then we fit predictive models using a negative binomial model for counts.</p>
+<p>The mvabund approach improves power across a range of species with different variances and includes an assumption of a mean-variance relationship use the abundance data. This is family of GLMs with an appropriate mean-variance assumption. The default family used by mvabund when fitting multivariate GLMs is negative binomial which assumes a quadratic mean-variance relationship and a log-linear relationship between the response variables and any continuous variables.</p>
+<p>To look at the transformed abundance data we use the mvabund plot function.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>transformed_abund <span class="ot">&lt;-</span> <span class="fu">plot</span>(ds_spp <span class="sc">~</span> ds<span class="sc">$</span>site, <span class="at">cex.axis=</span><span class="fl">0.8</span>, <span class="at">cex=</span><span class="fl">0.8</span>)</span></code></pre></div>
+<pre><code>
+ PIPING TO 2nd MVFACTOR </code></pre>
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>This shows the most abundant species by site. Non-mobile polychaete worms (Sedentaria) appear to be the most abundant of the different taxa, and P. Caracol appears to have the highest abundances of many taxa.</p>
+<h2 id="site-x-season">Site x Season</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">manyglm</span>(ds_spp <span class="sc">~</span> site <span class="sc">*</span> season, <span class="at">family=</span><span class="st">&quot;negative_binomial&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>M_output <span class="ot">&lt;-</span> <span class="fu">anova</span>(model)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(M_output, <span class="at">file =</span> <span class="st">&quot;M_output.rds&quot;</span>)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ site * season
+
+Multivariate test:
+            Res.Df Df.diff   Dev Pr(&gt;Dev)    
+(Intercept)    221                           
+site           218       3 349.7    0.001 ***
+season         217       1 100.5    0.001 ***
+site:season    214       3  80.3    0.010 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+ P-value calculated using 999 iterations via PIT-trap resampling.</code></pre>
+</div>
+<p>Check our model assumptions.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-10-1.png" width="624" /></p>
+</div>
+<p>The residuals look good with the negative binomial distribution (i.e no patterns detectable). Note: no samples with were removed from this dataset. We can remove the species with lowest abundances (i.e. Echinoidea, Scaphopoda, Amphipoda, Cladocera, Cumacea which all had low counts within the full bay-wide dataset). This would help the distribution more.. For now we keep everything.</p>
+<p>There were different species assemblages in the different sites (LRT = 710, P&lt; 0.001) and during different seasons (LRT = 89.6, P &lt; 0.001). There was also an interaction between region and season (LRT = 55, P &lt; 0.003).</p>
+<p>Then we perform pairwise comparisons to determine which sites are different from each other. For the paper, increase the nBoot to 999…</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_pairs <span class="ot">&lt;-</span> <span class="fu">anova</span>(model, <span class="at">pairwise.comp =</span> site, <span class="at">nBoot =</span> <span class="dv">199</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_pairs</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ site * season
+
+Multivariate test:
+            Res.Df Df.diff   Dev Pr(&gt;Dev)   
+(Intercept)    221                          
+site           218       3 349.7    0.005 **
+season         217       1 100.5    0.005 **
+site:season    214       3  80.3    0.020 * 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Pairwise comparison results: 
+                       Observed statistic
+Pastores vs P_Caracol              213.65
+Almirante vs P_Caracol             175.96
+Cristobal vs P_Caracol             124.68
+Pastores vs Cristobal               70.16
+Almirante vs Cristobal              58.03
+Pastores vs Almirante               23.52
+                       Free Stepdown Adjusted P-Value   
+Pastores vs P_Caracol                           0.005 **
+Almirante vs P_Caracol                          0.005 **
+Cristobal vs P_Caracol                          0.005 **
+Pastores vs Cristobal                           0.005 **
+Almirante vs Cristobal                          0.010 **
+Pastores vs Almirante                           0.160   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+ P-value calculated using 199 iterations via PIT-trap resampling.</code></pre>
+</div>
+<p>We see from these results that there is a significant effect of site, meaning that the species composition of macrofauna clearly differs between the sites that they are found in. Every site is different from the others, except Almirante and Pastores.</p>
+<p>To determine which species are important, in this we run univariate tests for each species separately. We also want to know if there is an interaction between site and seasonality in species abundances. This is done by using the p.uni=“adjusted” argument in the anova function. The “adjusted” part of the argument refers to the resampling method used to compute the p values, taking into account the correlation between the response variables. This correlation is often found in ecological systems where different species will interact with each other, competing with or facilitating each others’ resource use.</p>
+<p>Testing hypotheses about the site effects and site-by-season interactions, again using a Wald statistic and 199 resamples (better to ramp up to 999 for the paper).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>M1_uni <span class="ot">&lt;-</span> <span class="fu">anova</span>(model, <span class="at">p.uni=</span><span class="st">&quot;adjusted&quot;</span>) </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>M1_uni</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ site * season
+
+Multivariate test:
+            Res.Df Df.diff   Dev Pr(&gt;Dev)    
+(Intercept)    221                           
+site           218       3 349.7    0.001 ***
+season         217       1 100.5    0.001 ***
+site:season    214       3  80.3    0.012 *  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Univariate Tests:
+            sP_Vertebrata          P_Sipuncula          unknown
+                      Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)     Dev
+(Intercept)                                                    
+site               12.151    0.082      15.891    0.015  38.562
+season              2.285    0.761       6.595    0.175  45.525
+site:season         0.293    0.971       8.629    0.429  11.136
+                     sC_Sedentaria          sC_Errantia_Aciculata
+            Pr(&gt;Dev)           Dev Pr(&gt;Dev)                   Dev
+(Intercept)                                                      
+site           0.001       119.416    0.001                71.442
+season         0.001         0.732    0.894                 0.087
+site:season    0.231         6.677    0.565                20.649
+                     C_Ophiuroidea          C_Echinoidea         
+            Pr(&gt;Dev)           Dev Pr(&gt;Dev)          Dev Pr(&gt;Dev)
+(Intercept)                                                      
+site           0.001         7.663    0.358        2.776    0.920
+season         0.994         1.677    0.826        1.489    0.829
+site:season    0.006         0.238    0.971        0.002    0.971
+            C_Caudofoveata          C_Bivalvia          C_Gastropoda
+                       Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)          Dev
+(Intercept)                                                         
+site                19.347    0.007      7.101    0.386        5.621
+season              11.107    0.015     12.518    0.006        1.405
+site:season          1.329    0.971      3.374    0.812        1.565
+                     C_Scaphopoda          O_Amphipoda         
+            Pr(&gt;Dev)          Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)
+(Intercept)                                                    
+site           0.514         5.02    0.625       1.965    0.965
+season         0.838        4.494    0.384       4.454    0.384
+site:season    0.971        0.001    0.971       0.001    0.971
+            sO_Cladocera          sC_Copepoda          O_Decapoda
+                     Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)        Dev
+(Intercept)                                                      
+site               1.782    0.965       0.288    0.968      9.443
+season             0.024    0.994       4.892    0.349      1.167
+site:season        4.568    0.793       6.919    0.565      7.306
+                     O_Cumacea          C_Ostracoda         
+            Pr(&gt;Dev)       Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)
+(Intercept)                                                 
+site           0.199    11.524    0.096      19.739    0.005
+season         0.841      0.05    0.994       2.045    0.780
+site:season    0.550     3.941    0.812       3.698    0.812
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+P-value calculated using 999 iterations via PIT-trap resampling.</code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th>site</th>
+<th>season</th>
+<th>interaction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sedentaria</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Errantia</td>
+<td></td>
+<td>Errantia</td>
+</tr>
+<tr class="odd">
+<td>Caudofoveata</td>
+<td>Caudofoveata</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Ostracods</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>unidentified</td>
+<td>unidentified</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Bivalvia</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Errantia has a significant interaction between site and season indicating maybe they repopulate uninhabitable sites most quickly, or be more transient moving through the bay (LRT = 18, P = 0.002). This may be a good indicator of the environmental conditions changing.</p>
+<p>Check regional differences in species abundance. Testing hypotheses about the region effect and region-by-season interactions, again using a Wald statistic and 199 resamples (better to ramp up to 999 for the paper):</p>
+<h2 id="site-x-region">Site x Region</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">&lt;-</span> <span class="fu">manyglm</span>(ds_spp <span class="sc">~</span> ds<span class="sc">$</span>Region <span class="sc">*</span> ds<span class="sc">$</span>season, <span class="at">family=</span><span class="st">&quot;negative_binomial&quot;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">&lt;-</span> <span class="fu">anova</span>(M2)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>
+Call:  manyglm(formula = ds_spp ~ ds$Region * ds$season, family = &quot;negative_binomial&quot;) 
+[1] &quot;negative.binomial&quot;
+
+Nuisance Parameter(s) phi estimated by the PHI method.
+        sP_Vertebrata            P_Sipuncula                unknown  
+                1.405                 13.151                  3.418  
+        sC_Sedentaria  sC_Errantia_Aciculata          C_Ophiuroidea  
+                1.902                  3.293                 14.511  
+         C_Echinoidea         C_Caudofoveata             C_Bivalvia  
+               65.522                  8.701                  1.403  
+         C_Gastropoda           C_Scaphopoda            O_Amphipoda  
+                2.700                 15.644                 15.052  
+         sO_Cladocera            sC_Copepoda             O_Decapoda  
+               33.384                  2.100                  1.660  
+            O_Cumacea            C_Ostracoda  
+                2.495                  4.781  
+
+Degrees of Freedom: 221 Total (i.e. Null); 218 Residual
+
+                    sP_Vertebrata  P_Sipuncula  unknown 
+2*log-likelihood:    -61.646       -437.247     -604.970
+Residual Deviance:    36.503         88.822      148.317
+AIC:                  71.646        447.247      614.970
+                    sC_Sedentaria  sC_Errantia_Aciculata
+2*log-likelihood:   -880.846       -635.955             
+Residual Deviance:   212.748        170.636             
+AIC:                 890.846        645.955             
+                    C_Ophiuroidea  C_Echinoidea  C_Caudofoveata
+2*log-likelihood:   -119.035        -13.131      -186.191      
+Residual Deviance:    39.800          3.231        55.504      
+AIC:                 129.035         23.131       196.191      
+                    C_Bivalvia  C_Gastropoda  C_Scaphopoda
+2*log-likelihood:   -884.174    -669.537       -29.943    
+Residual Deviance:   231.033     189.476         9.844    
+AIC:                 894.174     679.537        39.943    
+                    O_Amphipoda  sO_Cladocera  sC_Copepoda
+2*log-likelihood:    -31.418     -105.776      -591.378   
+Residual Deviance:    12.308       27.043       188.849   
+AIC:                  41.418      115.776       601.378   
+                    O_Decapoda  O_Cumacea  C_Ostracoda
+2*log-likelihood:   -428.761     -88.034   -159.456   
+Residual Deviance:   168.867      47.071     61.985   
+AIC:                 438.761      98.034    169.456   </code></pre>
+</div>
+<p>There were different species assemblages in the different regions (LRT = 710, P&lt; 0.001) and during different seasons (LRT = 89.6, P &lt; 0.001). There was not a strong interaction between region and season (LRT = 27, P &lt; 0.067).</p>
+<p>Again, which species is important in this interaction?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>M2 <span class="ot">&lt;-</span> <span class="fu">manyglm</span>(ds_spp <span class="sc">~</span> ds<span class="sc">$</span>Region <span class="sc">*</span> ds<span class="sc">$</span>season, <span class="at">family=</span><span class="st">&quot;negative_binomial&quot;</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>M2_uni <span class="ot">&lt;-</span> <span class="fu">anova</span>(M2, <span class="at">p.uni=</span><span class="st">&quot;adjusted&quot;</span>) </span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ ds$Region * ds$season
+
+Multivariate test:
+                    Res.Df Df.diff    Dev Pr(&gt;Dev)    
+(Intercept)            221                            
+ds$Region              220       1 219.48    0.001 ***
+ds$season              219       1 108.60    0.001 ***
+ds$Region:ds$season    218       1  29.19    0.056 .  
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Univariate Tests:
+                    sP_Vertebrata          P_Sipuncula         
+                              Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)
+(Intercept)                                                    
+ds$Region                  11.265    0.017      12.508    0.011
+ds$season                   2.301    0.710        6.95    0.143
+ds$Region:ds$season             0    0.984        2.83    0.712
+                    unknown          sC_Sedentaria         
+                        Dev Pr(&gt;Dev)           Dev Pr(&gt;Dev)
+(Intercept)                                                
+ds$Region             29.28    0.001        79.319    0.001
+ds$season            50.893    0.001         1.342    0.801
+ds$Region:ds$season   4.324    0.454         2.161    0.744
+                    sC_Errantia_Aciculata          C_Ophiuroidea
+                                      Dev Pr(&gt;Dev)           Dev
+(Intercept)                                                     
+ds$Region                          34.925    0.001         0.877
+ds$season                           1.522    0.801         1.833
+ds$Region:ds$season                 2.232    0.744         0.001
+                             C_Echinoidea          C_Caudofoveata
+                    Pr(&gt;Dev)          Dev Pr(&gt;Dev)            Dev
+(Intercept)                                                      
+ds$Region              0.815        1.375    0.815         11.599
+ds$season              0.761        1.473    0.801         10.434
+ds$Region:ds$season    0.984        0.001    0.976          1.271
+                             C_Bivalvia          C_Gastropoda
+                    Pr(&gt;Dev)        Dev Pr(&gt;Dev)          Dev
+(Intercept)                                                  
+ds$Region              0.015      6.237    0.110        1.668
+ds$season              0.027     12.865    0.011        1.449
+ds$Region:ds$season    0.768      2.509    0.719        1.323
+                             C_Scaphopoda          O_Amphipoda
+                    Pr(&gt;Dev)          Dev Pr(&gt;Dev)         Dev
+(Intercept)                                                   
+ds$Region              0.694        4.147    0.344       0.629
+ds$season              0.801        4.469    0.376       4.409
+ds$Region:ds$season    0.768        0.001    0.959           0
+                             sO_Cladocera          sC_Copepoda
+                    Pr(&gt;Dev)          Dev Pr(&gt;Dev)         Dev
+(Intercept)                                                   
+ds$Region              0.815        0.143    0.883           0
+ds$season              0.376        0.346    0.801       4.515
+ds$Region:ds$season    0.984        0.634    0.768       2.463
+                             O_Decapoda          O_Cumacea         
+                    Pr(&gt;Dev)        Dev Pr(&gt;Dev)       Dev Pr(&gt;Dev)
+(Intercept)                                                        
+ds$Region              1.000      2.558    0.589     9.115    0.035
+ds$season              0.376      0.939    0.801     0.085    0.801
+ds$Region:ds$season    0.719      5.703    0.293      1.63    0.748
+                    C_Ostracoda         
+                            Dev Pr(&gt;Dev)
+(Intercept)                             
+ds$Region                13.836    0.008
+ds$season                 2.776    0.614
+ds$Region:ds$season       2.107    0.744
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+P-value calculated using 999 iterations via PIT-trap resampling.</code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th>region</th>
+<th>season</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>unidentified</td>
+<td>unidentified</td>
+</tr>
+<tr class="even">
+<td>Sedentaria</td>
+<td>Bivalve</td>
+</tr>
+<tr class="odd">
+<td>Errantia</td>
+<td>Caudofoveata</td>
+</tr>
+<tr class="even">
+<td>Ostracoda</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>As in the site x season model, regional differences are important for Sedentaria, Errantia/Aciculata, with the addition of Ostracods. All have significantly different abundances depending on the Region). Only bivalves and caudofoveata are seasonally influenced (both molluscs; same as site x season effects).</p>
+<h2 id="site-x-time">Site x Time</h2>
+<p>First, we check the significance of week.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>model_wk <span class="ot">&lt;-</span> <span class="fu">manyglm</span>(ds_spp <span class="sc">~</span> week, <span class="at">family=</span><span class="st">&quot;negative_binomial&quot;</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>M_output_wk <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_wk)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ week
+
+Multivariate test:
+            Res.Df Df.diff  Dev Pr(&gt;Dev)   
+(Intercept)    221                         
+week           167      54 1216    0.002 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+ P-value calculated using 999 iterations via PIT-trap resampling.</code></pre>
+</div>
+<p>Indeed, week is important.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>model_wk_site <span class="ot">&lt;-</span> <span class="fu">manyglm</span>(ds_spp <span class="sc">~</span> site <span class="sc">*</span> week, <span class="at">family=</span><span class="st">&quot;negative_binomial&quot;</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>M_output_wk_site <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_wk_site)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ site * week
+
+Multivariate test:
+            Res.Df Df.diff    Dev Pr(&gt;Dev)    
+(Intercept)    221                            
+site           218       3  349.7    0.001 ***
+week           164      54 1422.6    0.001 ***
+site:week        4     162 2107.3    0.001 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+ P-value calculated using 999 iterations via PIT-trap resampling.</code></pre>
+</div>
+<p>We look for an interaction between site and time, and find there is one. Next, find out which sites are affected by temporal differences.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model_pairs_wk <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_wk, <span class="at">pairwise.comp =</span> site, <span class="at">nBoot =</span> <span class="dv">199</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>model_pairs_wk</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ site * week
+
+Multivariate test:
+            Res.Df Df.diff    Dev Pr(&gt;Dev)   
+(Intercept)    221                           
+site           218       3  349.7    0.005 **
+week           164      54 1422.6    0.005 **
+site:week        4     162 2107.3    0.005 **
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Pairwise comparison results: 
+                       Observed statistic
+Pastores vs P_Caracol              213.65
+Almirante vs P_Caracol             175.96
+Cristobal vs P_Caracol             124.68
+Pastores vs Cristobal               70.16
+Almirante vs Cristobal              58.03
+Pastores vs Almirante               23.52
+                       Free Stepdown Adjusted P-Value   
+Pastores vs P_Caracol                           0.005 **
+Almirante vs P_Caracol                          0.005 **
+Cristobal vs P_Caracol                          0.005 **
+Pastores vs Cristobal                           0.005 **
+Almirante vs Cristobal                          0.010 **
+Pastores vs Almirante                           0.165   
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+ P-value calculated using 199 iterations via PIT-trap resampling.</code></pre>
+</div>
+<p>All of them except Pastores and Almirante, the two inner bay sites. Then, which species are important in the interaction between time and site?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>model_wk_site <span class="ot">&lt;-</span> <span class="fu">manyglm</span>(ds_spp <span class="sc">~</span> site <span class="sc">*</span> week, <span class="at">family=</span><span class="st">&quot;negative_binomial&quot;</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>M_output_wk_site_uni <span class="ot">&lt;-</span> <span class="fu">anova</span>(model_wk_site, <span class="at">p.uni=</span><span class="st">&quot;adjusted&quot;</span>) </span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>Analysis of Deviance Table
+
+Model: ds_spp ~ site * week
+
+Multivariate test:
+            Res.Df Df.diff    Dev Pr(&gt;Dev)    
+(Intercept)    221                            
+site           218       3  349.7    0.001 ***
+week           164      54 1422.6    0.001 ***
+site:week        4     162 2107.3    0.001 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Univariate Tests:
+            sP_Vertebrata          P_Sipuncula          unknown
+                      Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)     Dev
+(Intercept)                                                    
+site               12.151    0.079      15.891    0.024  38.562
+week               37.759    0.421      119.66    0.008 197.034
+site:week           8.687    0.101     161.455    0.101 202.777
+                     sC_Sedentaria          sC_Errantia_Aciculata
+            Pr(&gt;Dev)           Dev Pr(&gt;Dev)                   Dev
+(Intercept)                                                      
+site           0.001       119.416    0.001                71.442
+week           0.001       129.547    0.003               103.328
+site:week      0.021       295.823    0.013               238.187
+                     C_Ophiuroidea          C_Echinoidea         
+            Pr(&gt;Dev)           Dev Pr(&gt;Dev)          Dev Pr(&gt;Dev)
+(Intercept)                                                      
+site           0.001         7.663    0.394        2.776    0.934
+week           0.095        52.426    0.340        7.815    0.526
+site:week      0.021        33.543    0.101        0.002    0.498
+            C_Caudofoveata          C_Bivalvia          C_Gastropoda
+                       Dev Pr(&gt;Dev)        Dev Pr(&gt;Dev)          Dev
+(Intercept)                                                         
+site                19.347    0.006      7.101    0.399        5.621
+week                74.905    0.220     173.29    0.001      145.162
+site:week           61.377    0.101    290.221    0.021      262.833
+                     C_Scaphopoda          O_Amphipoda         
+            Pr(&gt;Dev)          Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)
+(Intercept)                                                    
+site           0.504         5.02    0.618       1.965    0.966
+week           0.001       21.542    0.461      19.559    0.461
+site:week      0.021        5.006    0.101       8.319    0.101
+            sO_Cladocera          sC_Copepoda          O_Decapoda
+                     Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)        Dev
+(Intercept)                                                      
+site               1.782    0.966       0.288    0.975      9.443
+week              41.196    0.421      88.952    0.139     92.603
+site:week         38.517    0.101     269.443    0.021    172.479
+                     O_Cumacea          C_Ostracoda         
+            Pr(&gt;Dev)       Dev Pr(&gt;Dev)         Dev Pr(&gt;Dev)
+(Intercept)                                                 
+site           0.201    11.524    0.097      19.739    0.006
+week           0.139    47.328    0.340      70.491    0.246
+site:week      0.036    16.783    0.101      41.849    0.101
+Arguments:
+ Test statistics calculated assuming uncorrelated response (for faster computation) 
+P-value calculated using 999 iterations via PIT-trap resampling.</code></pre>
+</div>
+<p>Summary of the significant factors site x time:</p>
+<table>
+<caption>Summary of significant factors</caption>
+<thead>
+<tr class="header">
+<th>site</th>
+<th>week</th>
+<th>interaction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sedentaria</td>
+<td>Sedentaria</td>
+<td>Sedentaria</td>
+</tr>
+<tr class="even">
+<td>Errantia</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Caudofoveata</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Ostracods</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>unidentified</td>
+<td>unidentified</td>
+<td>unidentified</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Sipuncula</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Bivalvia</td>
+<td>Bivalvia</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Gastropoda</td>
+<td>Gastropoda</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>Copepoda</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>Decapoda</td>
+</tr>
+</tbody>
+</table>
+<h1 id="part-2-visualizing-results">Part 2: Visualizing Results</h1>
+<h2 id="taxa-temporal-trends">Taxa-temporal trends</h2>
+<p>Here we look at the full data set range (note stats above are only calling the same time period as the microbial data)</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>Plot of all taxa with abundances that changed significantly with time:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-29"></span>
+<img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-29-1.png" alt="Temporal Trends: taxa with abundances that changed significantly with time" width="768" />
+<p class="caption">
+Figure 1: Temporal Trends: taxa with abundances that changed significantly with time
+</p>
+</div>
+</div>
+<p>Different taxa start appearing in the inner bay sites in the normoxic season, when conditions are more habitable. This is best seen with the Sedentaria at P. Caracol. The abundance at P. Caracol does not vary throughout the 2 years.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-30"></span>
+<img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-30-1.png" alt="Temporal Trends: bivalves with abundances that changed significantly with time" width="768" />
+<p class="caption">
+Figure 2: Temporal Trends: bivalves with abundances that changed significantly with time
+</p>
+</div>
+</div>
+<p>Bivalves show the impact of the extreme hypoxic event in Sept 2017, with severe decrease in abundance in all sites. Only in the outer bay sites does the abundance begin to increase two years later (2020).</p>
+<p>Taxa that vary by site:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-32"></span>
+<img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-32-1.png" alt="Spatial Trends: taxa with abundances that changed significantly with site" width="768" />
+<p class="caption">
+Figure 3: Spatial Trends: taxa with abundances that changed significantly with site
+</p>
+</div>
+</div>
+<p>Ostracods show a nice pattern of seasonality in each site, with some recognizable patterns with regard to the spatial gradient. The increase in living individuals is greater in the outer bay sites but minimal in the inner bay sites. Additionally, in Almirante, the year after the hypoxic event (2018) no ostracods were found. This could be because the source populations hadn’t recovered, the neighboring populations were unable to colonize, or conditions never improved to a level that supported either of these options.</p>
+<p>Taxa with a significant interaction between time and site:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-34"></span>
+<img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-34-1.png" alt="Taxa with abundances that changed significantly with time and site" width="768" />
+<p class="caption">
+Figure 4: Taxa with abundances that changed significantly with time and site
+</p>
+</div>
+</div>
+<p>A closer look at Sedentaria (non-mobile worms), which had sig. site, week, and interaction term.</p>
+<div class="layout-chunk" data-layout="l-body-outset">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-36"></span>
+<img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-36-1.png" alt="Sedentaria Trends" width="768" />
+<p class="caption">
+Figure 5: Sedentaria Trends
+</p>
+</div>
+</div>
+<p>Only decapods had significant interaction:</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body-outset">
+<div class="figure"><span id="fig:unnamed-chunk-38"></span>
+<img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-38-1.png" alt="Decapod Trends" width="768" />
+<p class="caption">
+Figure 6: Decapod Trends
+</p>
+</div>
+</div>
+<h2 id="short-data-set">Short data-set</h2>
+<h3 id="similarity-matrices">Similarity matrices</h3>
+<p>We compare the dissimilarity in community composition between each site using two metrics; Bray-Curtis dissimilarity and Jaccard dissimilarity. Bray-Curtis Dissimilarity is an abundance-based dissimilarity metric while Jaccard Dissimilarity explores the intersection over the union of sites (i.e. turnover).</p>
+<ol type="1">
+<li>Bray-Curtis dissimilarity</li>
+<li>Jaccard dissimilarity</li>
+</ol>
+<p>This is the sum of occurrences at each site, in each season every other week (based on microbial sampling); environmental data is averaged by season and site.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>short.mdf <span class="ot">&lt;-</span> <span class="fu">as.matrix.data.frame</span>(short.data)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(short.mdf) <span class="ot">&lt;-</span> site_s.data<span class="sc">$</span>site</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>short.bray <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(short.mdf, <span class="at">method =</span> <span class="st">&quot;bray&quot;</span>)</span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>short.jac <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(short.mdf, <span class="at">method =</span> <span class="st">&quot;jaccard&quot;</span>, <span class="at">binary =</span> T)</span></code></pre></div>
+</div>
+<p>Jaccard dissimilarity simple compares the overlap in species presence/absence between pairs of communities, consequently two communities with identical species present will have a Jaccard score of 0 regardless of the relative abundance of these organisms in the community. Bray is based on who’s who (i.e. abundances) and can be quite different than Jaccard in terms of interpreting community changes.</p>
+<p>While summary insights into community dissimilarity are valuable for understanding the factors which determine the structure of communities through time and space, it is important to consider which species are driving these trends. We can identify the species which contribute most to Bray-Curtis dissimilarity between each pair of sites using SIMPER analysis.</p>
+<p>SIMPLER is a method for identifying which species contribute most to beta diversity (Bray-Curtis dissimilarity). SIMPER identifies the most abundant and/or most variable species in the dataset. <em>Note that SIMPER is severely biased towards highly abundant species.</em></p>
+<p>We can use the simper function in the R package vegan to calculate the contribution of each species to Bray-Curtis dissimilarity between sites in Almirante Bay. The simper function will automatically perform pairwise comparisons between sites, and return cumulative contribution scores up to a maximum of 0.7 (70% of total dissimilarity).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">simper</span>(short.data, site_s.data<span class="sc">$</span>site, <span class="at">permutations =</span> <span class="dv">999</span>)</span></code></pre></div>
+<pre><code>cumulative contributions of most influential species:
+
+$Almirante_Cristobal
+          P_Sipuncula            C_Bivalvia         sC_Sedentaria 
+            0.1974464             0.3882823             0.5417897 
+              unknown sC_Errantia_Aciculata 
+            0.6820161             0.7460897 
+
+$Almirante_Pastores
+              unknown            C_Bivalvia         sC_Sedentaria 
+            0.2215839             0.4224743             0.5557500 
+         C_Gastropoda sC_Errantia_Aciculata 
+            0.6603115             0.7524137 
+
+$Almirante_P_Caracol
+        sC_Sedentaria               unknown sC_Errantia_Aciculata 
+            0.3784750             0.5739287             0.7455042 
+
+$Cristobal_Pastores
+          P_Sipuncula            C_Bivalvia               unknown 
+            0.2011921             0.3762404             0.5278118 
+        sC_Sedentaria sC_Errantia_Aciculata 
+            0.6617989             0.7537715 
+
+$Cristobal_P_Caracol
+        sC_Sedentaria               unknown sC_Errantia_Aciculata 
+            0.3324618             0.5213142             0.6826876 
+          P_Sipuncula 
+            0.7709300 
+
+$Pastores_P_Caracol
+        sC_Sedentaria sC_Errantia_Aciculata               unknown 
+            0.3714249             0.5608955             0.7495656 </code></pre>
+</div>
+<p>It appears the species that contribute to the majority of site differences are the sedentary polychaete worms, at least between Pastores, Almirante, Cristobal and P. Caracol. All these relationships had low dissimilarity scores. Sipuncula (a mobile worm-like animal) is important between Cristobal and Pastores as well as Almirante. The absense of these creatures in Almirante and Pastores (check) likely has a role in decreasing the bioturbation in these sites, leading to higher site evenness but lower richness.</p>
+<h3 id="pcoa">PCoA</h3>
+<p>Principal Coordinates Analysis</p>
+<p>Now that we have calculated our dissimilarity matrices, we can using ordination to visualize the structure of these communities. Ordination by definition is the representation of large numbers of sites or species in low dimensional space, such that any underlying relationships in these data become visually apparent. Below we will use functions in the R package vegan to perform and plot principal coordinates analysis for both Bray-Curtis and Jaccard dissimilarity matrices to vizualise macrofaunal community structure across Almirante Bay.</p>
+<p>Calculate principal coordinates analysis with Bray-Curtis dissimilarity matrix:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pcoa.short.bray <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(short.bray, <span class="at">k =</span> <span class="dv">2</span>, <span class="at">eig =</span> T)</span></code></pre></div>
+</div>
+<p>Extract axis positions for each site from cmdscale object and create a data frame for plotting</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pcoa.short.bray.plotting <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(pcoa.short.bray<span class="sc">$</span>points)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pcoa.short.bray.plotting) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;axis_1&quot;</span>, <span class="st">&quot;axis_2&quot;</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>pcoa.short.bray.plotting<span class="sc">$</span>site <span class="ot">&lt;-</span> <span class="fu">rownames</span>(pcoa.short.bray.plotting)</span></code></pre></div>
+</div>
+<p>Calculate the proportion of variance in the data which is explained by the first PCoA axis</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>pcoa.short.bray<span class="sc">$</span>eig[<span class="dv">1</span>]<span class="sc">/</span>(<span class="fu">sum</span>(pcoa.short.bray<span class="sc">$</span>eig))</span></code></pre></div>
+<pre><code>[1] 0.5729077</code></pre>
+</div>
+<p>Then the second:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>pcoa.short.bray<span class="sc">$</span>eig[<span class="dv">2</span>]<span class="sc">/</span>(<span class="fu">sum</span>(pcoa.short.bray<span class="sc">$</span>eig))</span></code></pre></div>
+<pre><code>[1] 0.1715044</code></pre>
+</div>
+<p>Create a PCoA plot with both dissimilarity matrices:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code>[1] 0.6078996</code></pre>
+<pre><code>[1] 0.2487032</code></pre>
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-47-1.png" width="624" /></p>
+</div>
+<h3 id="permanova">Permanova</h3>
+<p>PERMANOVA (permutational multivariate analysis of variance; Anderson 2001) is non-parametric multivariate statistical test used to quantify the impact of both continuous and categorical variables on dissimilarity between communities. While it is valid to construct a PERMANOVA model which includes continuous variables, in this instance we will use a simple PERMANOVA model to test the effect of season type on macrofaunal community composition. The input for PERMANOVA is a dissimilarity matrix (Bray-Curtis dissimilarity in this case), and corresponding environmental data. A resultant p-value &lt; 0.05 indicates that centroid position and/or dispersion differs between the groups in the model.</p>
+<p>As PERMANOVA is affected by both centroid position and disperison, we perform a homogeneity of dispersions analysis using betadisper to establish whether dispersion is homogeneous between groups (in this case, hypoxic season (HS) and normoxic season (NS) associated communities). We then perform PERMANOVA analysis using the adonis function in the R package vegan.</p>
+<p>Homogeneity of dispersion test</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">permutest</span>(<span class="fu">betadisper</span>(short.bray, site_s.data<span class="sc">$</span>season))</span></code></pre></div>
+<pre><code>
+Permutation test for homogeneity of multivariate dispersions
+Permutation: free
+Number of permutations: 999
+
+Response: Distances
+          Df   Sum Sq   Mean Sq      F N.Perm Pr(&gt;F)
+Groups     1 0.001524 0.0015236 0.0545    999  0.782
+Residuals  6 0.167819 0.0279698                     </code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis</span>(short.bray <span class="sc">~</span> season, <span class="at">data =</span> site_s.data, <span class="at">permutations =</span> <span class="dv">999</span>)</span></code></pre></div>
+</div>
+<p>The betadisper analysis shows that there is no signficiant difference in dispersion between hypoxic and normoxic seasons. The PERMANOVA analysis show that there is no significant difference in centroid position or dispersion between seasons.</p>
+<h3 id="dbrda">dbRDA</h3>
+<p>Distance-Based Redundancy Analysis (dbRDA; Legendre and Anderson, 1999) is an extension of Redundancy Analysis (RDA) which allows the use of non-euclidean distance matrices as inputs (e.g. Bray-Curtis dissimilarity). The method works by first calculating a PCoA from the dissimilarity matrix, and then subjecting the PCoA eigenvalues (which represent dissimilarities in euclidean space) to RDA. The method aims to detect linear relationships between environmental variables and these dissimilarities.</p>
+<p>dbRDA differs from PCoA in that it is a constrained analysis. While PCoA axes are generated to explain maximum variation in the distance matrix, dbRDA canonical axes are constructed as linear combinations of environmental variables. Consequently these axes are constrained to the environmental variables in the model, and the ordination will be distinct from the PCoA. dbRDA allows us to visualize how environmental variables constrain variation in community composition between our sites.</p>
+<p>As dbRDA considers multiple environmental variables which are measured using different techniques, it is important to normalize environmental variables such that they can be compared concurrently. This is achieved using a z-score transformation. Moreover, dbRDA is sensitive to multicolinearity (i.e. high correlation between environmental variables). We can test whether any of our environmental variables are correlated by calculating variance inflation factors (VIFs) and then removing selected terms from the model until all VIF scores are less than 10.</p>
+<p>Z-Score Transformation - normalizes environmental variables by their standard deviation from the mean</p>
+<p>Z-Score transform the environmental data:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>env.data.z <span class="ot">&lt;-</span> env_s.data</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>env.data.z<span class="sc">$</span>temp <span class="ot">&lt;-</span> (env.data.z<span class="sc">$</span>temp <span class="sc">-</span> <span class="fu">mean</span>(env.data.z<span class="sc">$</span>temp))<span class="sc">/</span><span class="fu">sd</span>(env.data.z<span class="sc">$</span>temp)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>env.data.z<span class="sc">$</span>sal_psu <span class="ot">&lt;-</span> (env.data.z<span class="sc">$</span>sal_psu <span class="sc">-</span> <span class="fu">mean</span>(env.data.z<span class="sc">$</span>sal_psu))<span class="sc">/</span><span class="fu">sd</span>(env.data.z<span class="sc">$</span>sal_psu)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>env.data.z<span class="sc">$</span>DO_mgL <span class="ot">&lt;-</span> (env.data.z<span class="sc">$</span>DO_mgL <span class="sc">-</span> <span class="fu">mean</span>(env.data.z<span class="sc">$</span>DO_mgL))<span class="sc">/</span><span class="fu">sd</span>(env.data.z<span class="sc">$</span>DO_mgL)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>env.data.z<span class="sc">$</span>pH <span class="ot">&lt;-</span> (env.data.z<span class="sc">$</span>pH <span class="sc">-</span> <span class="fu">mean</span>(env.data.z<span class="sc">$</span>pH))<span class="sc">/</span><span class="fu">sd</span>(env.data.z<span class="sc">$</span>pH)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>env.data.z<span class="sc">$</span>Chlorophyll_ugL <span class="ot">&lt;-</span> (env.data.z<span class="sc">$</span>Chlorophyll_ugL <span class="sc">-</span> <span class="fu">mean</span>(env.data.z<span class="sc">$</span>Chlorophyll_ugL))<span class="sc">/</span><span class="fu">sd</span>(env.data.z<span class="sc">$</span>Chlorophyll_ugL)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>env.data.z<span class="sc">$</span>BGA_ugL <span class="ot">&lt;-</span> (env.data.z<span class="sc">$</span>BGA_ugL <span class="sc">-</span> <span class="fu">mean</span>(env.data.z<span class="sc">$</span>BGA_ugL))<span class="sc">/</span><span class="fu">sd</span>(env.data.z<span class="sc">$</span>BGA_ugL)</span></code></pre></div>
+</div>
+<p>Perform dbRDA. Construct full model and calculate VIF, need to remove terms from the model until all VIF scores are &lt; 10.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>dbRDA.full <span class="ot">&lt;-</span> <span class="fu">capscale</span>(short.bray <span class="sc">~</span> temp<span class="sc">+</span>sal_psu<span class="sc">+</span>DO_mgL<span class="sc">+</span>pH<span class="sc">+</span>Chlorophyll_ugL<span class="sc">+</span>BGA_ugL,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>                       env.data.z)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.cca</span>(dbRDA.full)</span></code></pre></div>
+<pre><code>           temp         sal_psu          DO_mgL              pH 
+       11.17191        35.93593       544.11966       429.69329 
+Chlorophyll_ugL         BGA_ugL 
+       17.82015        21.94942 </code></pre>
+</div>
+<p>Construct the reduced model and calculate VIF:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>dbRDA.mat <span class="ot">&lt;-</span> <span class="fu">capscale</span>(short.bray <span class="sc">~</span>  DO_mgL<span class="sc">+</span>BGA_ugL<span class="sc">+</span>sal_psu<span class="sc">+</span>temp,</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>                      env.data.z)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">vif.cca</span>(dbRDA.mat)</span></code></pre></div>
+<pre><code>   DO_mgL   BGA_ugL   sal_psu      temp 
+10.439451  2.233842  7.113763  4.315231 </code></pre>
+</div>
+<p>Test overall significance of the analysis:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(dbRDA.mat)</span></code></pre></div>
+<pre><code>Permutation test for capscale under reduced model
+Permutation: free
+Number of permutations: 999
+
+Model: capscale(formula = short.bray ~ DO_mgL + BGA_ugL + sal_psu + temp, data = env.data.z)
+         Df SumOfSqs      F Pr(&gt;F)   
+Model     4  0.78648 3.7417  0.006 **
+Residual  3  0.15765                 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>Test significance of each environmental variable:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(dbRDA.mat, <span class="at">by =</span> <span class="st">&quot;terms&quot;</span>)</span></code></pre></div>
+<pre><code>Permutation test for capscale under reduced model
+Terms added sequentially (first to last)
+Permutation: free
+Number of permutations: 999
+
+Model: capscale(formula = short.bray ~ DO_mgL + BGA_ugL + sal_psu + temp, data = env.data.z)
+         Df SumOfSqs      F Pr(&gt;F)   
+DO_mgL    1  0.23447 4.4619  0.006 **
+BGA_ugL   1  0.11941 2.2723  0.122   
+sal_psu   1  0.25090 4.7746  0.016 * 
+temp      1  0.18171 3.4580  0.039 * 
+Residual  3  0.15765                 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<p>Summary of dbRDA model to extract total variance constrained and axis scores</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dbRDA.mat)</span></code></pre></div>
+<pre><code>
+Call:
+capscale(formula = short.bray ~ DO_mgL + BGA_ugL + sal_psu +      temp, data = env.data.z) 
+
+Partitioning of squared Bray distance:
+              Inertia Proportion
+Total          0.9441      1.000
+Constrained    0.7865      0.833
+Unconstrained  0.1576      0.167
+
+Eigenvalues, and their contribution to the squared Bray distance 
+
+Importance of components:
+                        CAP1   CAP2   CAP3    CAP4    MDS1    MDS2
+Eigenvalue            0.5298 0.1395 0.1048 0.01240 0.07754 0.05575
+Proportion Explained  0.5612 0.1477 0.1110 0.01313 0.08213 0.05905
+Cumulative Proportion 0.5612 0.7089 0.8199 0.83303 0.91516 0.97421
+                         MDS3
+Eigenvalue            0.02435
+Proportion Explained  0.02579
+Cumulative Proportion 1.00000
+
+Accumulated constrained eigenvalues
+Importance of components:
+                        CAP1   CAP2   CAP3    CAP4
+Eigenvalue            0.5298 0.1395 0.1048 0.01240
+Proportion Explained  0.6736 0.1773 0.1332 0.01577
+Cumulative Proportion 0.6736 0.8510 0.9842 1.00000
+
+Scaling 2 for species and site scores
+* Species are scaled proportional to eigenvalues
+* Sites are unscaled: weighted dispersion equal on all dimensions
+* General scaling constant of scores:  1.603365 
+
+
+Species scores
+
+     CAP1 CAP2 CAP3 CAP4 MDS1 MDS2
+Dim1                              
+Dim2                              
+Dim3                              
+Dim4                              
+Dim5                              
+Dim6                              
+Dim7                              
+
+
+Site scores (weighted sums of species scores)
+
+             CAP1    CAP2     CAP3     CAP4     MDS1     MDS2
+Almirante -0.1294  0.4803  0.21903 -0.81201 -0.90058  0.33656
+Almirante -0.6920 -0.8793  0.43399  0.23117  0.35854 -0.44940
+Cristobal  0.2317  1.0580  0.48629  1.08919 -0.52861 -0.55122
+Cristobal -0.0563  0.2043 -0.82564  0.31311  0.17539  1.20827
+Pastores  -0.4478  0.3411  0.23097 -0.85875  1.06459 -0.07915
+Pastores  -0.5427 -0.4538 -0.05396  0.46679 -0.39527 -0.09583
+P_Caracol  1.1582 -0.5913  0.66214 -0.05802  0.16722  0.26715
+P_Caracol  0.4783 -0.1593 -1.15283 -0.37147  0.05871 -0.63637
+
+
+Site constraints (linear combinations of constraining variables)
+
+             CAP1    CAP2      CAP3      CAP4     MDS1     MDS2
+Almirante -0.2561  0.1684  0.202134 -1.086491 -0.90058  0.33656
+Almirante -0.6060 -0.6791  0.005989 -0.006593  0.35854 -0.44940
+Cristobal  0.2097  0.9432  0.224260  0.735942 -0.52861 -0.55122
+Cristobal -0.1096  0.1874 -0.661520  0.476314  0.17539  1.20827
+Pastores  -0.3233  0.6702  0.431509 -0.393172  1.06459 -0.07915
+Pastores  -0.5971 -0.6236  0.240232  0.594536 -0.39527 -0.09583
+P_Caracol  1.1618 -0.5526  0.700686  0.016308  0.16722  0.26715
+P_Caracol  0.5206 -0.1139 -1.143290 -0.336843  0.05871 -0.63637
+
+
+Biplot scores for constraining variables
+
+           CAP1    CAP2    CAP3     CAP4 MDS1 MDS2
+DO_mgL   0.5768 -0.3000 -0.6456  0.40071    0    0
+BGA_ugL  0.1916 -0.7709  0.4925  0.35553    0    0
+sal_psu -0.8386  0.5184  0.1666 -0.01889    0    0
+temp     0.1446  0.5344  0.7121 -0.43178    0    0</code></pre>
+</div>
+<p>Plot dbRDA</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>smry <span class="ot">&lt;-</span> <span class="fu">summary</span>(dbRDA.mat)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>scrs <span class="ot">&lt;-</span> <span class="fu">scores</span>(dbRDA.mat)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>df1  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(smry<span class="sc">$</span>sites[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]) <span class="co"># site scores for RDA1 and RDA2</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>df1<span class="sc">$</span>site <span class="ot">&lt;-</span> <span class="fu">rownames</span>(df1)  <span class="co">#add site names</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>df2  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(smry<span class="sc">$</span>biplot[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])  <span class="co"># mapping environmental variables</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>rda.plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df1, <span class="fu">aes</span>(<span class="at">x=</span>CAP1, <span class="at">y=</span>CAP2, <span class="at">colour =</span> site)) <span class="sc">+</span> </span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data=</span>df2, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">0</span>, <span class="at">xend=</span>CAP1, <span class="at">y=</span><span class="dv">0</span>, <span class="at">yend=</span>CAP2), </span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>               <span class="at">color=</span><span class="st">&quot;grey50&quot;</span>, <span class="at">arrow=</span><span class="fu">arrow</span>(<span class="at">length=</span><span class="fu">unit</span>(<span class="fl">0.01</span>,<span class="st">&quot;npc&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data=</span>df2, <span class="fu">aes</span>(<span class="at">x=</span>CAP1,<span class="at">y=</span>CAP2,<span class="at">label=</span><span class="fu">rownames</span>(df2),</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>                          <span class="at">hjust=</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sign</span>(CAP1)),<span class="at">vjust=</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">sign</span>(CAP2))), </span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">color=</span><span class="st">&quot;grey50&quot;</span>, <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_viridis_d</span>(<span class="at">option =</span> <span class="st">&quot;magma&quot;</span>, <span class="at">begin =</span> <span class="fl">0.2</span>, <span class="at">end =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">rownames</span>(df1),</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">hjust=</span><span class="dv">0</span>,<span class="at">vjust=</span><span class="fl">1.5</span>), <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>,<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;dotted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;dotted&quot;</span>) <span class="sc">+</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="fl">1.05</span>, <span class="fl">1.65</span>) <span class="sc">+</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">1.5</span>, <span class="fl">1.05</span>) <span class="sc">+</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;RDA1 (56.2%)&quot;</span>) <span class="sc">+</span> <span class="co"># this percentage comes from the CAP1 &#39;importance of components:&#39; proportion explained, which can be found in summary(dbRDA.mat) </span></span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;RDA2 (14.1%)&quot;</span>) <span class="sc">+</span> <span class="co"># this percentage comes from the CAP2 &#39;importance of components:&#39; proportion explained, which can be found in summary(dbRDA.mat) </span></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>() <span class="sc">+</span></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() </span></code></pre></div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-57-1.png" width="624" /></p>
+</div>
+<p>It is critical to remember that we have reduced our model due to colinearity between pH, salinity, and chlorophyll, but that these factors are confounded. The relationship between constrained variance and unconstrained variance informs us of how well the beta-diversity of Almirante Bay can be explained by the environmental factors in our model. While the measured environmental parameters, namely Dissolved Oxygen concentrations, were able to explain trends in Shannon’s H’ observed throughout the bay, the environmental parameters were unable to explain a significant proportion of variance in macrofauna community composition (beta-diversity) throughout the region.</p>
+<h1 id="full-data-set">Full Data Set</h1>
+<p>Species data, transformed sqrt of relative abundance Principal Component Analysis</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-58-1.png" width="624" /></p>
+</div>
+<p>Region clustering</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-59-1.png" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="trepo-macrobeta_files/figure-html5/unnamed-chunk-60-1.png" width="624" /></p>
+</div>
+<h2 class="appendix" id="source-code">Source Code</h2>
+<p>The source code for this page can be accessed on GitHub by <a href="https://github.com/tropical-repo/web/blob/master/trepo-macrobeta.Rmd">clicking this link</a>.</p>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/tropical-repo/web/issues/new">create an issue</a> on the source repository.</p>
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/tropical-repo/web/">https://github.com/tropical-repo/web/</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2021 The TROPICAL-REPO Project.</p>
+<p>Site constructed using <a href="https://rstudio.github.io/distill/">Distill for R Markdown</a>.</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>
